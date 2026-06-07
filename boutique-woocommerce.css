@@ -30,6 +30,13 @@
 }
 .site-description,.ast-site-identity .site-description{ color:#9DB4D4 !important; }
 
+/* Masquer l'ANCIEN titre texte "EauService" (doublon à côté du nouveau logo) */
+.site-title,
+.ast-site-title-wrap .site-title,
+.ast-site-identity .site-title,
+.site-header .site-title,
+.ast-logo-title-inline .site-title{ display:none !important; }
+
 /* Menu de navigation du thème */
 .main-header-menu .menu-link,
 .ast-builder-menu .menu-link,
@@ -170,23 +177,27 @@ body.woocommerce a:hover{ color:#3B9EFF; }
   border-color:#BBD3F5;
 }
 
-/* Images reculées : fond clair + marge + image entière (pas zoomée) */
+/* Zone image : image ENTIÈRE centrée (jamais coupée), tailles calibrées */
+.woocommerce ul.products li.product a{ display:block; }
 .woocommerce ul.products li.product a img{
+  display:block !important;
   width:100% !important;
-  height:200px !important;
+  height:270px !important;
   object-fit:contain !important;
+  object-position:center !important;
   background:#F7FAFF;
   border:1px solid #EEF4FF;
   border-radius:10px;
-  padding:18px !important;
+  padding:14px !important;
   margin:0 0 14px !important;
   box-shadow:none !important;
 }
-/* Images plus petites pour l'unité et les suppléments */
+/* Produits à l'unité : zone image moyenne */
 .woocommerce ul.products li.product.product_cat-machines-a-cafe a img,
 .woocommerce ul.products li.product.product_cat-fontaines-a-eau a img,
-.woocommerce ul.products li.product.product_cat-refrigeration a img{ height:165px !important; padding:16px !important; }
-.woocommerce ul.products li.product.product_cat-supplements a img{ height:135px !important; padding:14px !important; }
+.woocommerce ul.products li.product.product_cat-refrigeration a img{ height:210px !important; padding:12px !important; }
+/* Suppléments : zone image plus compacte */
+.woocommerce ul.products li.product.product_cat-supplements a img{ height:155px !important; padding:12px !important; }
 
 .woocommerce ul.products li.product .woocommerce-loop-product__title{
   color:#0A1628 !important;
