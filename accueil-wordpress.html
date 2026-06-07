@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EauService by Events Café — Location de matériel événementiel</title>
-<meta name="description" content="EauService by Events Café — Location de machines à café, fontaines à eau et réfrigérateurs pour vos événements. Packs clés en main, livraison sous 24h en PACA.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- ============================================================= -->
+<!--  EauService by Events Cafe - PAGE D ACCUEIL (pret a coller)    -->
+<!--  Coller dans un bloc "HTML personnalise" (gabarit pleine       -->
+<!--  largeur / canvas), puis definir comme page d accueil.         -->
+<!-- ============================================================= -->
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ===== Police (le <link> du <head> n_existe pas dans un bloc) ===== */
+/* ===== Pleine largeur : fond sombre bord a bord, supprime le blanc des cotes Astra ===== */
+html,body{background:#060D1A !important;overflow-x:hidden;}
+.es-fullbleed{position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#060D1A;overflow-x:hidden;}
+.entry-content,.ast-container,.ast-container-fluid,.site-content,#primary,#content,.ast-article-single,.content-area,article.page,.ast-page-builder-template .entry-content{max-width:100% !important;width:100% !important;padding:0 !important;margin:0 !important;background:transparent !important;box-shadow:none !important;border:none !important;}
+.ast-separate-container .ast-article-single{padding:0 !important;}
+
+
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --night:#060D1A;--night2:#0A1424;--night3:#0F1D34;--panel:#142844;
@@ -254,10 +260,10 @@ footer{background:#04080F;padding:60px 40px 28px}
   .foot-grid{grid-template-columns:1fr}
   .hero h1{font-size:28px}
 }
-</style>
-</head>
-<body>
 
+</style>
+
+<div class="es-fullbleed">
 <div id="loader">
   <div class="ld-logo" id="ldlogo"><span class="eau">Eau</span>Service<small class="by">BY EVENTS CAFÉ</small></div>
   <div class="ld-bar" id="ldbar"></div>
@@ -487,5 +493,4 @@ function setLang(lang){
   });
 }
 </script>
-</body>
-</html>
+</div>
