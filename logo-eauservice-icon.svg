@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="EauService">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="EauService">
   <defs>
     <linearGradient id="esIco" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1E6FD9"/>
-      <stop offset="1" stop-color="#60A5FA"/>
+      <stop offset="0" stop-color="#2E7FE6"/>
+      <stop offset="1" stop-color="#67ABFF"/>
     </linearGradient>
     <linearGradient id="esIcoDrop" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#E3EDFB"/>
+      <stop offset="1" stop-color="#D9E8FC"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="96" height="96" rx="26" fill="url(#esIco)"/>
-  <path d="M48 22 C48 22 67 44 67 57 a19 19 0 1 1 -38 0 C29 44 48 22 48 22 Z" fill="url(#esIcoDrop)"/>
-  <path d="M41 53 a8 12 0 0 0 -4 17" fill="none" stroke="#60A5FA" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+  <rect x="0" y="0" width="120" height="120" rx="30" fill="url(#esIco)"/>
+  <path d="M60 28 C60 28 82 53 82 68 a22 22 0 1 1 -44 0 C38 53 60 28 60 28 Z" fill="url(#esIcoDrop)"/>
+  <path d="M51 64 a9 13 0 0 0 -4 19" fill="none" stroke="#67ABFF" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M92 30 l2.6 6.6 6.6 2.6 -6.6 2.6 -2.6 6.6 -2.6 -6.6 -6.6 -2.6 6.6 -2.6 Z" fill="#FFFFFF" opacity="0.9"/>
 </svg>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 92" width="384" height="92" role="img" aria-label="EauService by Events Café">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 104" width="430" height="104" role="img" aria-label="EauService by Events Café">
   <defs>
     <linearGradient id="esGradL" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1E6FD9"/>
@@ -6,21 +6,24 @@
     </linearGradient>
     <linearGradient id="esDropL" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#E3EDFB"/>
+      <stop offset="1" stop-color="#DCEAFD"/>
     </linearGradient>
   </defs>
 
-  <!-- Badge -->
-  <rect x="10" y="14" width="64" height="64" rx="18" fill="url(#esGradL)"/>
-  <!-- Goutte d'eau -->
-  <path d="M42 26 C42 26 57 43 57 53 a15 15 0 1 1 -30 0 C27 43 42 26 42 26 Z" fill="url(#esDropL)"/>
-  <!-- Reflet -->
-  <path d="M37 50 a6 9 0 0 0 -3 13" fill="none" stroke="#60A5FA" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  <!-- Emblème : anneau fin + disque dégradé -->
+  <circle cx="52" cy="52" r="41" fill="none" stroke="#1E6FD9" stroke-width="1.4" opacity="0.25"/>
+  <circle cx="52" cy="52" r="35" fill="url(#esGradL)"/>
+  <!-- Goutte d'eau épurée -->
+  <path d="M52 30 C52 30 67 47 67 57 a15 15 0 1 1 -30 0 C37 47 52 30 52 30 Z" fill="url(#esDropL)"/>
+  <!-- Reflet doux -->
+  <path d="M46 54 a7 10 0 0 0 -3 14" fill="none" stroke="#60A5FA" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <!-- Étincelle événementielle -->
+  <path d="M77 30 l2.2 5.6 5.6 2.2 -5.6 2.2 -2.2 5.6 -2.2 -5.6 -5.6 -2.2 5.6 -2.2 Z" fill="#1E6FD9" opacity="0.9"/>
 
-  <!-- Texte principal -->
-  <text x="92" y="53" font-family="Outfit, Poppins, 'Segoe UI', Arial, sans-serif" font-size="39" font-weight="800" letter-spacing="-1">
-    <tspan fill="#1E6FD9">Eau</tspan><tspan fill="#0A1628">Service</tspan>
+  <!-- Mot-symbole -->
+  <text x="108" y="58" font-family="Outfit, Poppins, 'Segoe UI', Arial, sans-serif" font-size="40" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#1E6FD9">Eau</tspan><tspan fill="#0A1628" font-weight="800">Service</tspan>
   </text>
-  <!-- Sous-titre -->
-  <text x="94" y="72" font-family="Outfit, Poppins, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="4" fill="#5B6B82">BY EVENTS CAFÉ</text>
+  <!-- Sous-titre événementiel -->
+  <text x="110" y="80" font-family="Outfit, Poppins, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="3.4" fill="#5B6B82">LOCATION ÉVÉNEMENTIELLE · CÔTE D'AZUR</text>
 </svg>
