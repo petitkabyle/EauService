@@ -1,0 +1,282 @@
+/* ============================================================= */
+/*  EauService by Events Café — DESIGN BOUTIQUE WOOCOMMERCE       */
+/*  À coller dans : Apparence → Personnaliser → CSS additionnel   */
+/*  Habille la Boutique, le Panier, la Commande et les produits   */
+/*  pour qu'ils correspondent au design bleu nuit de l'accueil.   */
+/* ============================================================= */
+
+/* Palette identique à la page d'accueil */
+:root{
+  --night:#060D1A; --night2:#0A1424; --night3:#0F1D34; --panel:#142844;
+  --blue:#1E6FD9; --blue-l:#3B9EFF; --azure:#60A5FA;
+  --txt-l:#EAF1FB; --txt-lg:#9DB4D4; --border:rgba(255,255,255,.10);
+  --green:#22C55E; --radius:14px;
+}
+
+/* ---------- FOND & TYPO (uniquement pages WooCommerce) ---------- */
+body.woocommerce,
+body.woocommerce-page,
+body.woocommerce-cart,
+body.woocommerce-checkout,
+body.woocommerce-account,
+body.post-type-archive-product,
+body.single-product,
+body.tax-product_cat{
+  background:#060D1A !important;
+  color:var(--txt-l) !important;
+  font-family:'Outfit',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif !important;
+}
+
+/* Conteneurs de contenu en pleine largeur, fond sombre */
+body.woocommerce .site-content,
+body.woocommerce-page .site-content,
+body.woocommerce #content,
+body.woocommerce-page #content,
+body.woocommerce .ast-container,
+body.woocommerce-page .ast-container,
+body.woocommerce #primary,
+body.woocommerce-page #primary,
+body.woocommerce .entry-content,
+body.woocommerce-page .entry-content{
+  background:transparent !important;
+  box-shadow:none !important;
+  color:var(--txt-l) !important;
+}
+
+/* Titres */
+body.woocommerce h1,
+body.woocommerce h2,
+body.woocommerce h3,
+body.woocommerce-page h1,
+body.woocommerce-page h2,
+body.woocommerce-page h3,
+.woocommerce-products-header__title,
+.woocommerce .product_title{
+  color:#fff !important;
+  font-weight:800 !important;
+  letter-spacing:-.4px;
+}
+
+/* Texte courant + liens */
+body.woocommerce p,
+body.woocommerce li,
+body.woocommerce td,
+body.woocommerce-page p,
+body.woocommerce-page li{ color:var(--txt-lg) !important; }
+body.woocommerce a{ color:var(--azure); text-decoration:none !important; }
+body.woocommerce a:hover{ color:var(--blue-l); }
+
+/* ---------- GRILLE PRODUITS (page Boutique) ---------- */
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product{
+  background:var(--night3) !important;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px !important;
+  text-align:center;
+  transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.woocommerce ul.products li.product:hover{
+  transform:translateY(-6px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  border-color:var(--azure);
+}
+.woocommerce ul.products li.product a img{
+  border-radius:12px;
+  background:linear-gradient(180deg,#0F1D34,#0A1424);
+  margin-bottom:14px;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title{
+  color:#fff !important;
+  font-size:17px !important;
+  font-weight:800 !important;
+  padding-bottom:6px !important;
+}
+.woocommerce ul.products li.product .price{
+  color:var(--azure) !important;
+  font-weight:900 !important;
+  font-size:18px !important;
+}
+.woocommerce ul.products li.product .price del{ color:var(--txt-lg) !important; opacity:.6; font-weight:600; }
+.woocommerce ul.products li.product .price ins{ color:#fff !important; }
+
+/* Badge "Promo" */
+.woocommerce span.onsale{
+  background:var(--green) !important;
+  color:#fff !important;
+  border-radius:20px !important;
+  font-weight:800;
+  min-height:auto;
+  min-width:auto;
+  padding:5px 12px;
+  line-height:1;
+}
+
+/* ---------- BOUTONS ---------- */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+.woocommerce .single_add_to_cart_button,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button,
+.woocommerce #place_order{
+  background:var(--blue) !important;
+  color:#fff !important;
+  border:none !important;
+  border-radius:10px !important;
+  font-family:inherit !important;
+  font-weight:800 !important;
+  padding:13px 26px !important;
+  font-size:14px !important;
+  text-transform:none !important;
+  transition:all .2s ease !important;
+  cursor:pointer;
+}
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce .single_add_to_cart_button:hover,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover,
+.woocommerce #place_order:hover{
+  background:var(--blue-l) !important;
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(30,111,217,.35);
+}
+/* Bouton secondaire (ex: "Mettre à jour le panier") */
+.woocommerce button[name="update_cart"],
+.woocommerce .button.wc-backward{
+  background:rgba(255,255,255,.08) !important;
+  border:1px solid var(--border) !important;
+}
+
+/* ---------- FICHE PRODUIT ---------- */
+.woocommerce div.product .woocommerce-product-gallery{ background:transparent; }
+.woocommerce div.product p.price,
+.woocommerce div.product span.price{
+  color:var(--azure) !important;
+  font-weight:900 !important;
+  font-size:26px !important;
+}
+.woocommerce div.product .woocommerce-product-details__short-description,
+.woocommerce div.product .woocommerce-tabs .panel{ color:var(--txt-lg) !important; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  border-radius:10px 10px 0 0;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active{ background:var(--panel) !important; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li a{ color:#fff !important; }
+.woocommerce div.product .woocommerce-tabs ul.tabs::before{ border-color:var(--border) !important; }
+
+/* Sélecteur de quantité */
+.woocommerce .quantity input.qty{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  color:#fff !important;
+  border-radius:8px !important;
+  padding:10px !important;
+}
+
+/* ---------- PANIER ---------- */
+.woocommerce table.shop_table{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  border-radius:var(--radius) !important;
+  overflow:hidden;
+}
+.woocommerce table.shop_table th{
+  background:var(--night2) !important;
+  color:#fff !important;
+  font-weight:700;
+}
+.woocommerce table.shop_table td{
+  background:transparent !important;
+  border-top:1px solid var(--border) !important;
+  color:var(--txt-l) !important;
+}
+.woocommerce-cart table.cart img{ border-radius:8px; }
+.woocommerce-cart .cart-collaterals .cart_totals{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  border-radius:var(--radius);
+  padding:8px 20px 20px;
+}
+.woocommerce-cart .cart_totals h2{ color:#fff !important; }
+.woocommerce .cart-collaterals .cart_totals tr td,
+.woocommerce .cart-collaterals .cart_totals tr th{ border-top-color:var(--border) !important; }
+
+/* Champ code promo / inputs */
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce .input-text,
+.woocommerce-cart .coupon input.input-text{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  color:#fff !important;
+  border-radius:9px !important;
+  padding:12px 14px !important;
+}
+.woocommerce form .form-row input::placeholder{ color:var(--txt-lg) !important; }
+
+/* ---------- COMMANDE (CHECKOUT) ---------- */
+.woocommerce-checkout #customer_details,
+.woocommerce-checkout #order_review,
+.woocommerce-checkout #order_review_heading{
+  color:var(--txt-l) !important;
+}
+.woocommerce-checkout #order_review,
+.woocommerce form.checkout_coupon,
+.woocommerce-checkout .woocommerce-checkout-payment{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  border-radius:var(--radius) !important;
+}
+.woocommerce-checkout .woocommerce-checkout-payment{ padding:6px 18px 18px; }
+.woocommerce-checkout label{ color:var(--txt-l) !important; font-weight:600; }
+.woocommerce-checkout .select2-container .select2-selection,
+.woocommerce-checkout select{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  color:#fff !important;
+  border-radius:9px !important;
+}
+
+/* ---------- NOTIFICATIONS / MESSAGES ---------- */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error{
+  background:var(--night3) !important;
+  border-top:3px solid var(--blue) !important;
+  color:var(--txt-l) !important;
+  border-radius:10px;
+}
+.woocommerce-message::before{ color:var(--green) !important; }
+.woocommerce-info::before{ color:var(--azure) !important; }
+
+/* ---------- PAGINATION / BREADCRUMB ---------- */
+.woocommerce nav.woocommerce-pagination ul{ border:none !important; }
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span{
+  background:var(--night3) !important;
+  color:#fff !important;
+  border:1px solid var(--border) !important;
+  border-radius:8px;
+  margin:0 4px;
+}
+.woocommerce nav.woocommerce-pagination ul li span.current{ background:var(--blue) !important; }
+.woocommerce .woocommerce-breadcrumb{ color:var(--txt-lg) !important; }
+
+/* Tri du catalogue */
+.woocommerce .woocommerce-ordering select,
+.woocommerce-page .woocommerce-ordering select{
+  background:var(--night3) !important;
+  border:1px solid var(--border) !important;
+  color:#fff !important;
+  border-radius:9px !important;
+  padding:10px 14px !important;
+}

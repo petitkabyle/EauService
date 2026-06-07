@@ -272,13 +272,16 @@ footer{background:#04080F;padding:60px 40px 28px}
   .hero h1{font-size:28px}
 }
 
-/* === NO TEXT HIGHLIGHT / NO TAP HIGHLIGHT === */
-*{-webkit-tap-highlight-color:transparent}
-body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
-input,textarea,select{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
-button,a,.nav a,.partner,.kpi-n,.kpi-l{-webkit-user-select:none;user-select:none}
+/* === ANTI-SURLIGNAGE / ANTI-SOULIGNAGE / ANTI-CADRE === */
+*{-webkit-tap-highlight-color:transparent !important;-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important}
+input,textarea,select{-webkit-user-select:text !important;-moz-user-select:text !important;-ms-user-select:text !important;user-select:text !important}
+a{text-decoration:none !important}
+::selection{background:transparent}
+::-moz-selection{background:transparent}
 button:focus,a:focus{outline:none}
 button:focus-visible,a:focus-visible{outline:2px solid var(--azure);outline-offset:2px}
+/* aucun cadre / aucune marge autour du site */
+html,body{margin:0 !important;padding:0 !important;border:0 !important;max-width:100% !important;background:#060D1A !important}
 
 /* === SCROLL PROGRESS BAR === */
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--azure));z-index:9000;transition:width .12s ease}
@@ -482,7 +485,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--azure);outline-offs
     <div>
       <div class="hero-eyebrow" data-fr="Location de matériel événementiel · Monaco · Nice · Cannes · Marseille" data-en="Event equipment rental · Monaco · Nice · Cannes · Marseille">Location de matériel événementiel · Monaco · Nice · Cannes · Marseille</div>
       <h1 data-fr="Location de café, eau &amp; réfrigération pour vos <span>événements</span>" data-en="Coffee, water &amp; refrigeration rental for your <span>events</span>">Location de café, eau &amp; réfrigération pour vos <span>événements</span></h1>
-      <p class="hero-sub" data-fr="Machines à café, fontaines à eau et réfrigérateurs en location pour vos salons, séminaires, mariages et événements professionnels. Des packs clés en main livrés et installés sous 24h à Monaco, Nice, Cannes, Antibes et Marseille." data-en="Coffee machines, water fountains and refrigerators for rent for your trade shows, seminars, weddings and corporate events. Turnkey packs delivered and installed within 24h in Monaco, Nice, Cannes, Antibes and Marseille.">Machines à café, fontaines à eau et réfrigérateurs en location pour vos salons, séminaires, mariages et événements professionnels. Des packs clés en main livrés et installés sous 24h à Monaco, Nice, Cannes, Antibes et Marseille.</p>
+      <p class="hero-sub" data-fr="Café, eau &amp; réfrigération pour vos événements. Livrés et installés sous 24h sur la Côte d'Azur." data-en="Coffee, water &amp; refrigeration for your events. Delivered and installed within 24h on the French Riviera.">Café, eau &amp; réfrigération pour vos événements. Livrés et installés sous 24h sur la Côte d'Azur.</p>
       <div class="hero-btns">
         <a href="#packs" class="bp" data-fr="Commander maintenant" data-en="Order now">Commander maintenant</a>
         <a href="#contact" class="bo" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
@@ -590,10 +593,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--azure);outline-offs
 <div class="partners-wrap"><section class="sec sec-light">
   <div class="center-head sr">
     <div class="eyebrow center" data-fr="Ils nous font confiance" data-en="They trust us">Ils nous font confiance</div>
-    <h2 class="sec-h" data-fr="Nos partenaires" data-en="Our partners">Nos partenaires</h2>
+    <h2 class="sec-h" data-fr="Nos événements &amp; salons partenaires" data-en="Our partner events &amp; trade shows">Nos événements &amp; salons partenaires</h2>
+    <p class="sec-sub" data-fr="Des plus grands rendez-vous de Monaco, Cannes, Nice et de la Côte d'Azur nous font confiance pour leur café, leur eau et leur réfrigération." data-en="The biggest events in Monaco, Cannes, Nice and across the French Riviera trust us for their coffee, water and refrigeration.">Des plus grands rendez-vous de Monaco, Cannes, Nice et de la Côte d'Azur nous font confiance pour leur café, leur eau et leur réfrigération.</p>
   </div>
   <div class="partners sr">
-    <div class="partner">Palais Princier de Monaco</div><div class="partner">Festival de Cannes</div><div class="partner">Cannes Lions</div><div class="partner">Ville d'Antibes</div><div class="partner">MIPCOM</div><div class="partner">Luxepack Monaco</div>
+    <div class="partner">Palais Princier de Monaco</div><div class="partner">Grand Prix de Monaco</div><div class="partner">Monaco Yacht Show</div><div class="partner">Festival de Cannes</div><div class="partner">Cannes Lions</div><div class="partner">MIPIM Cannes</div><div class="partner">Cannes Yachting Festival</div><div class="partner">MIPCOM</div><div class="partner">Luxepack Monaco</div><div class="partner">Top Marques Monaco</div><div class="partner">Sportel Monaco</div><div class="partner">Rolex Monte-Carlo Masters</div><div class="partner">Carnaval de Nice</div><div class="partner">Nice Jazz Festival</div><div class="partner">Jazz à Juan — Antibes</div><div class="partner">Fête du Citron — Menton</div><div class="partner">Ville d'Antibes</div><div class="partner">MIDEM Cannes</div>
   </div>
 </section></div>
 
