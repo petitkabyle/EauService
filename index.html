@@ -301,6 +301,7 @@ footer{background:#04080F;padding:60px 40px 28px}
     <button onclick="setLang('en');closeMenu()">English</button>
   </div>
 </div>
+<div class="menu-backdrop" id="menuBackdrop" onclick="closeMenu()"></div>
 
 
 <span id="top"></span>
@@ -457,15 +458,21 @@ document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
 
 
 function toggleMenu(){
-  document.getElementById('burger').classList.toggle('open');
-  document.getElementById('mobileMenu').classList.toggle('open');
-  document.getElementById('menuBackdrop').classList.toggle('open');
-  document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+  const burger=document.getElementById('burger');
+  const menu=document.getElementById('mobileMenu');
+  const back=document.getElementById('menuBackdrop');
+  if(burger) burger.classList.toggle('open');
+  if(menu) menu.classList.toggle('open');
+  if(back) back.classList.toggle('open');
+  document.body.style.overflow=(menu&&menu.classList.contains('open'))?'hidden':'';
 }
 function closeMenu(){
-  document.getElementById('burger').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('menuBackdrop').classList.remove('open');
+  const burger=document.getElementById('burger');
+  const menu=document.getElementById('mobileMenu');
+  const back=document.getElementById('menuBackdrop');
+  if(burger) burger.classList.remove('open');
+  if(menu) menu.classList.remove('open');
+  if(back) back.classList.remove('open');
   document.body.style.overflow='';
 }
 
