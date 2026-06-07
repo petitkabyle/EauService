@@ -306,8 +306,8 @@ body.ast-separate-container,body{background:#060D1A !important;}
         <button onclick="setLang('en')" id="len">EN</button>
       </div>
       <a href="https://formulaire.events-cafe.com/formulaire.html" class="btn-form" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
-      <a href="#packs" class="cart" data-fr="Panier" data-en="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:middle"><path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9z"/><path d="M12 12l8 -4.5"/><path d="M12 12v9"/><path d="M12 12l-8 -4.5"/></svg> <span data-fr="Panier" data-en="Cart">Panier</span> <span class="badge">0</span></a>
-      <a href="#packs" class="btn-shop" data-fr="Boutique" data-en="Shop">Boutique</a>
+      <a href="/panier/" class="cart" data-fr="Panier" data-en="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:middle"><path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9z"/><path d="M12 12l8 -4.5"/><path d="M12 12v9"/><path d="M12 12l-8 -4.5"/></svg> <span data-fr="Panier" data-en="Cart">Panier</span> <span class="badge">0</span></a>
+      <a href="/boutique/" class="btn-shop" data-fr="Boutique" data-en="Shop">Boutique</a>
     </div>
   </div>
 </header>
@@ -316,6 +316,8 @@ body.ast-separate-container,body{background:#060D1A !important;}
   <a href="#packs" onclick="closeMenu()" data-fr="Top Packs" data-en="Top Packs">Top Packs</a>
   <a href="#produits" onclick="closeMenu()" data-fr="Produits" data-en="Products">Produits</a>
   <a href="#contact" onclick="closeMenu()" data-fr="Contact" data-en="Contact">Contact</a>
+  <a href="/boutique/" data-fr="Boutique" data-en="Shop">Boutique</a>
+  <a href="/panier/" data-fr="Panier" data-en="Cart">Panier</a>
   <a href="https://formulaire.events-cafe.com/formulaire.html" class="mm-cta" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
   <a href="https://api.whatsapp.com/send?phone=33761465720" target="_blank" rel="noopener" class="mm-wa" data-fr="WhatsApp" data-en="WhatsApp">WhatsApp</a>
   <div class="mm-lang">
@@ -334,7 +336,7 @@ body.ast-separate-container,body{background:#060D1A !important;}
       <h1 data-fr="Valorisez vos stands avec <span>qualité</span> et excellence" data-en="Elevate your stands with <span>quality</span> and excellence">Valorisez vos stands avec <span>qualité</span> et excellence</h1>
       <p class="hero-sub" data-fr="Café, eau et réfrigération pour vos événements. Packs clés en main, livrés sous 24h." data-en="Coffee, water & refrigeration for your events. Turnkey packs, delivered within 24h.">Café, eau et réfrigération pour vos événements. Packs clés en main, livrés sous 24h.</p>
       <div class="hero-btns">
-        <a href="#packs" class="bp" data-fr="Commander maintenant" data-en="Order now">Commander maintenant</a>
+        <a href="/boutique/" class="bp" data-fr="Commander maintenant" data-en="Order now">Commander maintenant</a>
         <a href="#contact" class="bo" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
       </div>
       <div class="hero-mini">
@@ -375,7 +377,7 @@ body.ast-separate-container,body{background:#060D1A !important;}
         <div class="pack-name" data-fr="Pack Eau" data-en="Water Pack">Pack Eau</div>
         <div class="pack-desc" data-fr="1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets." data-en="1 water fountain + 1 water bottle + 100 cups.">1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets.</div>
         <div class="pack-price"><span class="amt">125€</span><span class="per" data-fr="HT" data-en="excl. tax">HT</span></div>
-        <a href="#contact" class="pack-btn ghost" data-fr="Commander" data-en="Order">Commander →</a>
+        <a href="/boutique/" class="pack-btn ghost" data-fr="Commander" data-en="Order">Commander →</a>
       </div>
     </div>
     <div class="pack featured sr">
@@ -386,7 +388,7 @@ body.ast-separate-container,body{background:#060D1A !important;}
         <div class="pack-name" data-fr="Pack Events Base" data-en="Events Base Pack">Pack Events Base</div>
         <div class="pack-desc" data-fr="1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets + 1 machine à café Nespresso (Zenius) + 1 kit café 200." data-en="1 water fountain + 1 water bottle + 100 cups + 1 Nespresso (Zenius) coffee machine + 1 coffee kit 200.">1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets + 1 machine à café Nespresso (Zenius) + 1 kit café 200.</div>
         <div class="pack-price"><span class="amt">280€</span><span class="per" data-fr="HT" data-en="excl. tax">HT</span></div>
-        <a href="#contact" class="pack-btn" data-fr="Commander" data-en="Order">Commander →</a>
+        <a href="/boutique/" class="pack-btn" data-fr="Commander" data-en="Order">Commander →</a>
       </div>
     </div>
     <div class="pack sr">
@@ -396,7 +398,7 @@ body.ast-separate-container,body{background:#060D1A !important;}
         <div class="pack-name" data-fr="Pack Events Complet" data-en="Events Complete Pack">Pack Events Complet</div>
         <div class="pack-desc" data-fr="1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets + 1 machine à café Nespresso (Zenius) + 1 kit café 200 + 1 frigo table top." data-en="1 water fountain + 1 water bottle + 100 cups + 1 Nespresso (Zenius) coffee machine + 1 coffee kit 200 + 1 table-top fridge.">1 fontaine à eau + 1 bonbonne d'eau + 100 gobelets + 1 machine à café Nespresso (Zenius) + 1 kit café 200 + 1 frigo table top.</div>
         <div class="pack-price"><span class="amt">360€</span><span class="per" data-fr="HT" data-en="excl. tax">HT</span></div>
-        <a href="#contact" class="pack-btn ghost" data-fr="Commander" data-en="Order">Commander →</a>
+        <a href="/boutique/" class="pack-btn ghost" data-fr="Commander" data-en="Order">Commander →</a>
       </div>
     </div>
   </div>
@@ -464,7 +466,7 @@ body.ast-separate-container,body{background:#060D1A !important;}
       <div class="foot-soc"><a href="https://www.instagram.com/eventscafe_paca" class="fsb" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:middle"><path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16.5 7.5l0 .01"/></svg></a><a href="#" class="fsb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:middle"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M8 11l0 5"/><path d="M8 8l0 .01"/><path d="M12 16l0 -5"/><path d="M16 16v-3a2 2 0 0 0 -4 0"/></svg></a></div>
     </div>
     <div><div class="foot-ct" data-fr="Produits" data-en="Products">Produits</div><ul class="foot-links"><li><a href="#packs" data-fr="Packs" data-en="Packs">Packs</a></li><li><a href="#produits" data-fr="Machines à café" data-en="Coffee machines">Machines à café</a></li><li><a href="#produits" data-fr="Fontaines à eau" data-en="Water fountains">Fontaines à eau</a></li><li><a href="#produits" data-fr="Réfrigération" data-en="Refrigeration">Réfrigération</a></li></ul></div>
-    <div><div class="foot-ct" data-fr="Société" data-en="Company">Société</div><ul class="foot-links"><li><a href="#forces" data-fr="Nos forces" data-en="Our strengths">Nos forces</a></li><li><a href="#contact">Contact</a></li><li><a href="#packs" data-fr="Boutique" data-en="Shop">Boutique</a></li></ul></div>
+    <div><div class="foot-ct" data-fr="Société" data-en="Company">Société</div><ul class="foot-links"><li><a href="#forces" data-fr="Nos forces" data-en="Our strengths">Nos forces</a></li><li><a href="#contact">Contact</a></li><li><a href="/boutique/" data-fr="Boutique" data-en="Shop">Boutique</a></li></ul></div>
     <div><div class="foot-ct" data-fr="Contact" data-en="Contact">Contact</div><ul class="foot-links"><li><a href="tel:+33761465720">07 61 46 57 20</a></li><li><a href="mailto:contact@events-cafe.com">contact@events-cafe.com</a></li><li><span data-fr="Monaco · Nice · Cannes · Marseille" data-en="Monaco · Nice · Cannes · Marseille">Monaco · Nice · Cannes · Marseille</span></li></ul></div>
   </div>
   <div class="foot-bottom" data-fr="© 2025 EauService by Events Café — Tous droits réservés" data-en="© 2025 EauService by Events Café — All rights reserved">© 2025 EauService by Events Café — Tous droits réservés</div>
