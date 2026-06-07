@@ -3,6 +3,7 @@
 <!--  Coller dans un bloc "HTML personnalise". Tout est inclus.     -->
 <!--  CSS scope sous #esroot => aucun conflit avec le theme.        -->
 <!-- ============================================================= -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
 
@@ -17,6 +18,8 @@ html,body{background:#060D1A !important;overflow-x:hidden !important;margin:0 !i
 #esroot,.es-fullbleed{width:100% !important;background:#060D1A;}
 /* Liens : enlever UNIQUEMENT le soulignement herite du theme (ne PAS toucher au fond des boutons) */
 #esroot a{text-decoration:none;}
+/* Securite police : si la police Outfit ne se charge pas, utiliser une police NON condensee (evite lettres/mots colles) */
+#esroot,#esroot *{font-family:'Outfit',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif !important;word-spacing:normal;}
 
 
 #esroot *{margin:0;padding:0;box-sizing:border-box}
@@ -70,7 +73,7 @@ html,body{background:#060D1A !important;overflow-x:hidden !important;margin:0 !i
 #esroot .hero::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.12),transparent 65%);pointer-events:none}
 #esroot .hero-inner{max-width:1240px;margin:0 auto;padding:80px 40px;position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
 #esroot .hero-eyebrow{font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--azure);margin-bottom:20px}
-#esroot .hero h1{font-size:clamp(40px,5vw,72px);font-weight:900;letter-spacing:-2.5px;line-height:1.02;color:#fff;margin-bottom:22px}
+#esroot .hero h1{font-size:clamp(30px,4.2vw,52px);font-weight:800;letter-spacing:-0.4px;line-height:1.12;color:#fff;margin-bottom:22px;word-spacing:normal}
 #esroot .hero h1 span{color:var(--azure)}
 #esroot .hero-sub{font-size:18px;color:var(--txt-lg);line-height:1.65;max-width:520px;margin-bottom:36px}
 #esroot .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
@@ -94,8 +97,8 @@ html,body{background:#060D1A !important;overflow-x:hidden !important;margin:0 !i
 #esroot .eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:12px}
 #esroot .eyebrow::before{content:'';width:22px;height:2px;background:var(--blue)}
 #esroot .eyebrow.center{justify-content:center}
-#esroot .sec-h{font-size:clamp(28px,3.2vw,46px);font-weight:900;letter-spacing:-1.5px;margin-bottom:14px;line-height:1.08}
-#esroot .sec-sub{font-size:16px;color:var(--txt-g);max-width:560px;line-height:1.65;margin-bottom:52px}
+#esroot .sec-h{font-size:clamp(28px,3.2vw,46px);font-weight:900;letter-spacing:-1.5px;margin-bottom:14px;line-height:1.08;color:#fff}#esroot .sec-light .sec-h{color:var(--txt-d)}
+#esroot .sec-sub{font-size:16px;color:var(--txt-lg);max-width:560px;line-height:1.65;margin-bottom:52px}#esroot .sec-light .sec-sub{color:var(--txt-g)}
 #esroot .center-head{text-align:center}#esroot .center-head .eyebrow{justify-content:center}#esroot .center-head .sec-sub{margin:0 auto 52px}
 
 /* FORCES */
