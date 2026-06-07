@@ -1,17 +1,27 @@
 <!-- ============================================================= -->
 <!--  EauService by Events Cafe - PAGE D ACCUEIL (pret a coller)    -->
-<!--  Coller dans un bloc "HTML personnalise" (gabarit pleine       -->
-<!--  largeur / canvas), puis definir comme page d accueil.         -->
+<!--  Coller dans un bloc "HTML personnalise". Police incluse.      -->
+<!--  Conseil : page sans barre laterale + pleine largeur.          -->
 <!-- ============================================================= -->
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
 
-/* ===== Police (le <link> du <head> n_existe pas dans un bloc) ===== */
-/* ===== Pleine largeur : fond sombre bord a bord, supprime le blanc des cotes Astra ===== */
-html,body{background:#060D1A !important;overflow-x:hidden;}
-.es-fullbleed{position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#060D1A;overflow-x:hidden;}
-.entry-content,.ast-container,.ast-container-fluid,.site-content,#primary,#content,.ast-article-single,.content-area,article.page,.ast-page-builder-template .entry-content{max-width:100% !important;width:100% !important;padding:0 !important;margin:0 !important;background:transparent !important;box-shadow:none !important;border:none !important;}
-.ast-separate-container .ast-article-single{padding:0 !important;}
+/* ============================================================ */
+/*  Overrides WordPress / Astra : PLEINE LARGEUR (tout l ecran)  */
+/* ============================================================ */
+/* Fond sombre + pas de scroll horizontal */
+html,body{background:#060D1A !important;overflow-x:hidden !important;margin:0 !important;}
+/* Masquer la barre laterale (cause du contenu colle a gauche) */
+#secondary,.widget-area,.ast-sidebar-wrapper,.ast-sidebar,aside.sidebar,.sidebar-area,.secondary{display:none !important;}
+/* Forcer tous les conteneurs en pleine largeur */
+.site,#page,#content,.site-content,.ast-container,.ast-container-fluid,#primary,.content-area,.ast-article-single,.ast-article-post,.entry-content,article.page,.ast-row,.wp-block-group,.wp-block-post-content{
+  max-width:100% !important;width:100% !important;flex:1 1 100% !important;
+  margin:0 !important;padding:0 !important;float:none !important;
+  background:transparent !important;box-shadow:none !important;border:none !important;
+}
+.ast-container{display:block !important;}
+/* Le contenu de la page occupe 100% du conteneur (plus de demi-ecran) */
+.es-fullbleed{width:100% !important;background:#060D1A;}
 
 
 *{margin:0;padding:0;box-sizing:border-box}
