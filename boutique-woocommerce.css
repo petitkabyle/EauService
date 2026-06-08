@@ -98,16 +98,31 @@ body.woocommerce-checkout .entry-header .entry-title{
 .es-trust b{ color:#0A1628; }
 
 /* =========================  BARRE TRI / RÉSULTATS  =================== */
-/* Corrige le "Tri par défaut coupé en deux" : largeur auto + pas de retour ligne */
+/* Corrige le "Tri par défaut coupé en deux" : largeur garantie, 1 seule
+   ligne, place pour la flèche native, hauteur propre (robuste Astra/Woo). */
 .woocommerce .woocommerce-result-count{ color:#5B6B82 !important; font-weight:600; margin:6px 0 18px; }
-.woocommerce .woocommerce-ordering{ margin:0 0 18px !important; }
+.woocommerce .woocommerce-ordering{ margin:0 0 18px !important; max-width:100%; }
+.woocommerce .woocommerce-ordering,
+.woocommerce-page .woocommerce-ordering{ display:inline-block !important; float:none !important; }
 .woocommerce .woocommerce-ordering select,
-.woocommerce-page select.orderby{
-  width:auto !important; min-width:230px !important; max-width:100% !important;
-  white-space:nowrap !important; line-height:1.4 !important;
-  background:#fff !important; border:1px solid #D6E4F7 !important; color:#0A1628 !important;
-  border-radius:10px !important; padding:12px 18px !important; font-weight:600 !important;
-  font-family:inherit !important; box-shadow:0 2px 8px rgba(10,22,40,.05) !important;
+.woocommerce-page select.orderby,
+.woocommerce-page .woocommerce-ordering select{
+  display:inline-block !important; box-sizing:border-box !important;
+  width:auto !important; min-width:260px !important; max-width:100% !important;
+  height:auto !important; line-height:1.4 !important; white-space:nowrap !important;
+  text-overflow:ellipsis !important; overflow:hidden !important; vertical-align:middle !important;
+  background-color:#fff !important; border:1px solid #D6E4F7 !important; color:#0A1628 !important;
+  border-radius:10px !important; padding:12px 42px 12px 16px !important;
+  font-size:14px !important; font-weight:600 !important; font-family:inherit !important;
+  box-shadow:0 2px 8px rgba(10,22,40,.05) !important;
+  -webkit-appearance:none !important; -moz-appearance:none !important; appearance:none !important;
+  /* flèche dessinée pour ne jamais chevaucher le texte */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231E6FD9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important; background-position:right 16px center !important;
+}
+.woocommerce .woocommerce-ordering select:focus,
+.woocommerce-page select.orderby:focus{
+  border-color:#1E6FD9 !important; box-shadow:0 0 0 3px rgba(30,111,217,.12) !important; outline:none !important;
 }
 .woocommerce .woocommerce-breadcrumb{ color:#5B6B82 !important; margin-bottom:18px; font-size:13px; }
 
