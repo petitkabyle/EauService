@@ -173,13 +173,26 @@ body.woocommerce-checkout .entry-header .entry-title{
 .woocommerce ul.products li.product .price del{ color:#9DB4D4 !important; font-weight:600; font-size:14px; }
 .woocommerce ul.products li.product .price ins{ color:#0A1628 !important; text-decoration:none; }
 .woocommerce ul.products li.product .button{
-  display:block !important; width:calc(100% - 32px); margin:12px 16px 0 !important;
+  position:relative !important; overflow:hidden !important;
+  display:flex !important; align-items:center; justify-content:center; gap:8px;
+  width:calc(100% - 32px); margin:12px 16px 0 !important;
   background:linear-gradient(135deg,#1E6FD9,#2f86f3) !important; color:#fff !important;
   border:none !important; border-radius:11px !important; padding:12px 14px !important;
   font-weight:700 !important; font-size:14px !important; letter-spacing:.2px;
-  box-shadow:0 8px 20px rgba(30,111,217,.22) !important; transition:filter .2s, transform .2s !important;
+  box-shadow:0 8px 20px rgba(30,111,217,.22) !important; transition:filter .2s, transform .2s, box-shadow .2s !important;
 }
-.woocommerce ul.products li.product .button:hover{ filter:brightness(1.06); transform:translateY(-1px); }
+/* petite icône panier injectée devant "Ajouter au panier" */
+.woocommerce ul.products li.product .button.add_to_cart_button::before{
+  content:'🛒'; font-size:14px; line-height:1; filter:saturate(0) brightness(3);
+}
+.woocommerce ul.products li.product .button:hover{ filter:brightness(1.06); transform:translateY(-2px); box-shadow:0 14px 30px rgba(30,111,217,.32) !important; }
+/* "Vu(e)" / produit ajouté : état confirmé */
+.woocommerce ul.products li.product .button.added{ background:linear-gradient(135deg,#16A34A,#22C55E) !important; box-shadow:0 8px 20px rgba(34,197,94,.3) !important; }
+.woocommerce ul.products li.product .added_to_cart{
+  display:block !important; margin:8px 16px 0 !important; text-align:center;
+  font-size:12.5px !important; font-weight:700 !important; color:#16A34A !important;
+}
+.woocommerce ul.products li.product .added_to_cart::before{ content:'✓ '; }
 
 .woocommerce span.onsale{
   background:#22C55E !important; color:#fff !important; border-radius:20px !important;
@@ -314,4 +327,150 @@ body.woocommerce-checkout .entry-header .entry-title{
 @media(prefers-reduced-motion:reduce){
   .woocommerce ul.products li.product{ animation:none; }
   .woocommerce ul.products li.product:hover a img{ transform:none; }
+}
+
+
+/* =====================================================================
+   ★★★  AMÉLIORATIONS DESIGN v2 — bloc additif (ne casse rien)        ★★★
+   Effets premium : brillance, réassurance auto, panier/commande
+   plus engageants, finitions globales. 100% CSS, aucune dépendance.
+   ===================================================================== */
+
+/* ----------  1. CARTE PRODUIT : balayage lumineux au survol  -------- */
+.woocommerce ul.products li.product{ isolation:isolate; }
+.woocommerce ul.products li.product > a:first-of-type{ position:relative; overflow:hidden; display:block; }
+.woocommerce ul.products li.product > a:first-of-type::after{
+  content:''; position:absolute; top:0; left:-130%; width:60%; height:100%; z-index:2;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg); transition:left .7s ease; pointer-events:none;
+}
+.woocommerce ul.products li.product:hover > a:first-of-type::after{ left:140%; }
+
+/* halo doux derrière le prix pour le faire ressortir */
+.woocommerce ul.products li.product .price{ position:relative; }
+
+/* ----------  2. BOUTONS : reflet glossy au survol  ----------------- */
+.woocommerce a.button,.woocommerce button.button,.woocommerce input.button,
+.woocommerce a.button.alt,.woocommerce button.button.alt,.woocommerce .single_add_to_cart_button,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button,.woocommerce #place_order{
+  position:relative; overflow:hidden;
+}
+.woocommerce a.button.alt::after,.woocommerce .single_add_to_cart_button::after,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button::after,.woocommerce #place_order::after{
+  content:''; position:absolute; top:0; left:-150%; width:55%; height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-20deg); transition:left .6s ease; pointer-events:none;
+}
+.woocommerce a.button.alt:hover::after,.woocommerce .single_add_to_cart_button:hover::after,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover::after,.woocommerce #place_order:hover::after{ left:160%; }
+
+/* ----------  3. RÉASSURANCE AUTO sous le titre boutique  ----------- */
+/* injecte une ligne de confiance directement après la bannière, sans HTML */
+.woocommerce-products-header::after{
+  content:'🚚  Livraison sous 24h · 7j/7        🔒  Paiement 100% sécurisé        ⭐  +500 événements équipés        💬  Support réactif WhatsApp';
+  display:block; position:relative; z-index:1; margin-top:22px;
+  color:#DCE8FB; font-size:13.5px; font-weight:600; letter-spacing:.2px; line-height:1.9;
+}
+@media(max-width:640px){
+  .woocommerce-products-header::after{ font-size:12px; line-height:2.1; }
+}
+
+/* ----------  4. CARTES "catégorie" en vignette (subcategory)  ------ */
+.woocommerce ul.products li.product-category a img{
+  background:linear-gradient(180deg,#0A1424,#13345A) !important;
+}
+.woocommerce ul.products li.product-category h2.woocommerce-loop-category__title{
+  color:#0A1628 !important; font-weight:800 !important; padding:6px 12px 14px !important;
+}
+.woocommerce ul.products li.product-category h2 mark.count{
+  background:#EAF1FB !important; color:#1E6FD9 !important; border-radius:20px; padding:2px 9px; font-weight:800;
+}
+
+/* ----------  5. PANIER : en-tête + état vide soignés  -------------- */
+/* mini-bandeau confiance au-dessus du tableau panier */
+.woocommerce-cart .woocommerce-cart-form::before{
+  content:'✓ Articles réservés pour vous — finalisez votre commande en quelques clics';
+  display:block; background:linear-gradient(180deg,#F0FAF3,#E8F7ED);
+  border:1px solid #C9EED5; color:#15803D; font-weight:700; font-size:13.5px;
+  border-radius:12px; padding:13px 18px; margin:0 0 18px;
+}
+/* panier vide : carte centrée et accueillante */
+.woocommerce .cart-empty.woocommerce-info{
+  text-align:center !important; font-size:18px !important; font-weight:800 !important;
+  color:#0A1628 !important; padding:34px 24px 14px !important; border-top:3px solid #1E6FD9 !important;
+}
+.woocommerce .cart-empty.woocommerce-info::first-line{ color:#0A1628; }
+.woocommerce .return-to-shop{ text-align:center; margin-top:8px; }
+.woocommerce .return-to-shop .button{
+  display:inline-flex !important; align-items:center; gap:8px;
+  font-size:15px !important; padding:14px 30px !important;
+}
+.woocommerce .return-to-shop .button::before{ content:'🛍️'; }
+
+/* boutons quantité +/- plus lisibles, champ centré */
+.woocommerce .quantity input.qty{ text-align:center; min-width:64px; }
+
+/* coupon : présentation en encart */
+.woocommerce-cart .cart .actions .coupon{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.woocommerce-cart .cart .actions .coupon label{ width:100%; font-weight:800; color:#0A1628 !important; }
+.woocommerce-cart .cart_totals h2::before{ content:'🧾 '; }
+
+/* ----------  6. COMMANDE : étapes + sécurité paiement  ------------- */
+/* mini-fil d'étapes au-dessus du formulaire (auto, sans HTML) */
+.woocommerce-checkout form.checkout::before{
+  content:'1. Panier        ➜        2. Coordonnées & livraison        ➜        3. Paiement sécurisé';
+  display:block; text-align:center; background:linear-gradient(135deg,#0A1424,#13345A);
+  color:#DCE8FB; font-weight:700; font-size:13.5px; letter-spacing:.2px;
+  border-radius:14px; padding:15px 18px; margin:0 0 24px;
+  box-shadow:0 10px 28px rgba(10,22,40,.14);
+}
+@media(max-width:640px){ .woocommerce-checkout form.checkout::before{ font-size:11.5px; line-height:1.9; } }
+
+/* badge de sécurité juste sous le bouton "Commander" */
+.woocommerce-checkout #payment .place-order::after,
+.woocommerce-checkout .woocommerce-checkout-payment .place-order::after{
+  content:'🔒  Paiement 100% sécurisé · Vos informations sont chiffrées et protégées';
+  display:block; text-align:center; margin-top:14px;
+  color:#5B6B82; font-size:12.5px; font-weight:600;
+}
+/* moyens de paiement : libellés plus nets */
+.woocommerce-checkout #payment ul.payment_methods li label{ color:#0A1628 !important; font-weight:700 !important; }
+.woocommerce-checkout #payment div.payment_box{ background:#fff !important; border:1px solid #E6EEFA !important; border-radius:10px !important; color:#5B6B82 !important; }
+.woocommerce-checkout #payment div.payment_box::before{ border-bottom-color:#fff !important; }
+
+/* récap commande : lignes plus aérées */
+.woocommerce-checkout #order_review table.shop_table th,
+.woocommerce-checkout #order_review table.shop_table td{ padding:14px 12px !important; }
+.woocommerce-checkout #order_review .cart_item .product-name{ color:#0A1628 !important; font-weight:600; }
+
+/* ----------  7. FINITIONS GLOBALES  -------------------------------- */
+/* sélection de texte aux couleurs de la marque */
+body.woocommerce ::selection,body.woocommerce-page ::selection{ background:#1E6FD9; color:#fff; }
+
+/* barre de défilement discrète et raccord avec le bleu */
+body.woocommerce,body.woocommerce-page{ scrollbar-color:#1E6FD9 #E6EEFA; }
+body.woocommerce ::-webkit-scrollbar,body.woocommerce-page ::-webkit-scrollbar{ width:11px; height:11px; }
+body.woocommerce ::-webkit-scrollbar-track,body.woocommerce-page ::-webkit-scrollbar-track{ background:#E6EEFA; }
+body.woocommerce ::-webkit-scrollbar-thumb,body.woocommerce-page ::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#1E6FD9,#2f86f3); border-radius:10px; border:2px solid #E6EEFA;
+}
+
+/* badge promo "onsale" : petite pulsation pour attirer l'œil */
+@keyframes esPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.07);} }
+.woocommerce span.onsale{ animation:esPulse 2.4s ease-in-out infinite; }
+
+/* liens "voir le panier / commande" et badges secondaires plus doux */
+.woocommerce .woocommerce-message .button,.woocommerce .woocommerce-info .button{
+  background:#fff !important; color:#1E6FD9 !important; border:1.5px solid #BBD3F5 !important; box-shadow:none !important;
+}
+.woocommerce .woocommerce-message .button:hover,.woocommerce .woocommerce-info .button:hover{
+  background:#EAF1FB !important; transform:translateY(-1px);
+}
+
+/* respect du "reduced motion" pour les nouveaux effets */
+@media(prefers-reduced-motion:reduce){
+  .woocommerce ul.products li.product > a:first-of-type::after,
+  .woocommerce a.button.alt::after,.woocommerce .single_add_to_cart_button::after,
+  .woocommerce-cart .wc-proceed-to-checkout a.checkout-button::after,.woocommerce #place_order::after{ display:none !important; }
+  .woocommerce span.onsale{ animation:none !important; }
 }
