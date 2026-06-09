@@ -152,7 +152,7 @@ function eauservice_back_to_shop() {
  * =========================================================================== */
 add_filter( 'loop_shop_per_page', 'eauservice_products_per_page', 30 );
 function eauservice_products_per_page( $cols ) {
-	return 24; // <-- ajustez ce nombre si vous voulez plus/moins par page
+	return 12; // <-- ajustez ce nombre si vous voulez plus/moins par page (12 = 2 pages)
 }
 
 /* ===========================================================================
