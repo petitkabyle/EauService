@@ -142,3 +142,39 @@ function eauservice_back_to_shop() {
 	echo '<a href="' . esc_url( $shop_url ) . '" class="es-back-to-shop">&larr; '
 		. esc_html__( 'Retour à la boutique', 'woocommerce' ) . '</a>';
 }
+
+
+/* ===========================================================================
+ * 4) NOMBRE DE PRODUITS PAR PAGE
+ *    Pour n'avoir que 2 pages au lieu de 3. Augmentez la valeur si besoin :
+ *    elle doit etre >= (nombre total de produits / 2).
+ *    Ex : 40 produits -> mettre au moins 20 ; 48 produits -> au moins 24.
+ * =========================================================================== */
+add_filter( 'loop_shop_per_page', 'eauservice_products_per_page', 30 );
+function eauservice_products_per_page( $cols ) {
+	return 24; // <-- ajustez ce nombre si vous voulez plus/moins par page
+}
+
+/* ===========================================================================
+ * 5) IMAGES NON COUPÉES DANS LA BOUTIQUE
+ *    Par defaut WooCommerce ROGNE les vignettes en carre : les produits
+ *    hauts (fontaine a eau) ou larges (Nespresso Zenius) sont coupes.
+ *    On force l'utilisation de l'image COMPLETE (non rognee) dans la boucle
+ *    boutique. Combine au CSS (object-fit:contain), l'image s'affiche ENTIERE.
+ *    -> Aucune regeneration de miniatures necessaire.
+ * =========================================================================== */
+add_filter( 'single_product_archive_thumbnail_size', 'eauservice_loop_image_full' );
+add_filter( 'woocommerce_gallery_thumbnail_size', 'eauservice_loop_image_full' );
+function eauservice_loop_image_full( $size ) {
+	return 'woocommerce_single'; // taille non rognee (largeur fixe, hauteur libre)
+}
+
+// Au cas ou le theme imposerait un rognage : on force le format "non rogne".
+add_filter( 'woocommerce_get_image_size_thumbnail', 'eauservice_uncrop_thumbnail' );
+function eauservice_uncrop_thumbnail( $size ) {
+	return array(
+		'width'  => 600,
+		'height' => 600,
+		'crop'   => 0, // 0 = non rogne (garde les proportions, rien n'est coupe)
+	);
+}
