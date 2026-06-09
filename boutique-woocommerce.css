@@ -165,8 +165,20 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 .es-trust b{ color:#0A1628; }
 
 /* ====================  BARRE TRI / RÉSULTATS  ====================== */
-.woocommerce .woocommerce-result-count{ color:#5B6B82 !important; font-weight:600; margin:4px 0 18px; font-size:14px; }
-.woocommerce .woocommerce-ordering{ margin:0 0 18px !important; overflow:visible !important; float:none !important; display:block; }
+/* Barre alignée : nombre de résultats à GAUCHE, menu de tri à DROITE.   */
+/* (avant le select se retrouvait centré au milieu de la page)           */
+.woocommerce .woocommerce-result-count{
+  color:#5B6B82 !important; font-weight:600; font-size:14px;
+  float:left !important; margin:0 !important; line-height:50px !important;
+}
+.woocommerce .woocommerce-ordering{
+  float:right !important; margin:0 !important; overflow:visible !important; display:block !important; text-align:right !important; clear:none !important;
+}
+/* on remet une marge sous toute la barre + on nettoie les flottants */
+.woocommerce-products-header + .woocommerce-result-count,
+.woocommerce .woocommerce-result-count,
+.woocommerce .woocommerce-ordering{ margin-bottom:18px !important; }
+.woocommerce ul.products{ clear:both !important; }
 .woocommerce .woocommerce-ordering select,.woocommerce-page select.orderby{
   width:auto !important; min-width:260px !important; max-width:100% !important;
   height:auto !important; min-height:50px !important; line-height:1.2 !important; box-sizing:border-box !important;
@@ -248,28 +260,32 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 .woocommerce ul.products li.product .ast-woo-product-category,
 .woocommerce ul.products li.product .posted_in,
 .woocommerce ul.products li.product .ast-woo-shop-product-categories{
-  display:block; font-size:11px !important; font-weight:700 !important; letter-spacing:1px !important; text-transform:uppercase !important;
-  color:#7C93B5 !important; padding:0 18px; margin-bottom:2px;
+  display:inline-block; font-size:11px !important; font-weight:800 !important; letter-spacing:.8px !important; text-transform:uppercase !important;
+  color:#1E6FD9 !important; background:#EAF1FB !important; border-radius:30px; padding:4px 12px !important; margin:0 18px 8px !important;
 }
 
 /* ====================  TUILES DE CATÉGORIES  ====================== */
 /* (Packs, Machine à café, Fontaine à eau, Réfrigération, Supplément…)   */
-/* Les titres étaient invisibles car sans couleur définie : on les rend  */
-/* bien lisibles, en bleu nuit, sur une carte propre.                    */
+/* Carte bien marquée + titre lisible et accentué pour qu'on repère vite */
+/* chaque famille de produits.                                           */
+.woocommerce ul.products li.product-category{
+  background:linear-gradient(180deg,#FFFFFF,#F4F8FF) !important; border:1px solid #DCE9FB !important;
+}
 .woocommerce ul.products li.product-category .woocommerce-loop-category__title,
 .woocommerce ul.products li.product-category h2,
 .woocommerce ul.products li.product-category h3,
 .woocommerce-loop-category__title{
-  color:#0A1628 !important; font-size:17px !important; font-weight:800 !important; letter-spacing:-.2px !important;
-  padding:6px 14px 14px !important; text-shadow:none !important; text-align:center;
+  color:#0A1628 !important; font-size:19px !important; font-weight:900 !important; letter-spacing:-.3px !important;
+  padding:10px 14px 16px !important; text-shadow:none !important; text-align:center; text-transform:uppercase;
 }
 .woocommerce ul.products li.product-category .woocommerce-loop-category__title .count{
-  display:inline-block; background:#EAF1FB !important; color:#1E6FD9 !important; border-radius:30px;
-  font-size:11px; font-weight:800; padding:3px 9px; margin-left:6px; vertical-align:middle;
+  display:inline-block; background:#1E6FD9 !important; color:#fff !important; border-radius:30px;
+  font-size:11px; font-weight:800; padding:3px 10px; margin-left:8px; vertical-align:middle; box-shadow:0 4px 10px rgba(30,111,217,.3);
 }
 .woocommerce ul.products li.product-category a img{
   height:170px !important; object-fit:contain !important; padding:18px !important; background:#fff !important; margin-bottom:8px !important;
 }
+.woocommerce ul.products li.product-category:hover{ border-color:#1E6FD9 !important; }
 
 /* Liste / widget "Catégories de produits" (menu latéral) : liens lisibles */
 .woocommerce .product-categories a,
