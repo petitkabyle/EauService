@@ -123,7 +123,17 @@ function eauservice_loop_read_more() {
 		return;
 	}
 	echo '<a href="' . esc_url( get_permalink( $product->get_id() ) ) . '" class="es-loop-readmore">'
-		. esc_html__( 'Lire la suite', 'woocommerce' ) . '</a>';
+		. esc_html__( 'En savoir plus', 'woocommerce' ) . '</a>';
+}
+
+/* Renomme le bouton par défaut "Lire la suite" (produit sans prix) en
+   "En savoir plus" pour rester cohérent. */
+add_filter( 'woocommerce_product_add_to_cart_text', 'eauservice_add_to_cart_text', 10, 2 );
+function eauservice_add_to_cart_text( $text, $product ) {
+	if ( $product && ( ! $product->is_purchasable() || ! $product->is_in_stock() ) ) {
+		return esc_html__( 'En savoir plus', 'woocommerce' );
+	}
+	return $text;
 }
 
 // Ferme le conteneur.
