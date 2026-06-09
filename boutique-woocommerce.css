@@ -231,7 +231,7 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
   border:none !important; border-radius:0 !important; padding:18px !important; margin:0 0 12px !important; box-shadow:none !important; transition:transform .5s var(--es-ease) !important;
 }
 .woocommerce ul.products li.product:hover a img{ transform:scale(1.07); }
-.woocommerce ul.products li.product .woocommerce-loop-product__title{ color:#0A1628 !important; font-size:16px !important; font-weight:800 !important; line-height:1.3; padding:4px 18px 8px !important; letter-spacing:-.2px; min-height:46px; }
+.woocommerce ul.products li.product .woocommerce-loop-product__title{ color:#0A1628 !important; font-size:16px !important; font-weight:800 !important; line-height:1.35; padding:4px 18px 8px !important; letter-spacing:-.2px; min-height:44px; overflow-wrap:break-word; word-wrap:break-word; hyphens:auto; }
 .woocommerce ul.products li.product .price{ color:#1E6FD9 !important; font-weight:900 !important; font-size:20px !important; padding:0 16px !important; letter-spacing:-.5px; }
 .woocommerce ul.products li.product .price del{ color:#9DB4D4 !important; font-weight:600; font-size:14px; margin-right:6px; }
 .woocommerce ul.products li.product .price ins{ color:#0A1628 !important; text-decoration:none; }
@@ -245,19 +245,36 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 /* Conteneur ajouté par eauservice-functions.php : gros bouton "Ajouter   */
 /* au panier" + petit bouton "Lire la suite" alignés côte à côte.        */
 .woocommerce ul.products li.product .es-loop-actions{
-  display:flex !important; gap:10px; align-items:stretch; width:calc(100% - 36px); margin:14px 18px 0 !important; margin-top:auto !important;
+  display:flex !important; gap:8px; align-items:stretch; width:calc(100% - 36px); margin:14px 18px 0 !important; margin-top:auto !important;
 }
 .woocommerce ul.products li.product .es-loop-actions .button{
-  flex:1 1 auto; width:auto !important; margin:0 !important; margin-top:0 !important;
+  flex:1 1 auto; width:auto !important; min-width:0; margin:0 !important; margin-top:0 !important;
+  padding:12px 14px !important; font-size:13.5px !important; line-height:1.2 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .woocommerce ul.products li.product .es-loop-readmore{
   flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; white-space:nowrap;
-  padding:13px 16px; border-radius:12px; background:#EAF1FB !important; color:#1E6FD9 !important; font-weight:700 !important; font-size:13px;
+  padding:12px 14px; border-radius:12px; background:#EAF1FB !important; color:#1E6FD9 !important; font-weight:700 !important; font-size:13px; line-height:1.2;
   border:1.5px solid #D6E4F7 !important; transition:background .2s, transform .2s;
 }
 .woocommerce ul.products li.product .es-loop-readmore:hover{ background:#DCE9FB !important; transform:translateY(-2px); }
 @media(max-width:420px){
   .woocommerce ul.products li.product .es-loop-actions{ flex-direction:column; }
+}
+
+/* CALIBRAGE : quand "Lire la suite" est SEUL (produit sans prix), on évite
+   le gros bouton pleine largeur disproportionné -> bouton secondaire,
+   largeur auto, centré et de taille normale. */
+.woocommerce ul.products li.product a.button.product_type_simple:not(.add_to_cart_button),
+.woocommerce ul.products li.product a.button.product_type_grouped:not(.add_to_cart_button),
+.woocommerce ul.products li.product .es-loop-actions a.button:only-child{
+  display:inline-block !important; width:auto !important; max-width:calc(100% - 36px);
+  margin:14px auto 0 !important; margin-top:auto !important;
+  padding:12px 24px !important; font-size:13.5px !important;
+  background:#EAF1FB !important; color:#1E6FD9 !important; border:1.5px solid #D6E4F7 !important; box-shadow:none !important;
+}
+.woocommerce ul.products li.product a.button.product_type_simple:not(.add_to_cart_button):hover,
+.woocommerce ul.products li.product .es-loop-actions a.button:only-child:hover{
+  background:#DCE9FB !important; color:#1558B0 !important; transform:translateY(-2px); filter:none;
 }
 
 /* Bouton "Retour à la boutique" sur la fiche produit */
