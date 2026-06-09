@@ -231,7 +231,11 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
   border:none !important; border-radius:0 !important; padding:18px !important; margin:0 0 12px !important; box-shadow:none !important; transition:transform .5s var(--es-ease) !important;
 }
 .woocommerce ul.products li.product:hover a img{ transform:scale(1.07); }
-.woocommerce ul.products li.product .woocommerce-loop-product__title{ color:#0A1628 !important; font-size:16px !important; font-weight:800 !important; line-height:1.35; padding:4px 18px 8px !important; letter-spacing:-.2px; min-height:44px; overflow-wrap:break-word; word-wrap:break-word; hyphens:auto; }
+.woocommerce ul.products li.product .woocommerce-loop-product__title{
+  color:#0A1628 !important; font-size:15px !important; font-weight:800 !important; line-height:1.35 !important; padding:4px 18px 8px !important; letter-spacing:-.2px;
+  display:-webkit-box !important; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  min-height:48px; overflow-wrap:break-word; word-break:normal; hyphens:none;
+}
 .woocommerce ul.products li.product .price{ color:#1E6FD9 !important; font-weight:900 !important; font-size:20px !important; padding:0 16px !important; letter-spacing:-.5px; }
 .woocommerce ul.products li.product .price del{ color:#9DB4D4 !important; font-weight:600; font-size:14px; margin-right:6px; }
 .woocommerce ul.products li.product .price ins{ color:#0A1628 !important; text-decoration:none; }
@@ -244,30 +248,24 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 /* ====================  ACTIONS CARTE : PANIER + LIRE LA SUITE  ====== */
 /* Conteneur ajouté par eauservice-functions.php : gros bouton "Ajouter   */
 /* au panier" + petit bouton "Lire la suite" alignés côte à côte.        */
+/* "Ajouter au panier" = gros bouton pleine largeur. "Lire la suite" =    */
+/* petit lien DISCRET en bas à droite de la carte.                        */
 .woocommerce ul.products li.product .es-loop-actions{
-  display:flex !important; gap:8px; align-items:center; width:calc(100% - 36px); margin:14px 18px 0 !important; margin-top:auto !important;
-}
-/* Les DEUX boutons ont la MÊME hauteur fixe et compacte (44px) : plus    */
-/* d'étirement vertical du bouton "Lire la suite".                        */
-.woocommerce ul.products li.product .es-loop-actions .button,
-.woocommerce ul.products li.product .es-loop-actions .es-loop-readmore{
-  height:44px !important; min-height:0 !important; line-height:1 !important;
-  display:inline-flex !important; align-items:center !important; justify-content:center !important;
-  padding:0 16px !important; margin:0 !important; border-radius:12px !important; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis;
+  display:block !important; width:calc(100% - 36px); margin:14px 18px 2px !important; margin-top:auto !important; text-align:right;
 }
 .woocommerce ul.products li.product .es-loop-actions .button{
-  flex:1 1 auto; width:auto !important; min-width:0; font-size:13.5px !important;
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  width:100% !important; height:46px !important; min-height:0 !important; line-height:1 !important;
+  margin:0 !important; padding:0 16px !important; border-radius:12px !important; font-size:14px !important; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
 }
 .woocommerce ul.products li.product .es-loop-readmore{
-  flex:0 0 auto; background:#EAF1FB !important; color:#1E6FD9 !important; font-weight:700 !important; font-size:13px;
-  border:1.5px solid #D6E4F7 !important; transition:background .2s, transform .2s;
+  display:inline-block; margin:8px 2px 0 !important; padding:0 !important;
+  background:none !important; border:none !important; box-shadow:none !important;
+  color:#8AA0BE !important; font-size:12px !important; font-weight:600 !important; text-decoration:underline; text-underline-offset:2px;
+  transition:color .2s;
 }
-.woocommerce ul.products li.product .es-loop-readmore:hover{ background:#DCE9FB !important; transform:translateY(-2px); }
-@media(max-width:420px){
-  .woocommerce ul.products li.product .es-loop-actions{ flex-direction:column; align-items:stretch; }
-  .woocommerce ul.products li.product .es-loop-actions .es-loop-readmore{ width:100%; }
-}
+.woocommerce ul.products li.product .es-loop-readmore:hover{ color:#1E6FD9 !important; background:none !important; transform:none; }
 
 /* CALIBRAGE : quand "Lire la suite" est SEUL (produit sans prix), on évite
    le gros bouton pleine largeur disproportionné -> bouton secondaire,
