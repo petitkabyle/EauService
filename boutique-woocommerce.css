@@ -688,3 +688,59 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 /* Sécurité : si un wrapper de bloc reste transparent, on garde le contenu
    lisible au-dessus du fond dégradé de la page. */
 .wp-block-woocommerce-cart,.wp-block-woocommerce-checkout{ position:relative; z-index:1; }
+
+
+/* ===================================================================== */
+/*  v18 — RENFORCEMENT PANIER & COMMANDE "CLASSIQUES"                    */
+/*  Sélecteurs très spécifiques (body.classe + .woocommerce + ...) pour  */
+/*  passer DEVANT tout style du thème. Teinte nettement distincte du fond */
+/*  pour que les encadrés ressortent vraiment.                           */
+/* ===================================================================== */
+
+/* --- Total du panier (page Panier classique) ------------------------- */
+body.woocommerce-cart .woocommerce .cart-collaterals .cart_totals,
+body.woocommerce-cart .cart-collaterals .cart_totals{
+  background:linear-gradient(180deg,#FFFFFF 0%,#E9F2FF 100%) !important;
+  border:1.5px solid #C5D9F6 !important; border-radius:24px !important;
+  box-shadow:0 26px 58px rgba(13,38,68,.20) !important; overflow:hidden !important;
+}
+
+/* --- Tableau du panier ---------------------------------------------- */
+body.woocommerce-cart .woocommerce table.shop_table.cart,
+body.woocommerce-cart table.shop_table.cart{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F4F9FF 100%) !important;
+  border:1.5px solid #C5D9F6 !important; border-radius:22px !important;
+  box-shadow:0 24px 54px rgba(13,38,68,.16) !important;
+}
+
+/* --- Sections de la page Commande (classique) ----------------------- */
+body.woocommerce-checkout .woocommerce .woocommerce-billing-fields,
+body.woocommerce-checkout .woocommerce .woocommerce-shipping-fields,
+body.woocommerce-checkout .woocommerce .woocommerce-additional-fields,
+body.woocommerce-checkout .woocommerce #order_review,
+body.woocommerce-checkout #order_review,
+body.woocommerce-checkout .woocommerce form.checkout_coupon{
+  background:linear-gradient(180deg,#FFFFFF 0%,#E9F2FF 100%) !important;
+  border:1.5px solid #C5D9F6 !important; border-radius:24px !important;
+  box-shadow:0 24px 54px rgba(13,38,68,.18) !important;
+  padding:30px 30px 28px !important; position:relative; z-index:1;
+}
+/* liseré coloré en haut de chaque section (vrai cadre, pas un bloc plat) */
+body.woocommerce-checkout .woocommerce .woocommerce-billing-fields{ box-shadow:0 24px 54px rgba(13,38,68,.18), inset 0 5px 0 #1E6FD9 !important; }
+body.woocommerce-checkout .woocommerce .woocommerce-shipping-fields{ box-shadow:0 24px 54px rgba(13,38,68,.18), inset 0 5px 0 #60A5FA !important; }
+body.woocommerce-checkout .woocommerce #order_review,
+body.woocommerce-checkout #order_review{ box-shadow:0 24px 54px rgba(13,38,68,.18), inset 0 5px 0 #22C55E !important; }
+
+/* --- Zone de paiement (classique) ----------------------------------- */
+body.woocommerce-checkout #payment,
+body.woocommerce-checkout .woocommerce #payment{
+  background:linear-gradient(180deg,#F2F8FF 0%,#FFFFFF 100%) !important;
+  border:1px solid #D6E4F7 !important; border-radius:16px !important;
+}
+
+/* --- Titre "Votre commande" en pastille bien visible ---------------- */
+body.woocommerce-checkout #order_review_heading{
+  display:inline-block !important; background:linear-gradient(135deg,#0F2747,#1E6FD9) !important; color:#fff !important;
+  padding:12px 24px !important; border-radius:30px !important; font-weight:900 !important;
+  box-shadow:0 10px 24px rgba(30,111,217,.28) !important; margin:6px 0 16px !important;
+}
