@@ -211,11 +211,11 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
 
 /* ====================  CARTE PRODUIT (premium)  ==================== */
 .woocommerce ul.products li.product{
-  position:relative !important; background:#fff !important; border:1px solid #E6EEFA !important; border-radius:22px !important;
-  padding:0 0 18px !important; overflow:hidden !important; text-align:center; box-shadow:0 12px 30px rgba(10,22,40,.10) !important;
+  position:relative !important; background:linear-gradient(180deg,#FFFFFF 0%,#FBFDFF 100%) !important; border:1.5px solid #D6E4F7 !important; border-radius:22px !important;
+  padding:0 0 18px !important; overflow:hidden !important; text-align:center; box-shadow:0 16px 38px rgba(13,38,68,.13) !important;
   transition:transform .4s var(--es-ease), box-shadow .4s var(--es-ease), border-color .4s !important;
 }
-.woocommerce ul.products li.product:hover{ transform:translateY(-10px) !important; box-shadow:0 34px 64px rgba(30,111,217,.24) !important; border-color:#BBD3F5 !important; }
+.woocommerce ul.products li.product:hover{ transform:translateY(-10px) !important; box-shadow:0 34px 64px rgba(30,111,217,.26) !important; border-color:#9FC2F0 !important; }
 .woocommerce ul.products li.product::before{
   content:''; position:absolute; left:0; right:0; top:0; height:4px; background:linear-gradient(90deg,#1E6FD9,#60A5FA,#1E6FD9); background-size:200% 100%;
   opacity:0; transition:opacity .3s ease; z-index:3; animation:esShine 3s linear infinite;
@@ -606,3 +606,85 @@ body.tax-product_cat .ast-archive-description-meta{ color:#C9D8EF !important; po
   background:linear-gradient(135deg,#1E6FD9,#2f86f3) !important; color:#fff !important; border:none !important;
   box-shadow:0 10px 24px rgba(30,111,217,.24) !important;
 }
+
+
+/* ===================================================================== */
+/*  v17 — PANIER & COMMANDE "BLOCS" (WooCommerce Blocks récents)         */
+/*  Les pages Panier/Commande modernes utilisent des classes .wc-block-* */
+/*  qui n'avaient AUCUN fond -> elles restaient transparentes (couleur    */
+/*  de l'arrière-plan). On leur donne ici de vrais cadres professionnels. */
+/* ===================================================================== */
+
+/* --- Colonne principale (liste produits panier / formulaire commande) - */
+.wp-block-woocommerce-cart .wc-block-cart__main,
+.wp-block-woocommerce-checkout .wc-block-checkout__main,
+.wc-block-checkout__main,
+.wc-block-cart__main{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F5FAFF 100%) !important;
+  border:1.5px solid #D0E1F9 !important; border-radius:24px !important;
+  box-shadow:0 24px 54px rgba(13,38,68,.15) !important;
+  padding:30px 32px !important; position:relative; z-index:1;
+}
+
+/* --- Colonne latérale : RÉSUMÉ / TOTAL (le bloc qui restait vide) ----- */
+.wc-block-checkout__sidebar,
+.wc-block-cart__sidebar,
+.wc-block-components-sidebar,
+.wp-block-woocommerce-checkout-order-summary-block,
+.wp-block-woocommerce-cart-order-summary-block{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F1F7FF 100%) !important;
+  border:1.5px solid #CFE0F8 !important; border-radius:24px !important;
+  box-shadow:0 26px 58px rgba(13,38,68,.18), inset 0 5px 0 #1E6FD9 !important;
+  padding:26px 26px 28px !important; overflow:hidden !important; position:relative; z-index:1;
+}
+
+/* Titre du récap commande (blocs) -> pastille dégradée bien visible */
+.wc-block-components-checkout-order-summary__title,
+.wc-block-checkout__sidebar .wc-block-components-title,
+.wc-block-cart__sidebar .wc-block-components-title{
+  display:inline-block; background:linear-gradient(135deg,#0F2747,#1E6FD9) !important; color:#fff !important;
+  padding:10px 22px !important; border-radius:30px !important; font-size:16px !important; font-weight:900 !important;
+  margin:0 0 18px !important; box-shadow:0 10px 24px rgba(30,111,217,.28); text-transform:uppercase; letter-spacing:.4px;
+}
+
+/* Totaux : valeur du total bien mise en valeur */
+.wc-block-components-totals-footer-item .wc-block-components-totals-item__value,
+.wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value{
+  color:#1558B0 !important; font-weight:900 !important; font-size:25px !important;
+}
+.wc-block-components-totals-item__label{ color:#5B6B82 !important; }
+.wc-block-components-totals-wrapper{ border-top-color:#E1EBFA !important; }
+
+/* Vignettes produit dans le récap (blocs) */
+.wc-block-components-order-summary-item__image img,
+.wc-block-cart-item__image img{
+  border-radius:12px !important; border:1px solid #E1EBFA !important; background:linear-gradient(160deg,#EEF5FF,#fff) !important; padding:6px !important;
+}
+
+/* Bloc PAIEMENT (blocs) */
+.wp-block-woocommerce-checkout-payment-block,
+.wc-block-checkout__payment-method{
+  background:linear-gradient(180deg,#F4F9FF,#FFFFFF) !important; border:1px solid #E1EBFA !important; border-radius:16px !important; padding:18px 18px !important; margin-top:8px;
+}
+
+/* Champs de saisie (blocs) cohérents avec le reste */
+.wc-block-components-text-input input,
+.wc-block-components-text-input input.is-active,
+.wc-block-checkout .wc-block-components-text-input input{
+  background:#fff !important; border:1.5px solid #D6E4F7 !important; border-radius:11px !important; color:#0A1628 !important;
+}
+
+/* Étapes du checkout en blocs : petit cadre interne propre */
+.wc-block-components-checkout-step{ border-bottom:1px solid #EEF4FF !important; }
+.wc-block-components-checkout-step__title{ color:#0A1628 !important; font-weight:800 !important; }
+
+/* Bouton "Passer la commande" (blocs) */
+.wc-block-components-checkout-place-order-button,
+.wp-block-woocommerce-checkout-actions-block button{
+  background:linear-gradient(135deg,#1E6FD9,#2f86f3) !important; color:#fff !important; border:none !important; border-radius:12px !important;
+  font-weight:800 !important; box-shadow:0 14px 32px rgba(30,111,217,.30) !important;
+}
+
+/* Sécurité : si un wrapper de bloc reste transparent, on garde le contenu
+   lisible au-dessus du fond dégradé de la page. */
+.wp-block-woocommerce-cart,.wp-block-woocommerce-checkout{ position:relative; z-index:1; }
