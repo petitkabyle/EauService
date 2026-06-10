@@ -843,3 +843,22 @@ body.woocommerce-checkout #order_review_heading,
 body.woocommerce-checkout .es-event-section h3{
   max-width:100%; line-height:1.25 !important; white-space:normal !important;
 }
+
+
+/* ===================================================================== */
+/*  v21 — TOTAL PANIER TOUJOURS VISIBLE (haut + sticky)                 */
+/* ===================================================================== */
+@media(min-width:993px){
+  /* la colonne de droite se cale EN HAUT (pas en bas) et suit le scroll */
+  body.woocommerce-cart .woocommerce .cart-collaterals{
+    align-self:flex-start !important;
+    position:sticky !important; top:24px !important;
+  }
+  body.woocommerce-cart .woocommerce .cart-collaterals .cart_totals{
+    position:static !important; /* le sticky est porté par la colonne */
+  }
+  /* le tableau produits commence bien en haut lui aussi */
+  body.woocommerce-cart .woocommerce .woocommerce-cart-form{
+    align-self:flex-start !important;
+  }
+}
