@@ -349,3 +349,16 @@ function eauservice_show_event_fields_email( $order, $sent_to_admin, $plain_text
 		echo '<table cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;margin-bottom:20px;">' . $rows . '</table>';
 	}
 }
+
+
+/* ===========================================================================
+ * 7) FORCER L'AFFICHAGE DE L'ADRESSE DE LIVRAISON
+ *    Par défaut WooCommerce masque l'adresse de livraison s'il n'y a pas de
+ *    zone d'expédition configurée. Comme on livre TOUJOURS sur site
+ *    (salon, congrès, événement), on force son affichage sur le checkout.
+ * =========================================================================== */
+add_filter( 'woocommerce_cart_needs_shipping_address', '__return_true' );
+
+// On s'assure aussi que la case "Livrer à une adresse différente" est cochée
+// par défaut, pour que l'adresse de livraison soit visible d'emblée.
+add_filter( 'woocommerce_ship_to_different_address_checked', '__return_true' );
