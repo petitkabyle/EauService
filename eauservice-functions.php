@@ -362,3 +362,112 @@ add_filter( 'woocommerce_cart_needs_shipping_address', '__return_true' );
 // On s'assure aussi que la case "Livrer à une adresse différente" est cochée
 // par défaut, pour que l'adresse de livraison soit visible d'emblée.
 add_filter( 'woocommerce_ship_to_different_address_checked', '__return_true' );
+
+
+/* ===========================================================================
+ * 8) CONTENU VITRINE + SEO INJECTÉ SUR LA PAGE BOUTIQUE (archive auto)
+ *    La page Boutique est une archive WooCommerce : pas de zone pour coller
+ *    des blocs. On injecte donc le contenu par hooks, automatiquement :
+ *      - AVANT la grille : hero SEO + réassurance + titre catalogue
+ *      - APRÈS la grille : FAQ + bande CTA "Demander un devis"
+ *    S'affiche UNIQUEMENT sur la 1re page de la boutique (pas les sous-pages,
+ *    pas les catégories) pour ne pas alourdir la navigation.
+ *    Le style est dans boutique-woocommerce.css (section v22).
+ * =========================================================================== */
+
+// --- 8a. HAUT de la boutique : hero + réassurance -------------------------
+add_action( 'woocommerce_before_main_content', 'eauservice_shop_intro', 30 );
+function eauservice_shop_intro() {
+	if ( ! ( function_exists( 'is_shop' ) && is_shop() ) ) { return; }
+	if ( function_exists( 'is_paged' ) && is_paged() ) { return; } // page 2, 3… : on n'affiche pas
+	?>
+	<section class="es-hero">
+		<span class="es-eyebrow">Location événementielle · Côte d'Azur</span>
+		<h1>Location de machines à café, fontaines à eau &amp; matériel pour vos événements</h1>
+		<p>EauService équipe vos salons, congrès, séminaires et événements professionnels à <strong>Cannes, Nice, Monaco, Antibes</strong> et sur toute la Côte d'Azur. Machines à café professionnelles (Nespresso, Lavazza, Covim), fontaines à eau, réfrigération et mobilier — avec <strong>livraison, installation et reprise sur site</strong>.</p>
+		<p>Du stand de 10&nbsp;m² au congrès de plusieurs milliers de visiteurs, nous proposons des packs clé en main adaptés à chaque format d'événement.</p>
+		<div class="es-hero-tags">
+			<span>Livraison sur stand</span>
+			<span>Installation incluse</span>
+			<span>Devis sous 24h</span>
+			<span>Matériel professionnel</span>
+			<span>Reprise après l'événement</span>
+		</div>
+	</section>
+
+	<div class="es-assur">
+		<div class="es-assur-item">
+			<div class="es-assur-ico">&#128666;</div>
+			<div class="es-assur-t">Livraison &amp; installation</div>
+			<div class="es-assur-d">Sur votre stand ou lieu d'événement, partout sur la Côte d'Azur.</div>
+		</div>
+		<div class="es-assur-item">
+			<div class="es-assur-ico">&#9201;</div>
+			<div class="es-assur-t">Devis en 24h</div>
+			<div class="es-assur-d">Une réponse rapide et un accompagnement personnalisé.</div>
+		</div>
+		<div class="es-assur-item">
+			<div class="es-assur-ico">&#9733;</div>
+			<div class="es-assur-t">Matériel premium</div>
+			<div class="es-assur-d">Équipements professionnels fiables et entretenus.</div>
+		</div>
+		<div class="es-assur-item">
+			<div class="es-assur-ico">&#9851;</div>
+			<div class="es-assur-t">Service clé en main</div>
+			<div class="es-assur-d">Livraison, montage et reprise gérés de A à Z.</div>
+		</div>
+	</div>
+
+	<div class="es-section-head">
+		<span class="es-eyebrow">Notre catalogue</span>
+		<h2>Nos produits à la location</h2>
+		<p>Sélectionnez vos équipements ci-dessous. Besoin d'un ensemble complet&nbsp;? Découvrez nos packs événementiels en tête de liste.</p>
+	</div>
+	<?php
+}
+
+// --- 8b. BAS de la boutique : FAQ + CTA -----------------------------------
+add_action( 'woocommerce_after_main_content', 'eauservice_shop_outro', 5 );
+function eauservice_shop_outro() {
+	if ( ! ( function_exists( 'is_shop' ) && is_shop() ) ) { return; }
+	if ( function_exists( 'is_paged' ) && is_paged() ) { return; }
+	?>
+	<div class="es-section-head" style="margin-top:30px;">
+		<span class="es-eyebrow">Questions fréquentes</span>
+		<h2>Tout savoir sur la location événementielle</h2>
+	</div>
+
+	<div class="es-faq">
+		<details open>
+			<summary>Livrez-vous le matériel sur les salons et congrès de la Côte d'Azur&nbsp;?</summary>
+			<div class="es-faq-a">Oui. Nous livrons et installons votre matériel directement sur votre stand ou lieu d'événement, notamment au Palais des Festivals de Cannes, au Grimaldi Forum de Monaco, au Palais des Congrès de Nice et sur tous les sites de la région (Antibes, Juan-les-Pins, Menton…). Nous récupérons également le matériel à la fin de votre événement.</div>
+		</details>
+		<details>
+			<summary>Quel est le délai pour obtenir un devis&nbsp;?</summary>
+			<div class="es-faq-a">Nous répondons à toute demande de devis sous 24h ouvrées. Pour les événements urgents, contactez-nous directement&nbsp;: nous faisons notre maximum pour nous adapter à votre calendrier.</div>
+		</details>
+		<details>
+			<summary>L'installation et la reprise sont-elles incluses&nbsp;?</summary>
+			<div class="es-faq-a">Nos packs événementiels incluent la livraison, l'installation sur site et la reprise du matériel après l'événement. Le détail des prestations est précisé dans chaque devis selon le lieu et la durée.</div>
+		</details>
+		<details>
+			<summary>Proposez-vous des packs adaptés à la taille de mon événement&nbsp;?</summary>
+			<div class="es-faq-a">Absolument. Du Pack de Base pour un petit stand au Pack Complet pour les grands congrès, nous proposons plusieurs formules avec machines à café, consommables, fontaines à eau et accessoires. Nous pouvons aussi composer une offre 100% sur mesure.</div>
+		</details>
+		<details>
+			<summary>Quels types de machines à café proposez-vous&nbsp;?</summary>
+			<div class="es-faq-a">Nous proposons une large gamme de machines professionnelles et grandes marques&nbsp;: Nespresso, Lavazza, Covim, Gemini… ainsi que les consommables associés (café, gobelets, sucre, touillettes) et des accessoires comme le mousseur à lait.</div>
+		</details>
+		<details>
+			<summary>Sur quelle durée puis-je louer le matériel&nbsp;?</summary>
+			<div class="es-faq-a">La location s'adapte à la durée de votre événement&nbsp;: d'une journée à plusieurs semaines. Indiquez vos dates de livraison et de reprise lors de la commande et nous organisons la logistique en conséquence.</div>
+		</details>
+	</div>
+
+	<section class="es-cta-band">
+		<h2>Un événement à équiper sur la Côte d'Azur&nbsp;?</h2>
+		<p>Recevez un devis personnalisé sous 24h pour votre salon, congrès ou événement professionnel.</p>
+		<a class="es-cta-btn" href="https://formulaire.events-cafe.com/formulaire.html">Demander un devis gratuit</a>
+	</section>
+	<?php
+}
