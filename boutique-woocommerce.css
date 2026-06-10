@@ -862,3 +862,100 @@ body.woocommerce-checkout .es-event-section h3{
     align-self:flex-start !important;
   }
 }
+
+
+/* ===================================================================== */
+/*  v22 — VITRINE BOUTIQUE : contenus enrichis (hero, réassurance, FAQ)  */
+/*  Ces styles habillent les blocs HTML que vous collez sur la page      */
+/*  Boutique (voir le fichier "boutique-contenu-seo.html").              */
+/* ===================================================================== */
+
+/* --- HERO / intro SEO en haut de la boutique ------------------------ */
+.es-hero{
+  position:relative; z-index:1; overflow:hidden;
+  background:linear-gradient(135deg,#0A1424 0%,#13345A 60%,#1E6FD9 135%);
+  border-radius:24px; padding:46px 46px; margin:0 0 30px;
+  box-shadow:0 26px 60px rgba(10,22,40,.28); border:1px solid rgba(255,255,255,.06);
+}
+.es-hero::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(560px 380px at 92% -20%, rgba(96,165,250,.4), transparent 60%),
+    radial-gradient(460px 360px at -6% 130%, rgba(30,111,217,.32), transparent 60%);
+}
+.es-hero > *{ position:relative; z-index:1; }
+.es-hero .es-eyebrow{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:3px; color:#60A5FA; text-transform:uppercase; margin-bottom:14px; }
+.es-hero h1,.es-hero h2{
+  color:#fff !important; font-size:clamp(26px,3.4vw,40px) !important; font-weight:900 !important;
+  letter-spacing:-1px; line-height:1.15; margin:0 0 14px !important;
+}
+.es-hero p{ color:#C9D8EF !important; font-size:16px; line-height:1.75; max-width:760px; margin:0 0 10px !important; }
+.es-hero .es-hero-tags{ margin-top:18px; display:flex; flex-wrap:wrap; gap:10px; }
+.es-hero .es-hero-tags span{
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); color:#EAF2FF;
+  font-size:13px; font-weight:600; padding:7px 14px; border-radius:30px; backdrop-filter:blur(4px);
+}
+
+/* --- BANDE DE RÉASSURANCE (4 atouts) -------------------------------- */
+.es-assur{
+  position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:0 0 32px;
+}
+.es-assur .es-assur-item{
+  background:linear-gradient(180deg,#FFFFFF,#F4F9FF); border:1.5px solid #D6E4F7; border-radius:18px;
+  padding:22px 20px; text-align:center; box-shadow:0 12px 30px rgba(13,38,68,.10); transition:transform .25s, box-shadow .25s;
+}
+.es-assur .es-assur-item:hover{ transform:translateY(-5px); box-shadow:0 22px 44px rgba(30,111,217,.18); }
+.es-assur .es-assur-ico{
+  width:52px; height:52px; margin:0 auto 12px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#1E6FD9,#2f86f3); color:#fff; font-size:24px; box-shadow:0 10px 22px rgba(30,111,217,.32);
+}
+.es-assur .es-assur-t{ font-weight:800; color:#0A1628; font-size:15px; margin-bottom:4px; }
+.es-assur .es-assur-d{ font-size:13px; color:#5B6B82; line-height:1.5; }
+
+/* --- TITRE DE SECTION (avant la grille produits / la FAQ) ----------- */
+.es-section-head{ position:relative; z-index:1; text-align:center; margin:6px 0 26px; }
+.es-section-head .es-eyebrow{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:3px; color:#1E6FD9; text-transform:uppercase; margin-bottom:8px; }
+.es-section-head h2{ color:#0A1628 !important; font-size:clamp(22px,2.6vw,32px) !important; font-weight:900 !important; letter-spacing:-.6px; margin:0 auto !important; }
+.es-section-head p{ color:#5B6B82 !important; max-width:620px; margin:10px auto 0 !important; line-height:1.7; }
+.es-section-head h2::after{ content:''; display:block; width:64px; height:4px; margin:14px auto 0; border-radius:3px; background:linear-gradient(90deg,#1E6FD9,#60A5FA); }
+
+/* --- FAQ ------------------------------------------------------------ */
+.es-faq{ position:relative; z-index:1; max-width:840px; margin:8px auto 36px; }
+.es-faq details{
+  background:linear-gradient(180deg,#FFFFFF,#F6FAFF); border:1.5px solid #D6E4F7; border-radius:16px;
+  padding:0 22px; margin-bottom:14px; box-shadow:0 10px 26px rgba(13,38,68,.08); overflow:hidden; transition:border-color .2s, box-shadow .2s;
+}
+.es-faq details[open]{ border-color:#9FC2F0; box-shadow:0 18px 40px rgba(30,111,217,.16); }
+.es-faq summary{
+  list-style:none; cursor:pointer; padding:18px 36px 18px 0; position:relative;
+  font-weight:800; color:#0A1628; font-size:16px; line-height:1.4;
+}
+.es-faq summary::-webkit-details-marker{ display:none; }
+.es-faq summary::after{
+  content:'+'; position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:28px; height:28px; border-radius:50%; background:#EAF1FB; color:#1E6FD9; font-weight:900; font-size:18px;
+  display:flex; align-items:center; justify-content:center; transition:transform .25s, background .2s;
+}
+.es-faq details[open] summary::after{ content:'\2212'; background:#1E6FD9; color:#fff; }
+.es-faq .es-faq-a{ color:#5B6B82; line-height:1.75; font-size:14.5px; padding:0 0 20px; }
+
+/* --- BLOC CTA bas de page (devis) ----------------------------------- */
+.es-cta-band{
+  position:relative; z-index:1; overflow:hidden; text-align:center;
+  background:linear-gradient(135deg,#0A1424,#13345A 70%,#1E6FD9 140%);
+  border-radius:24px; padding:42px 30px; margin:6px 0 30px; box-shadow:0 26px 60px rgba(10,22,40,.26);
+}
+.es-cta-band h2{ color:#fff !important; font-size:clamp(22px,2.6vw,30px) !important; font-weight:900 !important; margin:0 0 10px !important; letter-spacing:-.5px; }
+.es-cta-band p{ color:#C9D8EF !important; margin:0 0 22px !important; }
+.es-cta-band a.es-cta-btn{
+  display:inline-block; background:#fff; color:#13345A !important; font-weight:800; font-size:15px;
+  padding:15px 34px; border-radius:12px; text-decoration:none !important; box-shadow:0 14px 30px rgba(0,0,0,.22); transition:transform .2s, box-shadow .2s;
+}
+.es-cta-band a.es-cta-btn:hover{ transform:translateY(-3px); box-shadow:0 20px 40px rgba(0,0,0,.3); }
+
+/* --- Responsive ----------------------------------------------------- */
+@media(max-width:900px){ .es-assur{ grid-template-columns:1fr 1fr; } }
+@media(max-width:560px){
+  .es-assur{ grid-template-columns:1fr; }
+  .es-hero{ padding:32px 24px; }
+}
