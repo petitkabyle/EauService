@@ -188,3 +188,164 @@ function eauservice_uncrop_thumbnail( $size ) {
 		'crop'   => 0, // 0 = non rogne (garde les proportions, rien n'est coupe)
 	);
 }
+
+
+/* ===========================================================================
+ * 6) LIVRAISON ÉVÉNEMENTIELLE — champs personnalisés sur la commande
+ *    Secteur événementiel : livraison sur salons, congrès, événements.
+ *    On ajoute une section dédiée avec un maximum d'infos logistiques.
+ *    Ces champs sont enregistrés dans la commande, affichés en back-office
+ *    ET dans les e-mails de commande.
+ * =========================================================================== */
+
+// Liste centralisée des champs (clé => libellé) pour réutilisation.
+function eauservice_event_fields_list() {
+	return array(
+		'es_event_name'    => 'Nom de l’événement / salon / congrès',
+		'es_venue_name'    => 'Lieu / site (parc expo, palais des congrès…)',
+		'es_venue_address' => 'Adresse complète du lieu de livraison',
+		'es_hall'          => 'Hall / Pavillon',
+		'es_stand'         => 'N° de stand / emplacement',
+		'es_delivery_date' => 'Date de livraison souhaitée',
+		'es_delivery_time' => 'Créneau horaire de livraison',
+		'es_pickup_date'   => 'Date de reprise / fin de location',
+		'es_pickup_time'   => 'Créneau horaire de reprise',
+		'es_onsite_contact'=> 'Contact sur place (nom)',
+		'es_onsite_phone'  => 'Téléphone du contact sur place',
+		'es_access_notes'  => 'Instructions d’accès / logistique',
+	);
+}
+
+// 6a. Affichage de la section sur la page de commande.
+add_action( 'woocommerce_after_order_notes', 'eauservice_event_delivery_fields' );
+function eauservice_event_delivery_fields( $checkout ) {
+	echo '<div id="eauservice_event_delivery" class="es-event-section">';
+	echo '<h3>' . esc_html__( 'Informations de livraison événementielle', 'woocommerce' ) . '</h3>';
+	echo '<p class="es-event-intro">Indiquez les détails du lieu (salon, congrès, événement) pour une livraison et une reprise parfaitement organisées.</p>';
+
+	woocommerce_form_field( 'es_event_name', array(
+		'type' => 'text', 'class' => array( 'form-row-wide' ), 'required' => true,
+		'label' => 'Nom de l’événement / salon / congrès',
+		'placeholder' => 'Ex : Monaco Yacht Show 2026',
+	), $checkout->get_value( 'es_event_name' ) );
+
+	woocommerce_form_field( 'es_venue_name', array(
+		'type' => 'text', 'class' => array( 'form-row-wide' ), 'required' => true,
+		'label' => 'Lieu / site',
+		'placeholder' => 'Ex : Palais des Festivals, Cannes',
+	), $checkout->get_value( 'es_venue_name' ) );
+
+	woocommerce_form_field( 'es_venue_address', array(
+		'type' => 'text', 'class' => array( 'form-row-wide' ), 'required' => true,
+		'label' => 'Adresse complète du lieu de livraison',
+		'placeholder' => 'N°, rue, code postal, ville',
+	), $checkout->get_value( 'es_venue_address' ) );
+
+	woocommerce_form_field( 'es_hall', array(
+		'type' => 'text', 'class' => array( 'form-row-first' ),
+		'label' => 'Hall / Pavillon', 'placeholder' => 'Ex : Hall 3',
+	), $checkout->get_value( 'es_hall' ) );
+
+	woocommerce_form_field( 'es_stand', array(
+		'type' => 'text', 'class' => array( 'form-row-last' ),
+		'label' => 'N° de stand / emplacement', 'placeholder' => 'Ex : Stand B12',
+	), $checkout->get_value( 'es_stand' ) );
+
+	woocommerce_form_field( 'es_delivery_date', array(
+		'type' => 'date', 'class' => array( 'form-row-first' ), 'required' => true,
+		'label' => 'Date de livraison souhaitée',
+	), $checkout->get_value( 'es_delivery_date' ) );
+
+	woocommerce_form_field( 'es_delivery_time', array(
+		'type' => 'text', 'class' => array( 'form-row-last' ),
+		'label' => 'Créneau horaire de livraison', 'placeholder' => 'Ex : 8h - 10h',
+	), $checkout->get_value( 'es_delivery_time' ) );
+
+	woocommerce_form_field( 'es_pickup_date', array(
+		'type' => 'date', 'class' => array( 'form-row-first' ),
+		'label' => 'Date de reprise / fin de location',
+	), $checkout->get_value( 'es_pickup_date' ) );
+
+	woocommerce_form_field( 'es_pickup_time', array(
+		'type' => 'text', 'class' => array( 'form-row-last' ),
+		'label' => 'Créneau horaire de reprise', 'placeholder' => 'Ex : 18h - 20h',
+	), $checkout->get_value( 'es_pickup_time' ) );
+
+	woocommerce_form_field( 'es_onsite_contact', array(
+		'type' => 'text', 'class' => array( 'form-row-first' ), 'required' => true,
+		'label' => 'Contact sur place (nom)',
+	), $checkout->get_value( 'es_onsite_contact' ) );
+
+	woocommerce_form_field( 'es_onsite_phone', array(
+		'type' => 'tel', 'class' => array( 'form-row-last' ), 'required' => true,
+		'label' => 'Téléphone du contact sur place',
+	), $checkout->get_value( 'es_onsite_phone' ) );
+
+	woocommerce_form_field( 'es_access_notes', array(
+		'type' => 'textarea', 'class' => array( 'form-row-wide' ),
+		'label' => 'Instructions d’accès / logistique',
+		'placeholder' => 'Quai de livraison, badges / accréditations nécessaires, horaires de montage, restrictions véhicules, contraintes d’accès…',
+	), $checkout->get_value( 'es_access_notes' ) );
+
+	echo '</div>';
+}
+
+// 6b. Validation des champs obligatoires.
+add_action( 'woocommerce_checkout_process', 'eauservice_validate_event_fields' );
+function eauservice_validate_event_fields() {
+	$required = array(
+		'es_event_name'    => 'Nom de l’événement',
+		'es_venue_name'    => 'Lieu / site',
+		'es_venue_address' => 'Adresse du lieu de livraison',
+		'es_delivery_date' => 'Date de livraison',
+		'es_onsite_contact'=> 'Contact sur place',
+		'es_onsite_phone'  => 'Téléphone du contact sur place',
+	);
+	foreach ( $required as $key => $label ) {
+		if ( empty( $_POST[ $key ] ) ) {
+			wc_add_notice( sprintf( 'Merci de renseigner : %s (livraison événementielle).', $label ), 'error' );
+		}
+	}
+}
+
+// 6c. Enregistrement dans la commande (compatible stockage classique + HPOS).
+add_action( 'woocommerce_checkout_create_order', 'eauservice_save_event_fields', 20, 2 );
+function eauservice_save_event_fields( $order, $data ) {
+	foreach ( array_keys( eauservice_event_fields_list() ) as $key ) {
+		if ( ! empty( $_POST[ $key ] ) ) {
+			$value = ( 'es_access_notes' === $key )
+				? sanitize_textarea_field( wp_unslash( $_POST[ $key ] ) )
+				: sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+			$order->update_meta_data( '_' . $key, $value );
+		}
+	}
+}
+
+// 6d. Affichage dans le back-office (sous l'adresse de livraison).
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'eauservice_show_event_fields_admin' );
+function eauservice_show_event_fields_admin( $order ) {
+	echo '<div class="es-admin-event"><h3 style="margin-top:14px;">Livraison événementielle</h3>';
+	foreach ( eauservice_event_fields_list() as $key => $label ) {
+		$val = $order->get_meta( '_' . $key );
+		if ( $val ) {
+			echo '<p style="margin:2px 0;"><strong>' . esc_html( $label ) . ' :</strong> ' . esc_html( $val ) . '</p>';
+		}
+	}
+	echo '</div>';
+}
+
+// 6e. Affichage dans les e-mails de commande + page de confirmation.
+add_action( 'woocommerce_email_after_order_table', 'eauservice_show_event_fields_email', 20, 4 );
+function eauservice_show_event_fields_email( $order, $sent_to_admin, $plain_text, $email ) {
+	$rows = '';
+	foreach ( eauservice_event_fields_list() as $key => $label ) {
+		$val = $order->get_meta( '_' . $key );
+		if ( $val ) {
+			$rows .= '<tr><td style="padding:6px 10px;border:1px solid #e5e5e5;"><strong>' . esc_html( $label ) . '</strong></td><td style="padding:6px 10px;border:1px solid #e5e5e5;">' . esc_html( $val ) . '</td></tr>';
+		}
+	}
+	if ( $rows ) {
+		echo '<h2 style="color:#1E6FD9;">Livraison événementielle</h2>';
+		echo '<table cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;margin-bottom:20px;">' . $rows . '</table>';
+	}
+}

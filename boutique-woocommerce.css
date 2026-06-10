@@ -744,3 +744,43 @@ body.woocommerce-checkout #order_review_heading{
   padding:12px 24px !important; border-radius:30px !important; font-weight:900 !important;
   box-shadow:0 10px 24px rgba(30,111,217,.28) !important; margin:6px 0 16px !important;
 }
+
+
+/* ===================================================================== */
+/*  v19 — SECTION "LIVRAISON ÉVÉNEMENTIELLE" (checkout)                  */
+/*  Cadre premium dédié + bandeau, cohérent avec le reste du checkout.   */
+/* ===================================================================== */
+.woocommerce-checkout #eauservice_event_delivery.es-event-section{
+  background:linear-gradient(180deg,#FFFFFF 0%,#EAF2FF 100%) !important;
+  border:1.5px solid #C5D9F6 !important; border-radius:24px !important;
+  box-shadow:0 24px 54px rgba(13,38,68,.16), inset 0 5px 0 #1E6FD9 !important;
+  padding:28px 30px 24px !important; margin:22px 0 26px !important; position:relative; z-index:1;
+}
+.woocommerce-checkout .es-event-section h3{
+  display:inline-block; background:linear-gradient(135deg,#0F2747,#1E6FD9) !important; color:#fff !important;
+  padding:11px 22px !important; border-radius:30px !important; font-size:16px !important; font-weight:900 !important;
+  margin:0 0 6px !important; box-shadow:0 10px 24px rgba(30,111,217,.28); letter-spacing:.3px;
+}
+.woocommerce-checkout .es-event-section .es-event-intro{
+  color:#5B6B82 !important; font-size:13.5px; margin:8px 0 18px !important; line-height:1.6;
+}
+/* champs : disposition propre 2 colonnes, labels lisibles */
+.woocommerce-checkout .es-event-section .form-row{ margin-bottom:14px !important; padding:0 !important; }
+.woocommerce-checkout .es-event-section .form-row-first{ width:48.5% !important; float:left; clear:left; }
+.woocommerce-checkout .es-event-section .form-row-last{ width:48.5% !important; float:right; clear:right; }
+.woocommerce-checkout .es-event-section .form-row-wide{ width:100% !important; clear:both; }
+.woocommerce-checkout .es-event-section label{ color:#0A1628 !important; font-weight:700 !important; font-size:13.5px; margin-bottom:6px; display:block; }
+.woocommerce-checkout .es-event-section .required{ color:#1E6FD9; }
+.woocommerce-checkout .es-event-section input,
+.woocommerce-checkout .es-event-section textarea{
+  background:#fff !important; border:1.5px solid #D6E4F7 !important; border-radius:11px !important; color:#0A1628 !important;
+  padding:13px 14px !important; width:100% !important; box-sizing:border-box; transition:border-color .2s, box-shadow .2s;
+}
+.woocommerce-checkout .es-event-section input:focus,
+.woocommerce-checkout .es-event-section textarea:focus{ outline:none; border-color:#1E6FD9 !important; box-shadow:0 0 0 4px rgba(30,111,217,.12) !important; }
+.woocommerce-checkout .es-event-section textarea{ min-height:90px; resize:vertical; }
+.woocommerce-checkout .es-event-section::after{ content:''; display:block; clear:both; }
+@media(max-width:600px){
+  .woocommerce-checkout .es-event-section .form-row-first,
+  .woocommerce-checkout .es-event-section .form-row-last{ width:100% !important; float:none; }
+}
