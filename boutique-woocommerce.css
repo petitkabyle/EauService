@@ -784,3 +784,62 @@ body.woocommerce-checkout #order_review_heading{
   .woocommerce-checkout .es-event-section .form-row-first,
   .woocommerce-checkout .es-event-section .form-row-last{ width:100% !important; float:none; }
 }
+
+
+/* ===================================================================== */
+/*  v20 — CORRECTIONS BULLES + PANIER 2 COLONNES                        */
+/* ===================================================================== */
+
+/* --- 1) TEXTE BLANC dans toutes les "bulles" bleu foncé -------------- */
+/*    (titres en pastille : Total panier, Votre commande, Livraison       */
+/*    événementielle). On force le blanc avec un sélecteur fort + on      */
+/*    supprime la barre ::before parasite qui "buggait" la bulle.         */
+body.woocommerce-cart .cart_totals h2,
+body.woocommerce-cart .cart_totals h2 *,
+body.woocommerce-checkout #order_review_heading,
+body.woocommerce-checkout .es-event-section h3,
+body.woocommerce-checkout .es-event-section h3 *{
+  color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;
+}
+/* on enlève la barre verticale ::before sur les titres devenus pastilles */
+body.woocommerce-cart .cart_totals h2::before,
+body.woocommerce-checkout #order_review_heading::before,
+body.woocommerce-checkout .es-event-section h3::before{
+  display:none !important; content:none !important;
+}
+/* le titre "Total panier" : on lui enlève le padding-left hérité et on    */
+/* le présente comme un beau bandeau plein en haut de la carte.            */
+body.woocommerce-cart .cart_totals h2{
+  padding:18px 26px !important; margin:0 0 16px !important; border-radius:0 !important;
+  background:linear-gradient(135deg,#0F2747 0%,#1E6FD9 130%) !important;
+  text-transform:uppercase; letter-spacing:.4px; font-size:17px !important;
+}
+
+/* --- 2) PANIER : liste à GAUCHE, total à DROITE (2 colonnes) --------- */
+@media(min-width:993px){
+  body.woocommerce-cart .woocommerce{
+    display:flex !important; flex-wrap:wrap; align-items:flex-start; gap:30px;
+  }
+  /* les messages restent pleine largeur en haut */
+  body.woocommerce-cart .woocommerce > .woocommerce-notices-wrapper{
+    flex:0 0 100% !important; width:100% !important;
+  }
+  /* colonne gauche : le tableau des produits */
+  body.woocommerce-cart .woocommerce .woocommerce-cart-form{
+    flex:1 1 60% !important; min-width:0 !important; margin:0 !important;
+  }
+  /* colonne droite : le récap / total */
+  body.woocommerce-cart .woocommerce .cart-collaterals{
+    flex:1 1 33% !important; width:auto !important; float:none !important; margin:0 !important;
+  }
+  body.woocommerce-cart .woocommerce .cart-collaterals .cart_totals{
+    width:100% !important; float:none !important; margin:0 !important;
+  }
+}
+
+/* --- 3) Petites finitions des bulles checkout ----------------------- */
+/*    on s'assure que les pastilles ne se coupent pas / ne débordent pas. */
+body.woocommerce-checkout #order_review_heading,
+body.woocommerce-checkout .es-event-section h3{
+  max-width:100%; line-height:1.25 !important; white-space:normal !important;
+}
