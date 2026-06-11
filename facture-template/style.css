@@ -1,0 +1,200 @@
+/* =====================================================================
+   EAUSERVICE — STYLE FACTURE PDF (professionnel)
+   Pour l'extension "WooCommerce PDF Invoices & Packing Slips".
+   Couleurs : bleu nuit #13345A, bleu #1E6FD9, texte #0A1628.
+   NB : le moteur PDF (mPDF) ne gere pas les degrades ni flexbox.
+        On utilise donc des couleurs solides + des tableaux.
+   ===================================================================== */
+
+@page { margin: 0 0 90px 0; }
+
+* { box-sizing: border-box; }
+
+body {
+	font-family: "Helvetica", sans-serif;
+	font-size: 9pt;
+	color: #0A1628;
+	line-height: 1.5;
+	background: #FFFFFF;
+	margin: 0;
+	padding: 0;
+}
+
+/* ---------- EN-TETE : logo a gauche, infos boutique a droite ---------- */
+.head.container { width: 100%; margin-bottom: 12px; }
+.head td { vertical-align: top; }
+
+td.header { width: 50%; }
+td.header img { max-width: 240px; max-height: 90px; }
+
+td.shop-info {
+	width: 50%;
+	text-align: right;
+	color: #5B6B82;
+	font-size: 8.5pt;
+}
+.shop-name h3 {
+	color: #13345A;
+	font-size: 15pt;
+	font-weight: bold;
+	margin: 0 0 4px 0;
+	letter-spacing: -0.3px;
+}
+.shop-address { color: #5B6B82; }
+
+/* ---------- BANDEAU TITRE "FACTURE" ---------- */
+h1.document-type-label {
+	display: block;
+	background-color: #13345A;
+	color: #FFFFFF;
+	font-size: 20pt;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	padding: 12px 18px;
+	margin: 6px 0 18px 0;
+	border-radius: 8px;
+	border-left: 6px solid #1E6FD9;
+}
+
+/* ---------- ADRESSES + DONNEES DE COMMANDE ---------- */
+.order-data-addresses { width: 100%; margin-bottom: 16px; }
+.order-data-addresses td { vertical-align: top; padding-right: 12px; }
+
+td.address {
+	width: 33%;
+	background-color: #F4F9FF;
+	border: 1px solid #D6E4F7;
+	border-radius: 8px;
+	padding: 12px 14px;
+	color: #0A1628;
+}
+td.address h3 {
+	color: #1E6FD9;
+	font-size: 9pt;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin: 0 0 6px 0;
+	border-bottom: 1px solid #D6E4F7;
+	padding-bottom: 4px;
+}
+
+td.order-data { width: 34%; }
+td.order-data table { width: 100%; }
+td.order-data table th {
+	text-align: left;
+	color: #5B6B82;
+	font-weight: bold;
+	padding: 3px 6px 3px 0;
+	font-size: 8.5pt;
+}
+td.order-data table td {
+	text-align: right;
+	color: #0A1628;
+	padding: 3px 0;
+	font-size: 8.5pt;
+}
+
+/* ---------- TABLEAU DES PRODUITS ---------- */
+table.order-details {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 8px;
+	border-radius: 8px;
+	overflow: hidden;
+}
+table.order-details thead th {
+	background-color: #13345A;
+	color: #FFFFFF;
+	font-size: 8.5pt;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	text-align: left;
+	padding: 10px 8px;
+	border: none;
+}
+table.order-details thead th.quantity,
+table.order-details thead th.price { text-align: right; }
+
+table.order-details tbody td {
+	padding: 9px 8px;
+	border-bottom: 1px solid #EEF4FF;
+	vertical-align: top;
+	color: #0A1628;
+}
+table.order-details tbody tr:nth-child(even) td { background-color: #F8FBFF; }
+
+td.product .item-name { font-weight: bold; color: #0A1628; }
+td.product dl.meta { color: #5B6B82; font-size: 8pt; margin: 4px 0 0 0; }
+td.product dl.meta dt,
+td.product dl.meta dd { display: inline; margin: 0; }
+
+td.quantity { text-align: right; white-space: nowrap; }
+td.price { text-align: right; white-space: nowrap; }
+
+table.order-details tbody td img {
+	max-width: 48px;
+	max-height: 48px;
+	border: 1px solid #E1EBFA;
+	border-radius: 4px;
+	margin-right: 6px;
+}
+
+/* ---------- TOTAUX ---------- */
+table.order-details tfoot th {
+	text-align: right;
+	padding: 7px 8px;
+	color: #0A1628;
+	font-weight: bold;
+	border: none;
+}
+table.order-details tfoot td {
+	text-align: right;
+	padding: 7px 8px;
+	color: #0A1628;
+	border: none;
+	white-space: nowrap;
+}
+table.order-details tfoot tr td,
+table.order-details tfoot tr th { border-top: 1px solid #EEF4FF; }
+
+/* ligne du TOTAL TTC mise en valeur */
+table.order-details tfoot tr:last-child th,
+table.order-details tfoot tr:last-child td {
+	background-color: #EAF1FB;
+	color: #13345A;
+	font-size: 12pt;
+	font-weight: bold;
+	border-top: 2px solid #1E6FD9;
+}
+
+/* ---------- NOTES CLIENT ---------- */
+.document-notes, .customer-notes {
+	margin-top: 16px;
+	background-color: #F4F9FF;
+	border-left: 4px solid #1E6FD9;
+	border-radius: 6px;
+	padding: 10px 14px;
+	color: #5B6B82;
+	font-size: 8.5pt;
+}
+.document-notes h3, .customer-notes h3 {
+	color: #0A1628;
+	font-size: 9pt;
+	margin: 0 0 4px 0;
+}
+
+/* ---------- PIED DE PAGE ---------- */
+#footer {
+	position: fixed;
+	bottom: -70px; left: 0; right: 0;
+	color: #7C93B5;
+	font-size: 7.5pt;
+	text-align: center;
+	line-height: 1.5;
+	padding-top: 8px;
+	border-top: 1px solid #D6E4F7;
+}
+#footer a { color: #1E6FD9; text-decoration: none; }
