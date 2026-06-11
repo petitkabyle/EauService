@@ -959,3 +959,87 @@ body.woocommerce-checkout .es-event-section h3{
   .es-assur{ grid-template-columns:1fr; }
   .es-hero{ padding:32px 24px; }
 }
+
+
+/* ===================================================================== */
+/*  v23 — PAGE DE CONFIRMATION DE COMMANDE (merci / order-received)      */
+/*  Récap propre + bannière de remerciement + encart contact.            */
+/* ===================================================================== */
+
+/* Bandeau "Merci pour votre commande" */
+.woocommerce-order .es-thankyou-banner{
+  position:relative; z-index:1; text-align:center; color:#fff;
+  background:linear-gradient(135deg,#0A1424 0%,#13345A 65%,#1E6FD9 140%);
+  border-radius:24px; padding:40px 30px 34px; margin:0 0 26px;
+  box-shadow:0 26px 60px rgba(10,22,40,.26); overflow:hidden;
+}
+.woocommerce-order .es-thankyou-banner::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(520px 360px at 90% -20%, rgba(96,165,250,.4), transparent 60%);
+}
+.woocommerce-order .es-thankyou-banner > *{ position:relative; z-index:1; }
+.woocommerce-order .es-thankyou-banner .es-ty-check{
+  width:64px; height:64px; margin:0 auto 16px; border-radius:50%;
+  background:linear-gradient(135deg,#22C55E,#16a34a); color:#fff; font-size:32px; font-weight:900;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(34,197,94,.45);
+}
+.woocommerce-order .es-thankyou-banner h2{ color:#fff !important; font-size:clamp(22px,3vw,30px) !important; font-weight:900 !important; margin:0 0 10px !important; letter-spacing:-.5px; }
+.woocommerce-order .es-thankyou-banner p{ color:#C9D8EF !important; max-width:620px; margin:0 auto !important; line-height:1.7; font-size:15px; }
+
+/* Carte d'aide / contact */
+.woocommerce-order .es-help-card{
+  position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;
+  background:linear-gradient(180deg,#FFFFFF,#F4F9FF); border:1.5px solid #D6E4F7; border-radius:18px;
+  padding:22px 26px; margin:0 0 28px; box-shadow:0 14px 34px rgba(13,38,68,.10);
+}
+.woocommerce-order .es-help-card .es-help-txt{ display:flex; flex-direction:column; }
+.woocommerce-order .es-help-card .es-help-txt strong{ color:#0A1628; font-size:16px; }
+.woocommerce-order .es-help-card .es-help-txt span{ color:#5B6B82; font-size:14px; margin-top:2px; }
+.woocommerce-order .es-help-btns{ display:flex; gap:12px; flex-wrap:wrap; }
+.woocommerce-order .es-help-btn{
+  display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:12px; font-weight:800; font-size:14px; text-decoration:none !important; transition:transform .2s, box-shadow .2s, filter .2s;
+}
+.woocommerce-order .es-help-tel{ background:linear-gradient(135deg,#1E6FD9,#2f86f3); color:#fff !important; box-shadow:0 10px 24px rgba(30,111,217,.28); }
+.woocommerce-order .es-help-mail{ background:#EAF1FB; color:#1558B0 !important; border:1.5px solid #C9DDF7; }
+.woocommerce-order .es-help-btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+
+/* --- Récapitulatif de commande : cadres propres --------------------- */
+.woocommerce-order .woocommerce-order-overview,
+.woocommerce-order .woocommerce-order-details,
+.woocommerce-order .woocommerce-customer-details{
+  background:linear-gradient(180deg,#FFFFFF,#F6FAFF) !important;
+  border:1.5px solid #D6E4F7 !important; border-radius:20px !important;
+  box-shadow:0 18px 44px rgba(13,38,68,.12) !important;
+  padding:26px 28px !important; margin:0 0 24px !important; position:relative; z-index:1; list-style:none;
+}
+/* la liste "numéro / date / total / paiement" en ligne, propre */
+.woocommerce-order ul.woocommerce-order-overview{
+  display:flex !important; flex-wrap:wrap; gap:10px 0; margin:0 0 24px !important;
+}
+.woocommerce-order ul.woocommerce-order-overview li{
+  flex:1 1 50%; border:none !important; padding:8px 14px !important; color:#5B6B82 !important; font-size:13px !important; text-transform:none !important;
+}
+.woocommerce-order ul.woocommerce-order-overview li strong{ display:block; color:#0A1628 !important; font-size:17px; font-weight:900; margin-top:4px; }
+
+.woocommerce-order .woocommerce-order-details__title,
+.woocommerce-order .woocommerce-column__title{
+  color:#0A1628 !important; font-weight:900 !important; font-size:19px !important; margin-bottom:16px !important; letter-spacing:-.3px;
+}
+.woocommerce-order table.woocommerce-table--order-details{
+  background:#fff !important; border:1px solid #E6EEFA !important; border-radius:14px !important; overflow:hidden;
+}
+.woocommerce-order table.woocommerce-table--order-details thead th{
+  background:linear-gradient(180deg,#0F2747,#13345A) !important; color:#EAF2FF !important; text-transform:uppercase; font-size:12px !important; letter-spacing:.5px; padding:14px !important;
+}
+.woocommerce-order table.woocommerce-table--order-details td,
+.woocommerce-order table.woocommerce-table--order-details th{ color:#0A1628 !important; padding:14px !important; border-top:1px solid #EEF4FF !important; }
+.woocommerce-order table.woocommerce-table--order-details tfoot th{ color:#0A1628 !important; font-weight:800 !important; }
+.woocommerce-order table.woocommerce-table--order-details tfoot .amount{ color:#1558B0 !important; font-weight:900 !important; }
+.woocommerce-order .woocommerce-customer-details address{
+  border:1px solid #E6EEFA !important; border-radius:12px; padding:16px 18px; color:#0A1628 !important; font-style:normal; line-height:1.7;
+}
+
+@media(max-width:560px){
+  .woocommerce-order ul.woocommerce-order-overview li{ flex:1 1 100%; }
+  .woocommerce-order .es-help-card{ flex-direction:column; align-items:flex-start; }
+}

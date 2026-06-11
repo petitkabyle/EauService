@@ -550,3 +550,57 @@ function eauservice_faq_schema() {
 	);
 	echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "</script>\n";
 }
+
+
+/* ===========================================================================
+ * 11) PAGE DE CONFIRMATION (merci) — encart contact / accompagnement
+ *     Affiché après "Commande reçue" : message rassurant + boutons contact
+ *     (téléphone + e-mail) pour que le client ne se sente jamais seul.
+ *     >>> REMPLACEZ le téléphone et l'e-mail par les vôtres <<<
+ * =========================================================================== */
+add_action( 'woocommerce_thankyou', 'eauservice_thankyou_contact', 5 );
+function eauservice_thankyou_contact( $order_id ) {
+	if ( ! $order_id ) { return; }
+	// ---- À PERSONNALISER ----------------------------------------------
+	$tel       = '+33600000000';                 // numéro au format international (sans espaces) pour le lien
+	$tel_affit = '06 00 00 00 00';               // numéro affiché
+	$email     = 'contact@eau-service-events.fr';
+	$devis_url = 'https://formulaire.events-cafe.com/formulaire.html';
+	// -------------------------------------------------------------------
+	?>
+	<div class="es-thankyou-banner">
+		<div class="es-ty-check">&#10003;</div>
+		<h2>Merci pour votre commande !</h2>
+		<p>Votre commande a bien été reçue. Notre équipe la traite et vous recontacte sous 24h pour organiser la livraison de votre matériel événementiel. Un e-mail de confirmation vient de vous être envoyé.</p>
+	</div>
+
+	<div class="es-help-card">
+		<div class="es-help-txt">
+			<strong>Une question sur votre commande&nbsp;?</strong>
+			<span>Notre équipe vous accompagne par téléphone ou par e-mail.</span>
+		</div>
+		<div class="es-help-btns">
+			<a class="es-help-btn es-help-tel" href="tel:<?php echo esc_attr( $tel ); ?>">&#128222; <?php echo esc_html( $tel_affit ); ?></a>
+			<a class="es-help-btn es-help-mail" href="mailto:<?php echo esc_attr( $email ); ?>">&#9993; Nous écrire</a>
+		</div>
+	</div>
+	<?php
+}
+
+/* ===========================================================================
+ * 12) E-MAILS & CONFIRMATION — bloc contact en bas des e-mails client
+ *     (rassure le client + rappelle comment nous joindre)
+ * =========================================================================== */
+add_action( 'woocommerce_email_after_order_table', 'eauservice_email_contact_block', 30, 4 );
+function eauservice_email_contact_block( $order, $sent_to_admin, $plain_text, $email ) {
+	if ( $sent_to_admin || $plain_text ) { return; }
+	// ---- À PERSONNALISER ----------------------------------------------
+	$tel_affit = '06 00 00 00 00';
+	$email_pro = 'contact@eau-service-events.fr';
+	// -------------------------------------------------------------------
+	echo '<div style="margin:24px 0;padding:20px 24px;background:#EAF2FB;border-radius:12px;border-left:4px solid #1E6FD9;">';
+	echo '<p style="margin:0 0 6px;font-weight:bold;color:#0A1628;font-size:15px;">Une question sur votre commande&nbsp;?</p>';
+	echo '<p style="margin:0;color:#5B6B82;font-size:14px;">Notre équipe vous accompagne : &#128222; <a href="tel:' . esc_attr( str_replace( ' ', '', $tel_affit ) ) . '" style="color:#1E6FD9;font-weight:bold;text-decoration:none;">' . esc_html( $tel_affit ) . '</a> &nbsp;·&nbsp; &#9993; <a href="mailto:' . esc_attr( $email_pro ) . '" style="color:#1E6FD9;font-weight:bold;text-decoration:none;">' . esc_html( $email_pro ) . '</a></p>';
+	echo '<p style="margin:10px 0 0;color:#5B6B82;font-size:13px;">Merci de votre confiance,<br><strong>EauService</strong> — Location de matériel événementiel · Côte d\'Azur</p>';
+	echo '</div>';
+}
