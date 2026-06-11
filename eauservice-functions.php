@@ -604,3 +604,101 @@ function eauservice_email_contact_block( $order, $sent_to_admin, $plain_text, $e
 	echo '<p style="margin:10px 0 0;color:#5B6B82;font-size:13px;">Merci de votre confiance,<br><strong>EauService</strong> — Location de matériel événementiel · Côte d\'Azur</p>';
 	echo '</div>';
 }
+
+
+/* ===========================================================================
+ * 13) TEMPLATE D'E-MAIL PERSONNALISÉ (design premium EauService)
+ *     - En-tête bleu nuit dégradé (le logo blanc/bleu clair ressort enfin)
+ *     - Miniatures des produits affichées dans le récap
+ *     - Styles soignés : titres, tableau, total, boutons
+ *     Fonctionne avec le modèle d'e-mail WooCommerce standard.
+ * =========================================================================== */
+
+// 13a. Afficher les MINIATURES des produits dans les e-mails de commande.
+add_filter( 'woocommerce_email_order_items_args', 'eauservice_email_show_images' );
+function eauservice_email_show_images( $args ) {
+	$args['show_image']  = true;
+	$args['image_size']  = array( 64, 64 );
+	return $args;
+}
+
+// 13b. Injecter du CSS personnalisé dans TOUS les e-mails WooCommerce.
+add_filter( 'woocommerce_email_styles', 'eauservice_email_custom_styles', 20, 2 );
+function eauservice_email_custom_styles( $css, $email = null ) {
+	$css .= '
+		/* Fond general de l e-mail */
+		body, #wrapper { background-color:#EAF2FB !important; }
+
+		/* En-tete : degrade bleu nuit -> le logo blanc/bleu ressort */
+		#template_header_image { padding-top:24px; text-align:center; }
+		#template_header_image img { max-width:240px !important; height:auto !important; margin:0 auto !important; }
+		#template_header {
+			background:#0F2747 !important;
+			background-image:linear-gradient(135deg,#0A1424 0%,#13345A 60%,#1E6FD9 140%) !important;
+			border-radius:16px 16px 0 0 !important;
+			padding:8px 0 !important;
+		}
+		#template_header h1, #template_header h1 a {
+			color:#FFFFFF !important; font-weight:800 !important; letter-spacing:-.3px !important;
+			text-shadow:0 1px 6px rgba(0,0,0,.25) !important; text-align:center !important;
+		}
+
+		/* Conteneur principal : coins arrondis + ombre douce */
+		#template_container {
+			border-radius:16px !important; overflow:hidden !important;
+			box-shadow:0 18px 50px rgba(13,38,68,.18) !important; border:none !important;
+		}
+		#body_content, #template_body { background:#FFFFFF !important; }
+		#body_content table td { padding:32px 40px !important; }
+
+		/* Titres dans le corps */
+		#body_content h1, #body_content h2 {
+			color:#0A1628 !important; font-weight:800 !important; letter-spacing:-.3px !important;
+		}
+
+		/* Tableau de commande */
+		#body_content table.td, .order_item { color:#0A1628 !important; }
+		#body_content table.td th {
+			background:#13345A !important; color:#EAF2FF !important;
+			text-transform:uppercase !important; font-size:12px !important; letter-spacing:.4px !important;
+			padding:12px 10px !important; border:none !important;
+		}
+		#body_content table.td td {
+			border-color:#EEF4FF !important; padding:12px 10px !important; color:#0A1628 !important;
+		}
+		/* Miniatures produits arrondies */
+		#body_content table.td td img {
+			border-radius:8px !important; border:1px solid #E1EBFA !important;
+			background:#F4F9FF !important; padding:3px !important; vertical-align:middle !important;
+			margin-right:10px !important;
+		}
+		/* Total bien visible */
+		#body_content table.td tfoot th, #body_content table.td tfoot td {
+			font-weight:800 !important; color:#0A1628 !important;
+		}
+		#body_content table.td tfoot tr:last-child th,
+		#body_content table.td tfoot tr:last-child td {
+			color:#1558B0 !important; font-size:18px !important;
+		}
+
+		/* Adresses */
+		.address { color:#5B6B82 !important; border-color:#E6EEFA !important; }
+
+		/* Pied de page */
+		#template_footer #credit {
+			color:#7C93B5 !important; font-size:12px !important; padding:24px 48px !important; line-height:1.6 !important;
+		}
+		#template_footer #credit a { color:#1E6FD9 !important; }
+	';
+	return $css;
+}
+
+/* 13c. (Optionnel) Petit message d accueil en haut du corps des e-mails
+ *      client (sous l en-tete). Rassurant et personnalise. */
+add_action( 'woocommerce_email_header', 'eauservice_email_intro_note', 20, 2 );
+function eauservice_email_intro_note( $email_heading, $email = null ) {
+	if ( ! $email || ! is_object( $email ) ) { return; }
+	$client_emails = array( 'customer_processing_order', 'customer_completed_order', 'customer_on_hold_order', 'customer_invoice' );
+	if ( ! in_array( $email->id, $client_emails, true ) ) { return; }
+	echo '<p style="margin:0 0 6px;color:#5B6B82;font-size:15px;line-height:1.6;">Bonjour, merci d avoir choisi <strong style="color:#0A1628;">EauService</strong> pour votre evenement sur la Cote d Azur. Voici le recapitulatif de votre commande.</p>';
+}
