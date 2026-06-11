@@ -471,3 +471,82 @@ function eauservice_shop_outro() {
 	</section>
 	<?php
 }
+
+
+/* ===========================================================================
+ * 9) DONNÉES STRUCTURÉES — LocalBusiness (référencement local)
+ *    Indique à Google qui vous êtes, où, et ce que vous proposez.
+ *    Améliore l'affichage dans Google + Google Maps.
+ *    >>> REMPLISSEZ VOS VRAIES INFOS entre les crochets [ ... ] <<<
+ * =========================================================================== */
+add_action( 'wp_head', 'eauservice_local_business_schema' );
+function eauservice_local_business_schema() {
+	// ---- À PERSONNALISER ----------------------------------------------
+	$nom        = 'EauService';
+	$telephone  = '+33 [VOTRE NUMERO]';                 // ex : +33 6 12 34 56 78
+	$rue        = '[VOTRE ADRESSE]';                    // ex : 12 avenue des Congrès
+	$code_postal= '[CODE POSTAL]';                      // ex : 06400
+	$ville      = '[VILLE]';                            // ex : Cannes
+	$lien_maps  = '[LIEN GOOGLE MAPS]';                 // URL de votre fiche Google
+	$image      = 'https://eau-service-events.fr/wp-content/uploads/logo.png';
+	// -------------------------------------------------------------------
+
+	$data = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'LocalBusiness',
+		'name'        => $nom,
+		'description' => 'Location de matériel événementiel sur la Côte d\'Azur : machines à café, fontaines à eau, réfrigération et mobilier pour salons, congrès et événements professionnels.',
+		'url'         => 'https://eau-service-events.fr/',
+		'telephone'   => $telephone,
+		'image'       => $image,
+		'priceRange'  => '€€',
+		'address'     => array(
+			'@type'           => 'PostalAddress',
+			'streetAddress'   => $rue,
+			'postalCode'      => $code_postal,
+			'addressLocality' => $ville,
+			'addressCountry'  => 'FR',
+		),
+		'areaServed'  => array( 'Cannes', 'Nice', 'Monaco', 'Antibes', 'Grasse', 'Menton', 'Côte d\'Azur' ),
+		'sameAs'      => array_filter( array( $lien_maps ) ),
+	);
+
+	echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "</script>\n";
+}
+
+/* ===========================================================================
+ * 10) DONNÉES STRUCTURÉES — FAQ (sur la page Boutique)
+ *     Reprend les questions de la boutique au format Schema FAQ.
+ *     Google peut alors afficher ces questions directement dans les résultats.
+ * =========================================================================== */
+add_action( 'wp_head', 'eauservice_faq_schema' );
+function eauservice_faq_schema() {
+	if ( ! ( function_exists( 'is_shop' ) && is_shop() ) ) { return; }
+	if ( function_exists( 'is_paged' ) && is_paged() ) { return; }
+
+	$faq = array(
+		'Livrez-vous le matériel sur les salons et congrès de la Côte d\'Azur ?' =>
+			'Oui. Nous livrons et installons votre matériel directement sur votre stand ou lieu d\'événement, notamment au Palais des Festivals de Cannes, au Grimaldi Forum de Monaco et au Palais des Congrès de Nice, et nous le récupérons à la fin de votre événement.',
+		'Quel est le délai pour obtenir un devis ?' =>
+			'Nous répondons à toute demande de devis sous 24h ouvrées. Pour les événements urgents, contactez-nous directement.',
+		'L\'installation et la reprise sont-elles incluses ?' =>
+			'Nos packs événementiels incluent la livraison, l\'installation sur site et la reprise du matériel après l\'événement.',
+		'Quels types de machines à café proposez-vous ?' =>
+			'Nous proposons une large gamme de machines professionnelles : Nespresso, Lavazza, Covim, Gemini, ainsi que les consommables et accessoires associés.',
+	);
+
+	$items = array();
+	foreach ( $faq as $q => $a ) {
+		$items[] = array(
+			'@type'          => 'Question',
+			'name'           => $q,
+			'acceptedAnswer' => array( '@type' => 'Answer', 'text' => $a ),
+		);
+	}
+	$data = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => $items,
+	);
+	echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "</script>\n";
+}
