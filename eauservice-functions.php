@@ -562,8 +562,8 @@ add_action( 'woocommerce_thankyou', 'eauservice_thankyou_contact', 5 );
 function eauservice_thankyou_contact( $order_id ) {
 	if ( ! $order_id ) { return; }
 	// ---- À PERSONNALISER ----------------------------------------------
-	$tel       = '+33600000000';                 // numéro au format international (sans espaces) pour le lien
-	$tel_affit = '06 00 00 00 00';               // numéro affiché
+	$tel       = '+33761465720';                 // numéro au format international (sans espaces) pour le lien
+	$tel_affit = '07 61 46 57 20';               // numéro affiché
 	$email     = 'contact@eau-service-events.fr';
 	$devis_url = 'https://formulaire.events-cafe.com/formulaire.html';
 	// -------------------------------------------------------------------
@@ -595,7 +595,7 @@ add_action( 'woocommerce_email_after_order_table', 'eauservice_email_contact_blo
 function eauservice_email_contact_block( $order, $sent_to_admin, $plain_text, $email ) {
 	if ( $sent_to_admin || $plain_text ) { return; }
 	// ---- À PERSONNALISER ----------------------------------------------
-	$tel_affit = '06 00 00 00 00';
+	$tel_affit = '07 61 46 57 20';
 	$email_pro = 'contact@eau-service-events.fr';
 	// -------------------------------------------------------------------
 	echo '<div style="margin:24px 0;padding:20px 24px;background:#EAF2FB;border-radius:12px;border-left:4px solid #1E6FD9;">';
@@ -701,4 +701,68 @@ function eauservice_email_intro_note( $email_heading, $email = null ) {
 	$client_emails = array( 'customer_processing_order', 'customer_completed_order', 'customer_on_hold_order', 'customer_invoice' );
 	if ( ! in_array( $email->id, $client_emails, true ) ) { return; }
 	echo '<p style="margin:0 0 6px;color:#5B6B82;font-size:15px;line-height:1.6;">Bonjour, merci d avoir choisi <strong style="color:#0A1628;">EauService</strong> pour votre evenement sur la Cote d Azur. Voici le recapitulatif de votre commande.</p>';
+}
+
+
+/* ===========================================================================
+ * 14) OPTIMISATIONS PERFORMANCE & SEO (légères, sans plugin)
+ *     Objectif : pages plus rapides + meilleur référencement, sans alourdir.
+ *     Tout est conditionnel pour ne casser aucune fonctionnalité.
+ * =========================================================================== */
+
+// 14a. Charger les styles/scripts WooCommerce UNIQUEMENT sur les pages Woo.
+//      (évite de charger le CSS/JS panier sur l'accueil, le blog… => + rapide)
+add_action( 'wp_enqueue_scripts', 'eauservice_dequeue_woo_assets', 99 );
+function eauservice_dequeue_woo_assets() {
+	if ( function_exists( 'is_woocommerce' ) ) {
+		$is_woo = is_woocommerce() || is_cart() || is_checkout() || is_account_page();
+		if ( ! $is_woo ) {
+			wp_dequeue_style( 'woocommerce-general' );
+			wp_dequeue_style( 'woocommerce-layout' );
+			wp_dequeue_style( 'woocommerce-smallscreen' );
+			wp_dequeue_script( 'wc-cart-fragments' );
+			wp_dequeue_script( 'woocommerce' );
+			wp_dequeue_script( 'wc-add-to-cart' );
+		}
+	}
+}
+
+// 14b. Retirer les emojis WordPress (script inutile chargé partout = + léger).
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+// 14c. Lazy-loading natif + dimensions sur les images (déjà géré par WP,
+//      on s'assure juste que c'est actif pour le score vitesse mobile).
+add_filter( 'wp_lazy_loading_enabled', '__return_true' );
+
+// 14d. DNS-prefetch / preconnect vers Google Fonts (charge la police + vite).
+add_action( 'wp_head', 'eauservice_resource_hints', 1 );
+function eauservice_resource_hints() {
+	echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
+	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+}
+
+// 14e. SEO : title de l'onglet boutique optimisé si aucun plugin SEO ne gère.
+//      (Yoast prend le dessus s'il est actif : aucun conflit.)
+add_filter( 'document_title_parts', 'eauservice_shop_title', 5 );
+function eauservice_shop_title( $parts ) {
+	if ( function_exists( 'is_shop' ) && is_shop() && ! defined( 'WPSEO_VERSION' ) ) {
+		$parts['title'] = 'Location de matériel événementiel Côte d\'Azur';
+	}
+	return $parts;
+}
+
+// 14f. SEO : attribut alt automatique sur les images produit qui n'en ont pas
+//      (utilise le nom du produit) -> meilleures images dans Google.
+add_filter( 'wp_get_attachment_image_attributes', 'eauservice_auto_alt', 10, 2 );
+function eauservice_auto_alt( $attr, $attachment ) {
+	if ( empty( $attr['alt'] ) ) {
+		$parent = wp_get_post_parent_id( $attachment->ID );
+		if ( $parent && 'product' === get_post_type( $parent ) ) {
+			$attr['alt'] = get_the_title( $parent ) . ' - location événementiel Côte d\'Azur';
+		}
+	}
+	return $attr;
 }

@@ -966,42 +966,60 @@ body.woocommerce-checkout .es-event-section h3{
 /*  Récap propre + bannière de remerciement + encart contact.            */
 /* ===================================================================== */
 
-/* Bandeau "Merci pour votre commande" */
-.woocommerce-order .es-thankyou-banner{
+/* Message PAR DÉFAUT de WooCommerce ("Merci. Votre commande a été reçue.") */
+/* -> agrandi, centré, bien visible (avant : petit, gris, à gauche).        */
+.woocommerce-order > p.woocommerce-notice--success,
+.woocommerce-order p.woocommerce-thankyou-order-received,
+p.woocommerce-thankyou-order-received{
+  text-align:center !important; font-size:20px !important; font-weight:800 !important;
+  color:#0A1628 !important; background:#EAF7EE !important; border:1.5px solid #B6E6C8 !important;
+  border-radius:14px !important; padding:18px 22px !important; margin:0 0 22px !important;
+  box-shadow:0 10px 26px rgba(13,38,68,.08) !important;
+}
+
+/* Bandeau "Merci pour votre commande" (sélecteur direct = toujours appliqué) */
+.es-thankyou-banner{
   position:relative; z-index:1; text-align:center; color:#fff;
   background:linear-gradient(135deg,#0A1424 0%,#13345A 65%,#1E6FD9 140%);
-  border-radius:24px; padding:40px 30px 34px; margin:0 0 26px;
+  border-radius:24px; padding:44px 30px 38px; margin:0 0 26px;
   box-shadow:0 26px 60px rgba(10,22,40,.26); overflow:hidden;
 }
-.woocommerce-order .es-thankyou-banner::before{
+.es-thankyou-banner::before{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:radial-gradient(520px 360px at 90% -20%, rgba(96,165,250,.4), transparent 60%);
 }
-.woocommerce-order .es-thankyou-banner > *{ position:relative; z-index:1; }
-.woocommerce-order .es-thankyou-banner .es-ty-check{
-  width:64px; height:64px; margin:0 auto 16px; border-radius:50%;
-  background:linear-gradient(135deg,#22C55E,#16a34a); color:#fff; font-size:32px; font-weight:900;
+.es-thankyou-banner > *{ position:relative; z-index:1; }
+.es-thankyou-banner .es-ty-check{
+  width:70px; height:70px; margin:0 auto 18px; border-radius:50%;
+  background:linear-gradient(135deg,#22C55E,#16a34a); color:#fff !important; font-size:36px; font-weight:900;
   display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(34,197,94,.45);
 }
-.woocommerce-order .es-thankyou-banner h2{ color:#fff !important; font-size:clamp(22px,3vw,30px) !important; font-weight:900 !important; margin:0 0 10px !important; letter-spacing:-.5px; }
-.woocommerce-order .es-thankyou-banner p{ color:#C9D8EF !important; max-width:620px; margin:0 auto !important; line-height:1.7; font-size:15px; }
+/* TITRE en BLANC (bien visible sur le fond bleu nuit) + grand */
+.es-thankyou-banner h2{
+  color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;
+  font-size:clamp(26px,3.4vw,36px) !important; font-weight:900 !important; margin:0 0 12px !important; letter-spacing:-.6px;
+}
+/* Sous-texte agrandi et bien lisible */
+.es-thankyou-banner p{
+  color:#DCEAFE !important; max-width:640px; margin:0 auto !important; line-height:1.7; font-size:16.5px !important;
+}
 
-/* Carte d'aide / contact */
-.woocommerce-order .es-help-card{
+/* Carte d'aide / contact (sélecteur direct) */
+.es-help-card{
   position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;
   background:linear-gradient(180deg,#FFFFFF,#F4F9FF); border:1.5px solid #D6E4F7; border-radius:18px;
   padding:22px 26px; margin:0 0 28px; box-shadow:0 14px 34px rgba(13,38,68,.10);
 }
-.woocommerce-order .es-help-card .es-help-txt{ display:flex; flex-direction:column; }
-.woocommerce-order .es-help-card .es-help-txt strong{ color:#0A1628; font-size:16px; }
-.woocommerce-order .es-help-card .es-help-txt span{ color:#5B6B82; font-size:14px; margin-top:2px; }
-.woocommerce-order .es-help-btns{ display:flex; gap:12px; flex-wrap:wrap; }
-.woocommerce-order .es-help-btn{
+.es-help-card .es-help-txt{ display:flex; flex-direction:column; }
+.es-help-card .es-help-txt strong{ color:#0A1628; font-size:16px; }
+.es-help-card .es-help-txt span{ color:#5B6B82; font-size:14px; margin-top:2px; }
+.es-help-btns{ display:flex; gap:12px; flex-wrap:wrap; }
+.es-help-btn{
   display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:12px; font-weight:800; font-size:14px; text-decoration:none !important; transition:transform .2s, box-shadow .2s, filter .2s;
 }
-.woocommerce-order .es-help-tel{ background:linear-gradient(135deg,#1E6FD9,#2f86f3); color:#fff !important; box-shadow:0 10px 24px rgba(30,111,217,.28); }
-.woocommerce-order .es-help-mail{ background:#EAF1FB; color:#1558B0 !important; border:1.5px solid #C9DDF7; }
-.woocommerce-order .es-help-btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+.es-help-tel{ background:linear-gradient(135deg,#1E6FD9,#2f86f3); color:#fff !important; box-shadow:0 10px 24px rgba(30,111,217,.28); }
+.es-help-mail{ background:#EAF1FB; color:#1558B0 !important; border:1.5px solid #C9DDF7; }
+.es-help-btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
 
 /* --- Récapitulatif de commande : cadres propres --------------------- */
 .woocommerce-order .woocommerce-order-overview,
@@ -1042,4 +1060,41 @@ body.woocommerce-checkout .es-event-section h3{
 @media(max-width:560px){
   .woocommerce-order ul.woocommerce-order-overview li{ flex:1 1 100%; }
   .woocommerce-order .es-help-card{ flex-direction:column; align-items:flex-start; }
+}
+
+
+/* ===================================================================== */
+/*  v24 — FIX MENU PAYS/RÉGION (select2) + finitions checkout            */
+/*  Le menu déroulant Pays était "coupé" : on corrige la hauteur, le      */
+/*  rembourrage et l'alignement du composant select2 de WooCommerce.      */
+/* ===================================================================== */
+.woocommerce-checkout .select2-container .select2-selection--single,
+.woocommerce .select2-container .select2-selection--single{
+  height:50px !important; min-height:50px !important;
+  border:1.5px solid #D6E4F7 !important; border-radius:11px !important; background:#fff !important;
+  display:flex !important; align-items:center !important;
+}
+.woocommerce-checkout .select2-container--default .select2-selection--single .select2-selection__rendered,
+.woocommerce .select2-container--default .select2-selection--single .select2-selection__rendered{
+  line-height:48px !important; padding:0 30px 0 14px !important; color:#0A1628 !important;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.woocommerce-checkout .select2-container--default .select2-selection--single .select2-selection__arrow,
+.woocommerce .select2-container--default .select2-selection--single .select2-selection__arrow{
+  height:48px !important; right:8px !important;
+}
+/* liste déroulante ouverte */
+.select2-container--open .select2-dropdown{
+  border:1.5px solid #1E6FD9 !important; border-radius:12px !important; box-shadow:0 16px 40px rgba(13,38,68,.18) !important; overflow:hidden;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected]{
+  background:#1E6FD9 !important;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field{
+  border:1.5px solid #D6E4F7 !important; border-radius:8px !important; padding:8px !important;
+}
+/* le champ pays "natif" (sans select2) aussi propre */
+.woocommerce-checkout select#billing_country,
+.woocommerce-checkout select#shipping_country{
+  height:50px !important; border:1.5px solid #D6E4F7 !important; border-radius:11px !important; padding:0 14px !important; background:#fff !important; color:#0A1628 !important;
 }
