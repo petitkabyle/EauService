@@ -155,10 +155,10 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 #esroot .pack-btn.ghost:hover{background:#d4f0fb;filter:none}
 
 /* KPIs */
-#esroot .kpis-wrap{background:radial-gradient(120% 120% at 85% 0%,#11436b,#0a2942 55%,#061726)}
+#esroot .kpis-wrap{background:#f4f7fb}
 #esroot .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
-#esroot .kpi-n{font-size:clamp(38px,5vw,58px);font-weight:700;color:var(--a1);letter-spacing:-2px;line-height:1;font-family:'Sora',sans-serif !important}
-#esroot .kpi-l{font-size:13px;color:#a9c1d8;margin-top:8px;font-weight:500}
+#esroot .kpi-n{font-size:clamp(38px,5vw,58px);font-weight:700;background:linear-gradient(135deg,var(--deep),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-2px;line-height:1;font-family:'Sora',sans-serif !important}
+#esroot .kpi-l{font-size:13px;color:#5b6b7d;margin-top:8px;font-weight:500}
 
 /* PRODUCTS CATEGORIES (light) */
 #esroot .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
@@ -357,6 +357,14 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
   #esroot .es-map{height:340px}
 }
 
+
+/* ===== Fluidité / accessibilité ===== */
+#esroot .es-bub,#esroot .pack,#esroot .force,#esroot .cat,#esroot .testi,#esroot .ev-chip{will-change:transform}
+@media(prefers-reduced-motion:reduce){
+  #esroot *,#esroot *::before,#esroot *::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  #esroot .es-bub,#esroot .hero-wave-back{display:none !important}
+  #esroot .sr{opacity:1 !important;transform:none !important}
+}
 </style>
 
 <div id="esroot" class="es-fullbleed">
@@ -773,4 +781,207 @@ function setLang(lang){
 })();
 </script>
 
+
+<!-- SEO : donnees structurees -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.events-cafe.com/#eauservice",
+  "name": "EauService by Events Café",
+  "image": "https://www.events-cafe.com/pack%20complet%20nespresso.png",
+  "url": "https://www.events-cafe.com/",
+  "telephone": "+33761465720",
+  "email": "contact@events-cafe.com",
+  "priceRange": "€€",
+  "description": "Location de matériel événementiel sur la Côte d'Azur : fontaines à eau, machines à café Nespresso, Lavazza et Covim, réfrigérateurs et mobilier. Livraison, installation et reprise incluses. Devis gratuit sous 24h à Nice, Cannes, Monaco, Antibes et alentours.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "Provence-Alpes-Côte d'Azur",
+    "addressCountry": "FR"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Nice"
+    },
+    {
+      "@type": "City",
+      "name": "Cannes"
+    },
+    {
+      "@type": "City",
+      "name": "Antibes"
+    },
+    {
+      "@type": "City",
+      "name": "Monaco"
+    },
+    {
+      "@type": "City",
+      "name": "Sophia Antipolis"
+    },
+    {
+      "@type": "City",
+      "name": "Grasse"
+    },
+    {
+      "@type": "City",
+      "name": "Mandelieu"
+    },
+    {
+      "@type": "City",
+      "name": "Fréjus"
+    },
+    {
+      "@type": "City",
+      "name": "Saint-Raphaël"
+    },
+    {
+      "@type": "City",
+      "name": "Menton"
+    },
+    {
+      "@type": "City",
+      "name": "Toulon"
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "08:00",
+      "closes": "20:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/eventscafe_paca"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "6",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Camille Laurent"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Thomas Mercier"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Sophie Bernard"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et ponctuel."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Julien Roche"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Du matériel haut de gamme, livré pile à l'heure pour notre soirée VIP. On refait appel à eux sans hésiter."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Aurélie Martin"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Fontaines et machines à café impeccables pendant tout le salon. Installation rapide et reprise sans souci."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Karim Benali"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Une équipe à l'écoute et des tarifs clairs. Le pack complet a impressionné nos exposants."
+    }
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Location de fontaines à eau pour événements"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Location de machines à café Nespresso, Lavazza et Covim"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Location de réfrigérateurs pour salons et stands"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Packs événementiels clés en main"
+      }
+    }
+  ]
+}
+</script>
 </div>
