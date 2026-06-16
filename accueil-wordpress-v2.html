@@ -42,7 +42,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
 @keyframes esGlow{0%,100%{opacity:.45}50%{opacity:.85}}
 @keyframes esShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes esWaveMove{from{background-position-x:0}to{background-position-x:720px}}
+@keyframes esWaveX{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @keyframes shopPulse{0%,100%{box-shadow:0 8px 22px -8px rgba(46,182,230,.55)}50%{box-shadow:0 10px 30px -6px rgba(111,224,255,.8)}}
 
 /* LOADER */
@@ -56,7 +56,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 #esroot .ld-bar.go{width:180px}
 
 /* HEADER */
-#esroot header{position:sticky;top:0;z-index:500;background:rgba(8,26,43,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+#esroot header{position:sticky;top:0;z-index:500;background:rgba(7,23,40,.97);border-bottom:1px solid rgba(255,255,255,.08)}
 /* BANDEAU DEFILANT */
 #esroot .marquee{background:#06223a;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;white-space:nowrap;position:relative;z-index:600}
 #esroot .marquee-track{display:flex;width:max-content;animation:esmarquee 32s linear infinite}
@@ -93,7 +93,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 /* HERO */
 #esroot .hero{position:relative;min-height:84vh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 82% 0%,#11436b 0%,#0a2942 46%,#061726 100%);padding-bottom:90px}
 #esroot .hero::before{content:'';position:absolute;top:-140px;right:-60px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.32),transparent 65%);animation:esGlow 6s ease-in-out infinite;pointer-events:none}
-#esroot .hero::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:120px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C120,108 240,108 360,60 C480,12 600,12 720,60 L720,120 L0,120 Z' fill='%23f4f7fb'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:720px 120px;animation:esWaveMove 18s linear infinite;pointer-events:none;z-index:3}
+#esroot .hero::after{content:'';position:absolute;left:0;bottom:-1px;width:200%;height:60px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C120,108 240,108 360,60 C480,12 600,12 720,60 L720,120 L0,120 Z' fill='%23f4f7fb'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 14s linear infinite;pointer-events:none;z-index:4;transform:translateZ(0)}
 #esroot .hero-inner{max-width:1240px;margin:0 auto;padding:70px 40px 40px;position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
 #esroot .hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border:1px solid rgba(111,224,255,.32);border-radius:100px;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--a1);margin-bottom:22px}
 #esroot .hero h1{font-size:clamp(32px,4.4vw,56px);font-weight:700;letter-spacing:-1.4px;line-height:1.05;color:#f3f9ff;margin-bottom:22px;word-spacing:normal}
@@ -172,11 +172,6 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 #esroot .cat-desc{font-size:13.5px;color:var(--txt-g);line-height:1.6;margin-bottom:14px}
 #esroot .cat-link{font-size:13.5px;font-weight:700;color:var(--deep);display:flex;align-items:center;gap:6px}
 
-/* PARTNERS */
-#esroot .partners-wrap{background:#f4f7fb}
-#esroot .partners{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-#esroot .partner{background:#fff;border:1px solid var(--border-d);border-radius:100px;padding:14px 26px;font-size:14px;font-weight:700;color:var(--txt-g);transition:all .2s}
-#esroot .partner:hover{border-color:var(--a2);color:var(--deep)}
 
 /* CONTACT */
 #esroot .contact-wrap{background:radial-gradient(120% 100% at 85% 0%,#11436b,#0a2942 48%,#061726)}
@@ -283,9 +278,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
   #esroot .cta-main-btns{flex-direction:column;gap:12px}
   #esroot .cta-big,#esroot .cta-wa{width:100%;justify-content:center;text-align:center;font-size:15px;padding:16px}
   #esroot .cta-direct{flex-direction:column;gap:14px}
-  #esroot .partners{gap:8px}
-  #esroot .partner{font-size:12px;padding:10px 16px}
-  #esroot .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+      #esroot .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
   #esroot .force,#esroot .pack-body,#esroot .cat-body,#esroot .contact-form{padding:24px}
 }
 @media(max-width:420px){
@@ -302,8 +295,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 #esroot .hero .es-bub{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--a3));pointer-events:none;z-index:2;box-shadow:0 0 10px rgba(var(--rgb),.5)}
 
 /* --- Vagues plus fines + effet de perspective (2 couches) --- */
-#esroot .hero::after{height:66px !important;background-size:620px 66px !important;animation-duration:12s !important;z-index:4}
-#esroot .hero-wave-back{position:absolute;left:0;right:0;bottom:-1px;height:56px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 620 44' preserveAspectRatio='none'%3E%3Cpath d='M0,22 C103,2 207,2 310,22 C413,42 517,42 620,22 L620,44 L0,44 Z' fill='rgba(53,198,240,0.42)'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:620px 56px;animation:esWaveMove 16s linear infinite reverse;z-index:3;pointer-events:none}
+#esroot .hero-wave-back{position:absolute;left:0;bottom:-1px;width:200%;height:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 50' preserveAspectRatio='none'%3E%3Cpath d='M0,25 C120,5 240,5 360,25 C480,45 600,45 720,25 L720,50 L0,50 Z' fill='rgba(53,198,240,0.42)'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 10s linear infinite reverse;z-index:3;pointer-events:none;transform:translateZ(0)}
 
 /* --- Section Zones d'intervention (sombre, comme la v2) --- */
 #esroot .zones-wrap{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 15% 10%,#11436b 0%,#0a2942 50%,#061726 100%)}
@@ -320,7 +312,7 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 #esroot .es-pin{position:absolute}
 #esroot .es-pin .pdot{position:absolute;transform:translate(-50%,-50%);border-radius:50%;animation:esGlow 3.4s ease-in-out infinite}
 #esroot .es-pin .plabel{position:absolute;left:50%;white-space:nowrap;font-family:'Sora',sans-serif !important;text-shadow:0 1px 7px rgba(2,12,22,.9);pointer-events:none}
-#esroot .map-legend{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:14px;padding:9px 14px;border-radius:12px;background:rgba(6,23,38,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+#esroot .map-legend{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:14px;padding:9px 14px;border-radius:12px;background:rgba(6,23,38,.88);border:1px solid rgba(255,255,255,.12)}
 #esroot .map-legend span{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600}
 
 /* --- Salons & événements (chips avec LED) --- */
@@ -359,12 +351,21 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
 
 
 /* ===== Fluidité / accessibilité ===== */
-#esroot .es-bub,#esroot .pack,#esroot .force,#esroot .cat,#esroot .testi,#esroot .ev-chip{will-change:transform}
 @media(prefers-reduced-motion:reduce){
   #esroot *,#esroot *::before,#esroot *::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   #esroot .es-bub,#esroot .hero-wave-back{display:none !important}
   #esroot .sr{opacity:1 !important;transform:none !important}
 }
+/* ===== Optimisation & aération ===== */
+#esroot a,#esroot button{touch-action:manipulation}
+#esroot [id]{scroll-margin-top:90px}
+#esroot .forces,#esroot .cats{gap:26px}
+#esroot .packs,#esroot .testis{gap:28px}
+#esroot .zones-grid{gap:56px}
+#esroot .kpis-wrap{border-top:1px solid #eef2f6;border-bottom:1px solid #eef2f6}
+#esroot .ev-list{gap:12px;line-height:1.5}
+#esroot .hero-mini{margin-top:6px}
+@media(max-width:900px){#esroot .es-bub{display:none !important}}
 </style>
 
 <div id="esroot" class="es-fullbleed">
