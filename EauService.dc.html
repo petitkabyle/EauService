@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  @keyframes esWave { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes esFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+  @keyframes esFloatSlow { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-22px) rotate(1deg); } }
+  @keyframes esBubble { 0% { transform: translateY(10px) scale(.5); opacity: 0; } 18% { opacity: .7; } 100% { transform: translateY(-280px) scale(1); opacity: 0; } }
+  @keyframes esGlow { 0%,100% { opacity: .45; } 50% { opacity: .85; } }
+  @keyframes esShimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  @keyframes esChip { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes esSpin { to { transform: rotate(360deg); } }
+  @keyframes esToast { 0% { opacity: 0; transform: translate(-50%, 20px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes esDash { to { stroke-dashoffset: -240; } }
+</style>
+</helmet>
+<div style="font-family: 'Manrope', sans-serif; background: #f4f7fb; color: #0a2942; -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden;">
+
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(8,26,43,.86); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; gap: 20px;">
+      <div onClick="{{ navAccueil }}" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 13px; background: linear-gradient(155deg,#0e3753,#06223a); border: 1px solid rgba(111,224,255,.28); box-shadow: 0 0 22px rgba(var(--es-rgb,53,198,240),.32), inset 0 1px 0 rgba(255,255,255,.08);">
+          <svg width="25" height="25" viewBox="0 0 32 32" fill="none">
+            <defs>
+              <linearGradient id="es-jug" x1="8" y1="6" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="var(--es-a1,#6fe0ff)"></stop>
+                <stop offset="1" stop-color="var(--es-a2,#2eb6e6)"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M10 4H22A2 2 0 0 1 24 6V13C24 15.5 22 16.4 19.2 17.2A1 1 0 0 0 18.8 18V20H13.2V18A1 1 0 0 0 12.8 17.2C10 16.4 8 15.5 8 13V6A2 2 0 0 1 10 4Z" fill="url(#es-jug)"></path>
+            <path d="M10 4H22A2 2 0 0 1 24 6V8C21 9.6 19 9.6 16 8.2C13 6.8 11 6.8 8 8V6A2 2 0 0 1 10 4Z" fill="#e4f6fd"></path>
+            <path d="M10.6 6.4V12.4" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity=".38"></path>
+            <rect x="12.4" y="19.2" width="7.2" height="3.2" rx="1.1" fill="#eaf8ff"></rect>
+            <path d="M11.2 22.4 9.4 25.4M20.8 22.4 22.6 25.4M8.6 25.4H23.4" stroke="#cfe9f5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".75"></path>
+          </svg>
+        </div>
+        <span style="font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -.01em;">Eau<span style="color:var(--es-a1,#6fe0ff);">Service</span></span>
+      </div>
+      <nav style="display: flex; gap: 26px; font-size: 14.5px; font-weight: 500; color: #c3d4e6;">
+        <span onClick="{{ navAccueil }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.accueil }}</span>
+        <span onClick="{{ navPacks }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.packs }}</span>
+        <span onClick="{{ navEquip }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.equip }}</span>
+        <span onClick="{{ navZones }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.zones }}</span>
+        <span onClick="{{ navBoutique }}" style="cursor:pointer;color:var(--es-a1,#6fe0ff);font-weight:600;">{{ t.nav.boutique }}</span>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="display: flex; align-items: center; border: 1px solid rgba(255,255,255,.16); border-radius: 100px; overflow: hidden;">
+          <span onClick="{{ setFr }}" style="padding: 6px 12px; font-family:'Sora',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; color: {{ langFrColor }}; background: {{ langFrBg }};">FR</span>
+          <span onClick="{{ setEn }}" style="padding: 6px 12px; font-family:'Sora',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; color: {{ langEnColor }}; background: {{ langEnBg }};">EN</span>
+        </div>
+        <span style="font-size: 13.5px; font-weight: 600; color: #eaf3fb; white-space: nowrap;">07 61 46 57 20</span>
+        <div onClick="{{ navPanier }}" style="position: relative; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgba(255,255,255,.16); cursor: pointer;" style-hover="border-color:rgba(111,224,255,.5);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#eaf3fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}"><span style="position: absolute; top: -7px; right: -7px; min-width: 20px; height: 20px; padding: 0 5px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); color: #051726; font-size: 11.5px; font-weight: 800; border-radius: 100px;">{{ cartCount }}</span></sc-if>
+        </div>
+        <span onClick="{{ navDevis }}" style="font-family:'Sora',sans-serif; font-size: 14px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); padding: 11px 20px; border-radius: 100px; cursor: pointer; box-shadow: 0 8px 22px -8px rgba(var(--es-rgb,53,198,240),.7); white-space: nowrap;" style-hover="filter:brightness(1.08);">{{ t.nav.devis }}</span>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Accueil">
+
+    <section style="position: relative; overflow: hidden; background: radial-gradient(120% 90% at 82% 0%, #11436b 0%, #0a2942 46%, #061726 100%);">
+      <div style="position: absolute; top: -140px; right: -60px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--es-rgb,53,198,240),.32), transparent 65%); animation: esGlow 6s ease-in-out infinite; pointer-events: none;"></div>
+      <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.08fr .92fr; gap: 36px; align-items: center; padding: 70px 32px 130px; min-height: 78vh;">
+        <div>
+          <div data-reveal="" style="display: inline-flex; align-items: center; gap: 9px; padding: 8px 16px; border: 1px solid rgba(111,224,255,.32); border-radius: 100px; color: var(--es-a1,#6fe0ff); font-size: 12px; font-weight: 700; letter-spacing: .13em;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--es-a1,#6fe0ff);box-shadow:0 0 10px var(--es-a1,#6fe0ff);"></span>{{ t.hero.badge }}
+          </div>
+          <h1 data-reveal="" data-reveal-delay="80" style="font-family: 'Sora', sans-serif; font-size: 56px; line-height: 1.04; font-weight: 700; color: #f3f9ff; letter-spacing: -.025em; margin: 22px 0 0;">
+            {{ t.hero.titlePre }}<span style="background: linear-gradient(90deg,var(--es-a1,#6fe0ff),var(--es-a3,#35c6f0),var(--es-a1,#6fe0ff)); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: esShimmer 4s linear infinite;">{{ t.hero.titleHl }}</span>
+          </h1>
+          <p data-reveal="" data-reveal-delay="160" style="font-size: 17.5px; line-height: 1.6; color: #a9c1d8; max-width: 520px; margin: 24px 0 0;">{{ t.hero.sub }}</p>
+          <div data-reveal="" data-reveal-delay="240" style="display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap;">
+            <span onClick="{{ navDevis }}" style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); padding: 16px 28px; border-radius: 100px; cursor: pointer; box-shadow: 0 16px 36px -12px rgba(var(--es-rgb,53,198,240),.75);" style-hover="filter:brightness(1.08);">{{ t.hero.cta1 }}</span>
+            <span onClick="{{ navPacks }}" style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #eaf3fb; border: 1px solid rgba(255,255,255,.22); padding: 16px 28px; border-radius: 100px; cursor: pointer;" style-hover="border-color:rgba(111,224,255,.5);background:rgba(255,255,255,.04);">{{ t.hero.cta2 }}</span>
+          </div>
+          <div data-reveal="" data-reveal-delay="320" style="display: flex; gap: 38px; margin-top: 46px;">
+            <div><div data-count="" data-count-to="500" data-count-prefix="+" style="font-family:'Sora',sans-serif; font-size: 32px; font-weight: 700; color: var(--es-a1,#6fe0ff);">+500</div><div style="font-size: 13px; color: #8ba6c2; margin-top: 2px;">{{ t.hero.stat1 }}</div></div>
+            <div style="width:1px;background:rgba(255,255,255,.12);"></div>
+            <div><div data-count="" data-count-to="11" style="font-family:'Sora',sans-serif; font-size: 32px; font-weight: 700; color: var(--es-a1,#6fe0ff);">11</div><div style="font-size: 13px; color: #8ba6c2; margin-top: 2px;">{{ t.hero.stat2 }}</div></div>
+            <div style="width:1px;background:rgba(255,255,255,.12);"></div>
+            <div><div data-count="" data-count-to="24" data-count-suffix="h" style="font-family:'Sora',sans-serif; font-size: 32px; font-weight: 700; color: var(--es-a1,#6fe0ff);">24h</div><div style="font-size: 13px; color: #8ba6c2; margin-top: 2px;">{{ t.hero.stat3 }}</div></div>
+          </div>
+        </div>
+
+        <div style="position: relative; height: 540px; display: flex; align-items: center; justify-content: center;">
+          <div style="position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--es-rgb,53,198,240),.4), transparent 62%); animation: esGlow 5s ease-in-out infinite;"></div>
+          <div data-parallax="-0.04" style="position: relative; height: 500px; display: flex; align-items: center; justify-content: center;">
+            <img src="./zenius-mqfk4q08.png" alt="{{ t.hero.imgAlt }}" style="height: 432px; width: 348px; object-fit: contain; filter: drop-shadow(0 40px 50px rgba(0,0,0,.55)); animation: esFloatSlow 7s ease-in-out infinite">
+          </div>
+          <div style="position: absolute; top: 40px; left: 0; display: flex; align-items: center; gap: 8px; padding: 11px 16px; background: rgba(8,30,48,.82); backdrop-filter: blur(8px); border: 1px solid rgba(111,224,255,.25); border-radius: 12px; color: #eaf3fb; font-size: 13px; font-weight: 600; animation: esChip 5s ease-in-out infinite;"><span style="width:7px;height:7px;border-radius:50%;background:#35e0a0;"></span>{{ t.hero.chip1 }}</div>
+          <div style="position: absolute; bottom: 70px; right: 0; display: flex; align-items: center; gap: 8px; padding: 11px 16px; background: rgba(8,30,48,.82); backdrop-filter: blur(8px); border: 1px solid rgba(111,224,255,.25); border-radius: 12px; color: #eaf3fb; font-size: 13px; font-weight: 600; animation: esChip 5s ease-in-out infinite 1.2s;"><span style="width:7px;height:7px;border-radius:50%;background:var(--es-a1,#6fe0ff);"></span>{{ t.hero.chip2 }}</div>
+          <div style="position:absolute;left:60px;bottom:90px;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--es-a3,#35c6f0));animation:esBubble 6s ease-in infinite .4s;"></div>
+          <div style="position:absolute;right:80px;top:120px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--es-a3,#35c6f0));animation:esBubble 7s ease-in infinite 1.5s;"></div>
+          <div style="position:absolute;left:120px;bottom:40px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--es-a3,#35c6f0));animation:esBubble 5.5s ease-in infinite 2.2s;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; left: 0; right: 0; bottom: -1px; height: 120px; overflow: hidden; pointer-events: none;">
+        <div style="display: flex; width: 200%; height: 100%; animation: esWave 20s linear infinite;">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="width:50%;height:100%;"><path d="M0,60 C240,108 480,108 720,60 C960,12 1200,12 1440,60 L1440,120 L0,120 Z" fill="#f4f7fb"></path></svg>
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="width:50%;height:100%;"><path d="M0,60 C240,108 480,108 720,60 C960,12 1200,12 1440,60 L1440,120 L0,120 Z" fill="#f4f7fb"></path></svg>
+        </div>
+      </div>
+      <div style="position: absolute; left: 0; right: 0; bottom: -1px; height: 88px; overflow: hidden; pointer-events: none;">
+        <div style="display: flex; width: 200%; height: 100%; animation: esWave 13s linear infinite;">
+          <svg viewBox="0 0 1440 88" preserveAspectRatio="none" style="width:50%;height:100%;"><path d="M0,44 C240,8 480,8 720,44 C960,80 1200,80 1440,44 L1440,88 L0,88 Z" fill="rgba(var(--es-rgb,53,198,240),.16)"></path></svg>
+          <svg viewBox="0 0 1440 88" preserveAspectRatio="none" style="width:50%;height:100%;"><path d="M0,44 C240,8 480,8 720,44 C960,80 1200,80 1440,44 L1440,88 L0,88 Z" fill="rgba(var(--es-rgb,53,198,240),.16)"></path></svg>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: #fff; border-bottom: 1px solid #e7edf3; overflow: hidden; padding: 22px 0;">
+      <div style="display: flex; align-items: center; gap: 18px; max-width: 1280px; margin: 0 auto; padding: 0 32px;">
+        <span style="flex: none; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: #94a6b8; text-transform: uppercase;">{{ t.misc.equips }}</span>
+        <div style="position: relative; flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);">
+          <div style="display: flex; width: max-content; gap: 44px; animation: esWave 26s linear infinite; white-space: nowrap;">
+            <span style="display:flex;gap:44px;align-items:center;color:#5b6b7d;font-weight:600;font-size:15px;"><sc-for list="{{ marquee }}" as="mi" hint-placeholder-count="8"><span>{{ mi.name }}</span><span style="color:#cdd8e3;">·</span></sc-for></span>
+            <span style="display:flex;gap:44px;align-items:center;color:#5b6b7d;font-weight:600;font-size:15px;"><sc-for list="{{ marquee }}" as="mi" hint-placeholder-count="8"><span>{{ mi.name }}</span><span style="color:#cdd8e3;">·</span></sc-for></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1280px; margin: 0 auto; padding: 92px 32px 40px;">
+      <div data-reveal="" style="text-align: center; max-width: 720px; margin: 0 auto;">
+        <div style="display: inline-block; color: var(--es-deep,#2191c4); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.why.eyebrow }}</div>
+        <h2 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #0a2942; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.1;">{{ t.why.title }}</h2>
+        <p style="font-size: 16.5px; color: #5b6b7d; line-height: 1.6; margin: 16px 0 0; text-wrap: pretty;">{{ t.why.sub }}</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 52px;">
+        <div data-reveal="" data-reveal-delay="0" style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 30px 26px; box-shadow: 0 10px 30px -22px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s, border-color .35s;" style-hover="transform:translateY(-7px);box-shadow:0 26px 46px -26px rgba(10,41,66,.5);border-color:#bfe6f6;">
+          <div style="width: 54px; height: 54px; border-radius: 15px; background: linear-gradient(135deg,#e7f7fe,#d2effb); display: flex; align-items: center; justify-content: center; margin-bottom: 22px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--es-deep,#1b86bc)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"></path><path d="M14 9h4l3 3v5h-3"></path><circle cx="7.5" cy="17.5" r="2"></circle><circle cx="17.5" cy="17.5" r="2"></circle></svg>
+          </div>
+          <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; color: #0a2942; margin: 0 0 8px;">{{ t.why.f1t }}</h3>
+          <p style="font-size: 14.5px; color: #5b6b7d; line-height: 1.55; margin: 0;">{{ t.why.f1d }}</p>
+        </div>
+        <div data-reveal="" data-reveal-delay="100" style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 30px 26px; box-shadow: 0 10px 30px -22px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s, border-color .35s;" style-hover="transform:translateY(-7px);box-shadow:0 26px 46px -26px rgba(10,41,66,.5);border-color:#bfe6f6;">
+          <div style="width: 54px; height: 54px; border-radius: 15px; background: linear-gradient(135deg,#e7f7fe,#d2effb); display: flex; align-items: center; justify-content: center; margin-bottom: 22px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--es-deep,#1b86bc)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          </div>
+          <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; color: #0a2942; margin: 0 0 8px;">{{ t.why.f2t }}</h3>
+          <p style="font-size: 14.5px; color: #5b6b7d; line-height: 1.55; margin: 0;">{{ t.why.f2d }}</p>
+        </div>
+        <div data-reveal="" data-reveal-delay="200" style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 30px 26px; box-shadow: 0 10px 30px -22px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s, border-color .35s;" style-hover="transform:translateY(-7px);box-shadow:0 26px 46px -26px rgba(10,41,66,.5);border-color:#bfe6f6;">
+          <div style="width: 54px; height: 54px; border-radius: 15px; background: linear-gradient(135deg,#e7f7fe,#d2effb); display: flex; align-items: center; justify-content: center; margin-bottom: 22px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--es-deep,#1b86bc)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+          </div>
+          <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; color: #0a2942; margin: 0 0 8px;">{{ t.why.f3t }}</h3>
+          <p style="font-size: 14.5px; color: #5b6b7d; line-height: 1.55; margin: 0;">{{ t.why.f3d }}</p>
+        </div>
+        <div data-reveal="" data-reveal-delay="300" style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 30px 26px; box-shadow: 0 10px 30px -22px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s, border-color .35s;" style-hover="transform:translateY(-7px);box-shadow:0 26px 46px -26px rgba(10,41,66,.5);border-color:#bfe6f6;">
+          <div style="width: 54px; height: 54px; border-radius: 15px; background: linear-gradient(135deg,#e7f7fe,#d2effb); display: flex; align-items: center; justify-content: center; margin-bottom: 22px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--es-deep,#1b86bc)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          </div>
+          <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; color: #0a2942; margin: 0 0 8px;">{{ t.why.f4t }}</h3>
+          <p style="font-size: 14.5px; color: #5b6b7d; line-height: 1.55; margin: 0;">{{ t.why.f4d }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="packs" style="max-width: 1280px; margin: 0 auto; padding: 80px 32px 40px;">
+      <div data-reveal="" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 44px;">
+        <div style="max-width: 640px;">
+          <div style="display: inline-block; color: var(--es-deep,#2191c4); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.packs.eyebrow }}</div>
+          <h2 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #0a2942; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.1;">{{ t.packs.title }}</h2>
+          <p style="font-size: 16.5px; color: #5b6b7d; line-height: 1.6; margin: 14px 0 0; text-wrap: pretty;">{{ t.packs.sub }}</p>
+        </div>
+        <span onClick="{{ navBoutique }}" style="font-family:'Sora',sans-serif;font-size:14.5px;font-weight:600;color:var(--es-deep,#1b86bc);cursor:pointer;white-space:nowrap;" style-hover="color:#0a2942;">{{ t.packs.link }}</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch;">
+        <sc-for list="{{ packs }}" as="pack" hint-placeholder-count="3">
+          <div data-reveal="" data-reveal-delay="{{ pack.delay }}" style="position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #e7edf3; border-radius: 24px; overflow: hidden; box-shadow: 0 14px 36px -24px rgba(10,41,66,.45); transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-8px);box-shadow:0 34px 60px -30px rgba(10,41,66,.5);">
+            <sc-if value="{{ pack.featured }}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 18px; right: 18px; z-index: 2; padding: 7px 13px; border-radius: 100px; background: linear-gradient(135deg,#0a2942,#16405f); color: var(--es-a1,#6fe0ff); font-size: 11.5px; font-weight: 700; letter-spacing: .04em;">{{ t.packs.badge }}</div>
+            </sc-if>
+            <div style="position: relative; height: 230px; background: radial-gradient(120% 100% at 50% 10%, #f2f8fc, #e7eef4); display: flex; align-items: center; justify-content: center; padding: 18px;">
+              <img src="{{ pack.img }}" alt="{{ pack.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 18px 22px rgba(10,41,66,.18));">
+            </div>
+            <div style="display: flex; flex-direction: column; flex: 1; padding: 26px;">
+              <h3 style="font-family: 'Sora', sans-serif; font-size: 21px; font-weight: 700; color: #0a2942; margin: 0;">{{ pack.name }}</h3>
+              <div style="display: flex; align-items: baseline; gap: 7px; margin: 10px 0 0;">
+                <span style="font-size: 13px; color: #8295a8;">{{ t.misc.from }}</span>
+                <span style="font-family:'Sora',sans-serif; font-size: 26px; font-weight: 700; color: #0a2942;">{{ pack.priceLabel }}</span>
+                <span style="font-size: 13px; color: #8295a8;">{{ t.misc.perDay }}</span>
+              </div>
+
+              <sc-if value="{{ pack.brandSelect }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 8px; margin: 18px 0 4px;">
+                  <sc-for list="{{ pack.brandChips }}" as="b" hint-placeholder-count="3">
+                    <span onClick="{{ b.onSelect }}" style="flex:1; text-align:center; padding: 9px 6px; border-radius: 10px; font-size: 12.5px; font-weight: 600; cursor: pointer; border: 1.5px solid {{ b.borderColor }}; background: {{ b.bgColor }}; color: {{ b.textColor }};">{{ b.label }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <div style="height: 1px; background: #eef2f6; margin: 20px 0;"></div>
+              <div style="display: flex; flex-direction: column; gap: 9px; flex: 1;">
+                <sc-for list="{{ pack.itemRows }}" as="it" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: #34465a;">
+                    <span style="flex:none; display:flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:50%; background:#dff4fc; color:var(--es-deep,#1b86bc); font-size:11px; font-weight:800;">✓</span>{{ it.label }}
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top: 20px;">
+                <div style="font-size: 12px; font-weight: 700; letter-spacing: .06em; color: #94a6b8; text-transform: uppercase; margin-bottom: 9px;">{{ t.misc.idealFor }}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+                  <sc-for list="{{ pack.idealRows }}" as="id" hint-placeholder-count="3">
+                    <span style="padding: 5px 11px; border-radius: 100px; background: #f1f5f9; color: #51647a; font-size: 12.5px; font-weight: 600;">{{ id.label }}</span>
+                  </sc-for>
+                </div>
+              </div>
+              <button onClick="{{ pack.onAdd }}" style="margin-top: 24px; width: 100%; font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); border: none; padding: 15px; border-radius: 14px; cursor: pointer; box-shadow: 0 14px 30px -14px rgba(46,182,230,.8);" style-hover="filter:brightness(1.06);">{{ t.misc.addCart }}</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="equipements" style="max-width: 1280px; margin: 0 auto; padding: 80px 32px 40px;">
+      <div data-reveal="" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px;">
+        <div style="max-width: 640px;">
+          <div style="display: inline-block; color: var(--es-deep,#2191c4); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.equip.eyebrow }}</div>
+          <h2 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #0a2942; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.1;">{{ t.equip.title }}</h2>
+          <p style="font-size: 16.5px; color: #5b6b7d; line-height: 1.6; margin: 14px 0 0; text-wrap: pretty;">{{ t.equip.sub }}</p>
+        </div>
+        <span onClick="{{ navBoutique }}" style="font-family:'Sora',sans-serif;font-size:14.5px;font-weight:600;color:var(--es-deep,#1b86bc);cursor:pointer;white-space:nowrap;" style-hover="color:#0a2942;">{{ t.equip.link }}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;">
+        <sc-for list="{{ productsTeaser }}" as="p" hint-placeholder-count="6">
+          <div data-reveal="" style="display: flex; flex-direction: column; background: #fff; border: 1px solid #e7edf3; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px -24px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(10,41,66,.5);">
+            <div style="position: relative; height: 200px; background: radial-gradient(120% 100% at 50% 12%, #f3f8fc, #e8eef4); display: flex; align-items: center; justify-content: center; padding: 16px;">
+              <span style="position: absolute; top: 14px; left: 14px; padding: 5px 11px; border-radius: 100px; background: rgba(10,41,66,.06); color: #4a6076; font-size: 11.5px; font-weight: 700;">{{ p.cat }}</span>
+              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ true }}">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 16px 18px rgba(10,41,66,.15));">
+              </sc-if>
+              <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}">
+                <div style="width: 100%; height: 100%; border-radius: 12px; background: repeating-linear-gradient(135deg, #eaf1f7, #eaf1f7 10px, #e2ebf2 10px, #e2ebf2 20px); display: flex; align-items: center; justify-content: center;"><span style="font-family: ui-monospace, monospace; font-size: 12px; color: #9aabbc;">{{ t.misc.photoPh }}</span></div>
+              </sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; flex: 1; padding: 22px;">
+              <h3 style="font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 600; color: #0a2942; margin: 0;">{{ p.name }}</h3>
+              <p style="font-size: 13.5px; color: #6b7d90; line-height: 1.5; margin: 7px 0 0; flex: 1;">{{ p.desc }}</p>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 18px;">
+                <div style="display: flex; align-items: baseline; gap: 5px;"><span style="font-family:'Sora',sans-serif; font-size: 20px; font-weight: 700; color: #0a2942;">{{ p.priceLabel }}</span><span style="font-size: 12.5px; color: #8295a8;">{{ p.unitLabel }}</span></div>
+                <button onClick="{{ p.onAdd }}" style="display: flex; align-items: center; gap: 6px; font-family:'Sora',sans-serif; font-size: 13.5px; font-weight: 600; color: #0a2942; background: #e7f7fe; border: 1px solid #c7ebfa; padding: 10px 15px; border-radius: 10px; cursor: pointer;" style-hover="background:#d4f0fb;">{{ t.misc.addShort }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="zones" style="position: relative; overflow: hidden; background: radial-gradient(120% 100% at 15% 10%, #11436b 0%, #0a2942 50%, #061726 100%); margin-top: 56px;">
+      <div style="position: absolute; top: -120px; left: -60px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--es-rgb,53,198,240),.22), transparent 65%); animation: esGlow 7s ease-in-out infinite; pointer-events: none;"></div>
+      <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; padding: 90px 32px 52px;">
+        <div data-reveal="">
+          <div style="display: inline-block; color: var(--es-a1,#6fe0ff); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.zones.eyebrow }}</div>
+          <h2 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #f3f9ff; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.1;">{{ t.zones.title }}</h2>
+          <p style="font-size: 16.5px; color: #a9c1d8; line-height: 1.6; margin: 16px 0 24px; text-wrap: pretty;">{{ t.zones.sub }}</p>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <sc-for list="{{ zones }}" as="z" hint-placeholder-count="12">
+              <div style="display: flex; align-items: center; gap: 9px; font-size: 14.5px; font-weight: 600; color: #d7e6f4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--es-a1,#6fe0ff);box-shadow:0 0 8px var(--es-a1,#6fe0ff);"></span>{{ z.name }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div data-reveal="" data-reveal-delay="150" style="position: relative; height: 460px; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(170deg, rgba(20,64,95,.55), rgba(6,23,38,.9));">
+          <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);background-size:26px 26px;"></div>
+          <svg viewBox="0 0 600 360" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%;">
+            <path d="M0,0 H600 V148 C540,164 500,158 455,182 C405,206 360,180 315,198 C270,216 235,193 200,206 C150,225 110,206 60,213 C40,216 18,215 0,209 Z" style="fill:rgba(255,255,255,.045); stroke:rgba(var(--es-rgb,53,198,240),.28); stroke-width:1.4;"></path>
+            <path d="{{ routePath }}" style="fill:none; stroke:var(--es-a1,#6fe0ff); stroke-width:2.4; stroke-linecap:round; opacity:.8; animation:esDash 22s linear infinite;" stroke-dasharray="2 9"></path>
+            <text x="300" y="330" text-anchor="middle" style="fill:rgba(207,227,243,.3); font-family:'Sora',sans-serif; font-size:14px; font-weight:600; letter-spacing:5px;">{{ t.zones.sea }}</text>
+          </svg>
+          <sc-for list="{{ mapPins }}" as="m" hint-placeholder-count="13">
+            <div style="position:absolute; left:{{ m.left }}; top:{{ m.top }};">
+              <span style="position:absolute; transform:translate(-50%,-50%); width:{{ m.size }}; height:{{ m.size }}; border-radius:50%; background:{{ m.bg }}; border:{{ m.border }}; box-shadow:{{ m.shadow }}; animation:esGlow {{ m.pulse }} ease-in-out infinite;"></span>
+              <span style="position:absolute; left:50%; {{ m.labelEdge }}; transform:{{ m.labelTransform }}; white-space:nowrap; font-family:'Sora',sans-serif; font-size:{{ m.lsize }}; font-weight:{{ m.lweight }}; color:{{ m.lcolor }}; text-shadow:0 1px 7px rgba(2,12,22,.9); pointer-events:none;">{{ m.name }}</span>
+            </div>
+          </sc-for>
+          <div style="position:absolute; top:16px; left:16px; display:flex; align-items:center; gap:14px; padding:9px 14px; border-radius:12px; background:rgba(6,23,38,.62); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(6px);">
+            <span style="display:flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:#cfe3f3;"><span style="width:12px;height:12px;border-radius:50%;background:var(--es-a1,#6fe0ff);box-shadow:0 0 10px var(--es-a1,#6fe0ff);"></span>{{ t.zones.legendHub }}</span>
+            <span style="display:flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:#9fc0db;"><span style="width:9px;height:9px;border-radius:50%;border:2px solid var(--es-a1,#6fe0ff);"></span>{{ t.zones.legendZone }}</span>
+          </div>
+        </div>
+      </div>
+      <div data-reveal="" style="max-width: 1280px; margin: 0 auto; padding: 8px 32px 90px;">
+        <div style="display: flex; align-items: center; gap: 16px; margin: 0 0 12px; flex-wrap: wrap;">
+          <span style="color:var(--es-a1,#6fe0ff); font-size:12.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap;">{{ t.zones.eventsEyebrow }}</span>
+          <span style="height:1px; flex:1; min-width:40px; background:rgba(255,255,255,.12);"></span>
+          <span style="font-size:13px; color:#8ba6c2; white-space:nowrap;">{{ t.zones.eventsCount }}</span>
+        </div>
+        <p style="font-size:15.5px; color:#a9c1d8; line-height:1.6; max-width:720px; margin:0 0 24px; text-wrap: pretty;">{{ t.zones.eventsSub }}</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+          <sc-for list="{{ events }}" as="e" hint-placeholder-count="20">
+            <span style="display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:100px; border:{{ e.border }}; background:{{ e.bg }}; color:{{ e.color }}; font-size:13.5px; font-weight:600; transition:border-color .25s, transform .25s;" style-hover="transform:translateY(-2px);border-color:var(--es-a1,#6fe0ff);">
+              <span style="width:6px;height:6px;border-radius:50%;background:{{ e.dot }};"></span>{{ e.name }} <span style="color:#7d97ad; font-weight:500; font-size:12px;">{{ e.city }}</span>
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1280px; margin: 0 auto; padding: 90px 32px 40px;">
+      <div data-reveal="" style="text-align: center; max-width: 680px; margin: 0 auto 50px;">
+        <div style="display: inline-block; color: var(--es-deep,#2191c4); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.testi.eyebrow }}</div>
+        <h2 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #0a2942; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.1;">{{ t.testi.title }}</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <sc-for list="{{ testimonials }}" as="tm" hint-placeholder-count="3">
+          <div data-reveal="" data-reveal-delay="{{ tm.delay }}" style="display: flex; flex-direction: column; background: #fff; border: 1px solid #e7edf3; border-radius: 22px; padding: 32px; box-shadow: 0 14px 36px -26px rgba(10,41,66,.4);">
+            <div style="color: var(--es-a2,#2eb6e6); font-size: 16px; letter-spacing: 2px;">★★★★★</div>
+            <p style="font-size: 16px; line-height: 1.62; color: #2c3e52; margin: 18px 0 0; flex: 1; font-weight: 500; text-wrap: pretty;">{{ tm.quote }}</p>
+            <div style="display: flex; align-items: center; gap: 13px; margin-top: 26px;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#0a2942,var(--es-deep,#1b86bc)); display: flex; align-items: center; justify-content: center; font-family:'Sora',sans-serif; color: #fff; font-weight: 700; font-size: 16px;">{{ tm.initials }}</div>
+              <div><div style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #0a2942;">{{ tm.name }}</div><div style="font-size: 13px; color: #7d8fa1;">{{ tm.role }}</div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="devis" style="position: relative; overflow: hidden; background: radial-gradient(120% 100% at 85% 0%, #11436b 0%, #0a2942 48%, #061726 100%); margin-top: 56px;">
+      <div style="position: absolute; bottom: -140px; right: -80px; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--es-rgb,53,198,240),.22), transparent 65%); animation: esGlow 7s ease-in-out infinite; pointer-events: none;"></div>
+      <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; padding: 84px 32px;">
+        <div data-reveal="">
+          <div style="display: inline-block; color: var(--es-a1,#6fe0ff); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;">{{ t.devis.eyebrow }}</div>
+          <h2 style="font-family: 'Sora', sans-serif; font-size: 42px; font-weight: 700; color: #f3f9ff; letter-spacing: -.025em; margin: 14px 0 0; line-height: 1.08;">{{ t.devis.title }}</h2>
+          <p style="font-size: 16.5px; color: #a9c1d8; line-height: 1.6; margin: 18px 0 28px; text-wrap: pretty;">{{ t.devis.sub }}</p>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sc-for list="{{ devisBullets }}" as="bl" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 13px; color: #d7e6f4; font-size: 15px; font-weight: 500;"><span style="display:flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:10px;background:rgba(111,224,255,.14);color:var(--es-a1,#6fe0ff);">✓</span>{{ bl.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <form onSubmit="{{ submitForm }}" data-reveal="" data-reveal-delay="120" style="background: #fff; border-radius: 24px; padding: 34px; box-shadow: 0 40px 90px -40px rgba(0,0,0,.5);">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.nom }}<input required="" name="nom" placeholder="{{ t.form.phNom }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.societe }}<input name="societe" placeholder="{{ t.form.phSociete }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.tel }}<input required="" name="tel" placeholder="06 00 00 00 00" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.email }}<input required="" type="email" name="email" placeholder="{{ t.form.phEmail }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.type }}<select name="type" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; color:#0a2942;"><sc-for list="{{ typeOptions }}" as="o" hint-placeholder-count="7"><option>{{ o.label }}</option></sc-for></select></label>
+            <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.date }}<input type="date" name="date" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; color:#0a2942;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+          </div>
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076; margin-top: 16px;">{{ t.form.participants }}<input name="participants" placeholder="{{ t.form.phParticipants }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076; margin-top: 16px;">{{ t.form.besoins }}<textarea name="besoins" rows="3" placeholder="{{ t.form.phBesoins }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 13px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; resize: vertical;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></textarea></label>
+          <button type="submit" style="margin-top: 22px; width: 100%; font-family:'Sora',sans-serif; font-size: 16px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); border: none; padding: 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 16px 34px -14px rgba(46,182,230,.8);" style-hover="filter:brightness(1.06);">{{ t.devis.submit }}</button>
+        </form>
+      </div>
+    </section>
+
+    <footer style="background: #061726; color: #9fb6cc; padding: 70px 32px 36px;">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.08);">
+          <div>
+            <div style="display: flex; align-items: center; gap: 11px; margin-bottom: 18px;">
+              <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 13px; background: linear-gradient(155deg,#0e3753,#06223a); border: 1px solid rgba(111,224,255,.28); box-shadow: inset 0 1px 0 rgba(255,255,255,.08);">
+                <svg width="25" height="25" viewBox="0 0 32 32" fill="none">
+                  <defs>
+                    <linearGradient id="es-jug-f" x1="8" y1="6" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="var(--es-a1,#6fe0ff)"></stop>
+                      <stop offset="1" stop-color="var(--es-a2,#2eb6e6)"></stop>
+                    </linearGradient>
+                  </defs>
+                  <path d="M10 4H22A2 2 0 0 1 24 6V13C24 15.5 22 16.4 19.2 17.2A1 1 0 0 0 18.8 18V20H13.2V18A1 1 0 0 0 12.8 17.2C10 16.4 8 15.5 8 13V6A2 2 0 0 1 10 4Z" fill="url(#es-jug-f)"></path>
+                  <path d="M10 4H22A2 2 0 0 1 24 6V8C21 9.6 19 9.6 16 8.2C13 6.8 11 6.8 8 8V6A2 2 0 0 1 10 4Z" fill="#e4f6fd"></path>
+                  <path d="M10.6 6.4V12.4" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity=".38"></path>
+                  <rect x="12.4" y="19.2" width="7.2" height="3.2" rx="1.1" fill="#eaf8ff"></rect>
+                  <path d="M11.2 22.4 9.4 25.4M20.8 22.4 22.6 25.4M8.6 25.4H23.4" stroke="#cfe9f5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".75"></path>
+                </svg>
+              </div>
+              <span style="font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: #fff;">Eau<span style="color:var(--es-a1,#6fe0ff);">Service</span></span>
+            </div>
+            <p style="font-size: 14.5px; line-height: 1.65; max-width: 320px; margin: 0 0 18px; text-wrap: pretty;">{{ t.foot.tagline }}</p>
+            <div style="display: flex; gap: 10px;">
+              <span style="display:flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);font-size:13px;color:#cfe0ef;">in</span>
+              <span style="display:flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);font-size:13px;color:#cfe0ef;">f</span>
+              <span style="display:flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);font-size:13px;color:#cfe0ef;">@</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Sora',sans-serif; font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 16px;">{{ t.foot.navTitle }}</div>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <span onClick="{{ navAccueil }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.accueil }}</span>
+              <span onClick="{{ navPacks }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.packs }}</span>
+              <span onClick="{{ navEquip }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.equip }}</span>
+              <span onClick="{{ navBoutique }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.nav.boutique }}</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Sora',sans-serif; font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 16px;">{{ t.nav.equip }}</div>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <span onClick="{{ navBoutique }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.foot.eq1 }}</span>
+              <span onClick="{{ navBoutique }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.foot.eq2 }}</span>
+              <span onClick="{{ navBoutique }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.foot.eq3 }}</span>
+              <span onClick="{{ navBoutique }}" style="cursor:pointer;" style-hover="color:var(--es-a1,#6fe0ff);">{{ t.foot.eq4 }}</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Sora',sans-serif; font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 16px;">{{ t.foot.contactTitle }}</div>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <span style="color:#cfe0ef;font-weight:600;">04 22 22 11 00</span>
+              <span>contact@events-cafe.com</span>
+              <span>{{ t.foot.addr }}</span>
+              <span onClick="{{ navDevis }}" style="cursor:pointer;color:var(--es-a1,#6fe0ff);font-weight:600;">{{ t.nav.devis }} →</span>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 12px; line-height: 1.7; color: #54697d; margin: 26px 0 0; max-width: 980px;">{{ t.foot.seo }}</p>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 26px; font-size: 13px;">
+          <span>{{ t.foot.copy }}</span>
+          <span style="display:flex;gap:22px;"><span>{{ t.foot.legal1 }}</span><span>{{ t.foot.legal2 }}</span><span>{{ t.foot.legal3 }}</span></span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isBoutique }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Boutique">
+    <section style="background: linear-gradient(160deg, #0a2942, #061726); padding: 56px 32px 40px;">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div style="font-size: 13px; color: var(--es-a1,#6fe0ff); font-weight: 600; letter-spacing: .04em;"><span onClick="{{ navAccueil }}" style="cursor:pointer;color:#8fb6cf;">{{ t.nav.accueil }}</span> &nbsp;/&nbsp; {{ t.nav.boutique }}</div>
+        <h1 style="font-family: 'Sora', sans-serif; font-size: 42px; font-weight: 700; color: #fff; letter-spacing: -.025em; margin: 14px 0 0;">{{ t.bo.title }}</h1>
+        <p style="font-size: 16.5px; color: #a9c1d8; line-height: 1.6; margin: 12px 0 0; max-width: 600px; text-wrap: pretty;">{{ t.bo.sub }}</p>
+      </div>
+    </section>
+
+    <section style="max-width: 1280px; margin: 0 auto; padding: 56px 32px 30px;">
+      <h2 style="font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 700; color: #0a2942; margin: 0 0 24px;">{{ t.bo.packsTitle }}</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch;">
+        <sc-for list="{{ packs }}" as="pack" hint-placeholder-count="3">
+          <div style="position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #e7edf3; border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -26px rgba(10,41,66,.4);">
+            <div style="position: relative; height: 190px; background: radial-gradient(120% 100% at 50% 10%, #f2f8fc, #e7eef4); display: flex; align-items: center; justify-content: center; padding: 16px;">
+              <img src="{{ pack.img }}" alt="{{ pack.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 16px 18px rgba(10,41,66,.16));">
+            </div>
+            <div style="display: flex; flex-direction: column; flex: 1; padding: 22px;">
+              <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: #0a2942; margin: 0;">{{ pack.name }}</h3>
+              <div style="display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0;"><span style="font-size: 12.5px; color: #8295a8;">{{ t.misc.from }}</span><span style="font-family:'Sora',sans-serif; font-size: 22px; font-weight: 700; color: #0a2942;">{{ pack.priceLabel }}</span><span style="font-size: 12.5px; color: #8295a8;">{{ t.misc.perDay }}</span></div>
+              <sc-if value="{{ pack.brandSelect }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 7px; margin: 16px 0 0;">
+                  <sc-for list="{{ pack.brandChips }}" as="b" hint-placeholder-count="3">
+                    <span onClick="{{ b.onSelect }}" style="flex:1; text-align:center; padding: 8px 6px; border-radius: 9px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid {{ b.borderColor }}; background: {{ b.bgColor }}; color: {{ b.textColor }};">{{ b.label }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <button onClick="{{ pack.onAdd }}" style="margin-top: 20px; width: 100%; font-family:'Sora',sans-serif; font-size: 14.5px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); border: none; padding: 13px; border-radius: 12px; cursor: pointer;" style-hover="filter:brightness(1.06);">{{ t.misc.addCart }}</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width: 1280px; margin: 0 auto; padding: 30px 32px 90px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 26px;">
+        <h2 style="font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 700; color: #0a2942; margin: 0;">{{ t.bo.allTitle }}</h2>
+        <div style="display: flex; gap: 9px; flex-wrap: wrap;">
+          <sc-for list="{{ catFilters }}" as="c" hint-placeholder-count="6">
+            <span onClick="{{ c.onSelect }}" style="padding: 9px 18px; border-radius: 100px; font-size: 13.5px; font-weight: 600; cursor: pointer; border: 1.5px solid {{ c.border }}; background: {{ c.bg }}; color: {{ c.color }};">{{ c.label }}</span>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <sc-for list="{{ filteredProducts }}" as="p" hint-placeholder-count="8">
+          <div style="display: flex; flex-direction: column; background: #fff; border: 1px solid #e7edf3; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 30px -26px rgba(10,41,66,.4); transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-6px);box-shadow:0 26px 46px -28px rgba(10,41,66,.5);">
+            <div style="position: relative; height: 168px; background: radial-gradient(120% 100% at 50% 12%, #f3f8fc, #e8eef4); display: flex; align-items: center; justify-content: center; padding: 14px;">
+              <span style="position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 100px; background: rgba(10,41,66,.06); color: #4a6076; font-size: 11px; font-weight: 700;">{{ p.cat }}</span>
+              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ true }}">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 14px 16px rgba(10,41,66,.14));">
+              </sc-if>
+              <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}">
+                <div style="width: 100%; height: 100%; border-radius: 10px; background: repeating-linear-gradient(135deg, #eaf1f7, #eaf1f7 10px, #e2ebf2 10px, #e2ebf2 20px); display: flex; align-items: center; justify-content: center;"><span style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #9aabbc;">{{ t.misc.photoPh }}</span></div>
+              </sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; flex: 1; padding: 18px;">
+              <h3 style="font-family: 'Sora', sans-serif; font-size: 15.5px; font-weight: 600; color: #0a2942; margin: 0; line-height: 1.3;">{{ p.name }}</h3>
+              <p style="font-size: 13px; color: #6b7d90; line-height: 1.5; margin: 6px 0 0; flex: 1;">{{ p.desc }}</p>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px;">
+                <div style="display: flex; align-items: baseline; gap: 4px;"><span style="font-family:'Sora',sans-serif; font-size: 18px; font-weight: 700; color: #0a2942;">{{ p.priceLabel }}</span><span style="font-size: 11.5px; color: #8295a8;">{{ p.unitLabel }}</span></div>
+                <button onClick="{{ p.onAdd }}" style="font-family:'Sora',sans-serif; font-size: 13px; font-weight: 600; color: #0a2942; background: #e7f7fe; border: 1px solid #c7ebfa; padding: 9px 13px; border-radius: 10px; cursor: pointer;" style-hover="background:#d4f0fb;">{{ t.misc.addShort }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isPanier }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Panier">
+    <section style="background: linear-gradient(160deg, #0a2942, #061726); padding: 56px 32px 40px;">
+      <div style="max-width: 1080px; margin: 0 auto;">
+        <div style="font-size: 13px; color: var(--es-a1,#6fe0ff); font-weight: 600;"><span onClick="{{ navAccueil }}" style="cursor:pointer;color:#8fb6cf;">{{ t.nav.accueil }}</span> &nbsp;/&nbsp; <span onClick="{{ navBoutique }}" style="cursor:pointer;color:#8fb6cf;">{{ t.nav.boutique }}</span> &nbsp;/&nbsp; {{ t.pa.crumb }}</div>
+        <h1 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -.025em; margin: 14px 0 0;">{{ t.pa.title }}</h1>
+      </div>
+    </section>
+
+    <section style="max-width: 1080px; margin: 0 auto; padding: 50px 32px 90px;">
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align: center; padding: 70px 20px; background: #fff; border: 1px solid #e7edf3; border-radius: 22px;">
+          <div style="display: inline-flex; width: 72px; height: 72px; align-items: center; justify-content: center; border-radius: 50%; background: #eef5fa; margin-bottom: 22px;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7d99b3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          </div>
+          <h2 style="font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: #0a2942; margin: 0 0 8px;">{{ t.pa.emptyTitle }}</h2>
+          <p style="font-size: 15px; color: #6b7d90; margin: 0 0 24px;">{{ t.pa.emptySub }}</p>
+          <span onClick="{{ navBoutique }}" style="display:inline-block; font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); padding: 14px 26px; border-radius: 100px; cursor: pointer;">{{ t.pa.emptyCta }}</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}">
+        <div style="display: grid; grid-template-columns: 1.6fr .9fr; gap: 28px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+              <div style="display: flex; align-items: center; gap: 18px; background: #fff; border: 1px solid #e7edf3; border-radius: 18px; padding: 16px;">
+                <div style="flex: none; width: 92px; height: 92px; border-radius: 12px; background: radial-gradient(120% 100% at 50% 12%, #f3f8fc, #e8eef4); display: flex; align-items: center; justify-content: center; padding: 8px;">
+                  <sc-if value="{{ l.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ l.img }}" alt="{{ l.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain;"></sc-if>
+                  <sc-if value="{{ l.noImg }}" hint-placeholder-val="{{ false }}"><span style="font-family: ui-monospace, monospace; font-size: 10px; color: #9aabbc;">{{ t.misc.product }}</span></sc-if>
+                </div>
+                <div style="flex: 1;">
+                  <h3 style="font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 600; color: #0a2942; margin: 0;">{{ l.name }}</h3>
+                  <div style="font-size: 13.5px; color: #7d8fa1; margin-top: 4px;">{{ l.priceLabel }} <span style="font-size:12px;">{{ l.unit }}</span></div>
+                  <span onClick="{{ l.onRemove }}" style="display:inline-block; font-size: 12.5px; color: #c2566b; cursor: pointer; margin-top: 8px; font-weight: 600;">{{ t.pa.remove }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; border: 1px solid #e2e8ee; border-radius: 10px; padding: 4px;">
+                  <span onClick="{{ l.onDec }}" style="display:flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:7px; background:#f1f5f9; color:#0a2942; font-size:18px; font-weight:700; cursor:pointer; user-select:none;">−</span>
+                  <span style="min-width: 30px; text-align: center; font-family:'Sora',sans-serif; font-size: 15px; font-weight: 700; color: #0a2942;">{{ l.qty }}</span>
+                  <span onClick="{{ l.onInc }}" style="display:flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:7px; background:#f1f5f9; color:#0a2942; font-size:18px; font-weight:700; cursor:pointer; user-select:none;">+</span>
+                </div>
+                <div style="flex: none; width: 92px; text-align: right; font-family:'Sora',sans-serif; font-size: 17px; font-weight: 700; color: #0a2942;">{{ l.lineLabel }}</div>
+              </div>
+            </sc-for>
+            <span onClick="{{ navBoutique }}" style="font-size: 14px; font-weight: 600; color: var(--es-deep,#1b86bc); cursor: pointer; margin-top: 6px;">{{ t.pa.continue }}</span>
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 26px; position: sticky; top: 92px;">
+            <h3 style="font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: #0a2942; margin: 0 0 18px;">{{ t.pa.recap }}</h3>
+            <div style="display: flex; justify-content: space-between; font-size: 14.5px; color: #51647a; margin-bottom: 12px;"><span>{{ t.pa.subtotal }}</span><span style="font-weight:600;color:#0a2942;">{{ subtotalLabel }}</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14.5px; color: #51647a; margin-bottom: 16px;"><span>{{ t.pa.delivery }}</span><span style="font-weight:600;color:#1b9e6a;">{{ t.misc.included }}</span></div>
+            <div style="height: 1px; background: #eef2f6; margin: 16px 0;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;"><span style="font-family:'Sora',sans-serif; font-size: 16px; font-weight: 700; color: #0a2942;">{{ t.pa.total }}</span><span style="font-family:'Sora',sans-serif; font-size: 24px; font-weight: 700; color: #0a2942;">{{ totalLabel }}</span></div>
+            <p style="font-size: 12px; color: #8295a8; margin: 6px 0 20px; line-height: 1.5;">{{ t.pa.note }}</p>
+            <button onClick="{{ navCommande }}" style="width: 100%; font-family:'Sora',sans-serif; font-size: 15.5px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); border: none; padding: 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 14px 30px -14px rgba(46,182,230,.8);" style-hover="filter:brightness(1.06);">{{ t.pa.validate }}</button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isCommande }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Commande">
+    <section style="background: linear-gradient(160deg, #0a2942, #061726); padding: 56px 32px 40px;">
+      <div style="max-width: 1080px; margin: 0 auto;">
+        <div style="font-size: 13px; color: var(--es-a1,#6fe0ff); font-weight: 600;"><span onClick="{{ navAccueil }}" style="cursor:pointer;color:#8fb6cf;">{{ t.nav.accueil }}</span> &nbsp;/&nbsp; <span onClick="{{ navPanier }}" style="cursor:pointer;color:#8fb6cf;">{{ t.pa.crumb }}</span> &nbsp;/&nbsp; {{ t.co.crumb }}</div>
+        <h1 style="font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -.025em; margin: 14px 0 0;">{{ t.co.title }}</h1>
+        <p style="font-size: 16px; color: #a9c1d8; margin: 12px 0 0; text-wrap: pretty;">{{ t.co.sub }}</p>
+      </div>
+    </section>
+
+    <section style="max-width: 1080px; margin: 0 auto; padding: 50px 32px 90px;">
+      <form onSubmit="{{ submitForm }}" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 22px;">
+          <div style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 26px;">
+            <h3 style="font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: #0a2942; margin: 0 0 18px;">{{ t.co.coords }}</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.nom }}<input required="" name="nom" placeholder="{{ t.form.phNom }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.societe }}<input name="societe" placeholder="{{ t.form.phSociete }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.tel }}<input required="" name="tel" placeholder="06 00 00 00 00" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.email }}<input required="" type="email" name="email" placeholder="{{ t.form.phEmail }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+            </div>
+          </div>
+          <div style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 26px;">
+            <h3 style="font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: #0a2942; margin: 0 0 18px;">{{ t.co.deliv }}</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076; grid-column: span 2;">{{ t.form.adresse }}<input required="" name="adresse" placeholder="{{ t.form.phAdresse }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.ville }}<select required="" name="ville" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; color:#0a2942;"><sc-for list="{{ villeOptions }}" as="o" hint-placeholder-count="11"><option>{{ o.label }}</option></sc-for></select></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.type }}<select name="type" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; color:#0a2942;"><sc-for list="{{ typeOptions }}" as="o" hint-placeholder-count="7"><option>{{ o.label }}</option></sc-for></select></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.date }}<input type="date" name="date" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; color:#0a2942;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076;">{{ t.form.participants }}<input name="participants" placeholder="{{ t.form.phParticipants }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></label>
+              <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 600; color: #4a6076; grid-column: span 2;">{{ t.form.precisions }}<textarea name="besoins" rows="2" placeholder="{{ t.form.phPrecisions }}" style="font-family:'Manrope',sans-serif; font-size: 14.5px; padding: 12px 14px; border: 1px solid #dde5ec; border-radius: 11px; background: #f8fafc; outline: none; resize: vertical;" style-focus="border-color:var(--es-a2,#2eb6e6);background:#fff;"></textarea></label>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid #e7edf3; border-radius: 20px; padding: 24px; position: sticky; top: 92px;">
+          <h3 style="font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: #0a2942; margin: 0 0 16px;">{{ t.co.order }}</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px; max-height: 260px; overflow: auto;">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="flex: none; position: relative; width: 48px; height: 48px; border-radius: 10px; background: radial-gradient(120% 100% at 50% 12%, #f3f8fc, #e8eef4); display: flex; align-items: center; justify-content: center; padding: 5px;">
+                  <sc-if value="{{ l.hasImg }}" hint-placeholder-val="{{ true }}"><img src="{{ l.img }}" alt="{{ l.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain;"></sc-if>
+                  <span style="position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; padding: 0 4px; display: flex; align-items: center; justify-content: center; background: #0a2942; color: #fff; font-size: 10.5px; font-weight: 700; border-radius: 100px;">{{ l.qty }}</span>
+                </div>
+                <div style="flex: 1; font-size: 13px; font-weight: 600; color: #34465a; line-height: 1.3;">{{ l.name }}</div>
+                <div style="font-family:'Sora',sans-serif; font-size: 13.5px; font-weight: 700; color: #0a2942;">{{ l.lineLabel }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="height: 1px; background: #eef2f6; margin: 16px 0;"></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13.5px; color: #51647a; margin-bottom: 10px;"><span>{{ t.pa.delivery }}</span><span style="font-weight:600;color:#1b9e6a;">{{ t.misc.included }}</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;"><span style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 700; color: #0a2942;">{{ t.pa.total }}</span><span style="font-family:'Sora',sans-serif; font-size: 22px; font-weight: 700; color: #0a2942;">{{ totalLabel }}</span></div>
+          <button type="submit" style="width: 100%; font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); border: none; padding: 15px; border-radius: 14px; cursor: pointer; box-shadow: 0 14px 30px -14px rgba(46,182,230,.8);" style-hover="filter:brightness(1.06);">{{ t.co.confirm }}</button>
+          <p style="font-size: 11.5px; color: #8295a8; margin: 12px 0 0; text-align: center; line-height: 1.5;">{{ t.co.note }}</p>
+        </div>
+      </form>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isConfirmation }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Confirmation" style="position: relative; overflow: hidden; background: radial-gradient(110% 90% at 50% 0%, #11436b 0%, #0a2942 48%, #061726 100%); min-height: calc(100vh - 75px); display: flex; align-items: center; justify-content: center; padding: 60px 32px;">
+      <div style="position: absolute; top: 6%; left: 50%; transform: translateX(-50%); width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--es-rgb,53,198,240),.22), transparent 60%); animation: esGlow 6s ease-in-out infinite; pointer-events: none;"></div>
+      <div style="position: relative; max-width: 540px; text-align: center; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: 28px; padding: 52px 44px;">
+        <div style="display: inline-flex; width: 84px; height: 84px; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); margin-bottom: 26px; box-shadow: 0 16px 40px -12px rgba(var(--es-rgb,53,198,240),.7);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#051726" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"></path></svg>
+        </div>
+        <h1 style="font-family: 'Sora', sans-serif; font-size: 34px; font-weight: 700; color: #fff; letter-spacing: -.02em; margin: 0;">{{ t.cf.title }}</h1>
+        <p style="font-size: 16.5px; color: #a9c1d8; line-height: 1.6; margin: 16px 0 0; text-wrap: pretty;">{{ t.cf.sub1 }}<strong style="color:#fff;">{{ t.cf.sub2 }}</strong>{{ t.cf.sub3 }}</p>
+        <div style="display: inline-flex; align-items: center; gap: 10px; margin: 26px 0 30px; padding: 12px 20px; border-radius: 100px; background: rgba(111,224,255,.1); border: 1px solid rgba(111,224,255,.25);">
+          <span style="font-size: 13px; color: #8fb6cf;">{{ t.cf.ref }}</span>
+          <span style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 700; color: var(--es-a1,#6fe0ff);">{{ orderRef }}</span>
+        </div>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <span onClick="{{ navAccueil }}" style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #051726; background: linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6)); padding: 14px 26px; border-radius: 100px; cursor: pointer;">{{ t.cf.home }}</span>
+          <span onClick="{{ navBoutique }}" style="font-family:'Sora',sans-serif; font-size: 15px; font-weight: 600; color: #eaf3fb; border: 1px solid rgba(255,255,255,.22); padding: 14px 26px; border-radius: 100px; cursor: pointer;">{{ t.cf.shop }}</span>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 80; display: flex; align-items: center; gap: 10px; padding: 14px 22px; background: #0a2942; border: 1px solid rgba(111,224,255,.3); border-radius: 100px; color: #fff; font-size: 14.5px; font-weight: 600; box-shadow: 0 20px 50px -16px rgba(0,0,0,.5); animation: esToast .35s ease;">
+      <span style="display:flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,var(--es-a1,#6fe0ff),var(--es-a2,#2eb6e6));color:#051726;font-weight:800;">✓</span>{{ toast }}
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Aqua&quot;,&quot;Corail&quot;,&quot;Émeraude&quot;,&quot;Améthyste&quot;],&quot;default&quot;:&quot;Aqua&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Immersif&quot;,&quot;Épuré&quot;],&quot;default&quot;:&quot;Immersif&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;shape&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Net&quot;,&quot;Doux&quot;,&quot;Galets&quot;],&quot;default&quot;:&quot;Doux&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'accueil', cart: [], brand: 'nespresso', toast: null, cat: 'tous', lang: 'fr' };
+
+  // ---------- i18n ----------
+  strings() {
+    const fr = {
+      nav: { accueil: 'Accueil', packs: 'Nos packs', equip: 'Équipements', zones: 'Zones', boutique: 'Boutique', devis: 'Demander un devis' },
+      hero: {
+        badge: "LOCATION ÉVÉNEMENTIELLE · CÔTE D'AZUR",
+        titlePre: 'Location de matériel événementiel sur toute la ', titleHl: "Côte d'Azur",
+        sub: "Fontaines à eau, machines à café, réfrigérateurs et mobilier professionnel livrés, installés et repris sur vos salons, congrès, séminaires et stands — partout entre Toulon, Cannes, Nice et Monaco.",
+        cta1: 'Demander un devis →', cta2: 'Découvrir nos packs',
+        stat1: 'événements équipés', stat2: 'villes couvertes', stat3: 'délai de réponse',
+        chip1: 'Installation incluse', chip2: 'Consommables fournis',
+        imgAlt: 'Fontaine à eau professionnelle en location pour événements sur la Côte d’Azur'
+      },
+      why: {
+        eyebrow: 'Pourquoi EauService', title: 'Votre partenaire confort, du devis à la reprise',
+        sub: "Des solutions clé en main, livrées et installées partout sur la Côte d'Azur, pour que vous restiez concentré sur votre événement.",
+        f1t: 'Livraison rapide', f1d: "Intervention sur toute la Côte d'Azur, toujours dans les délais de votre événement.",
+        f2t: 'Matériel professionnel', f2d: "Équipements fiables, entretenus et conformes aux exigences de l'événementiel.",
+        f3t: 'Service clé en main', f3d: "Livraison, installation, consommables et reprise : vous n'avez rien à gérer.",
+        f4t: 'Réactivité', f4d: 'Réponse sous 24h et conseiller dédié, même pour les demandes urgentes.'
+      },
+      packs: {
+        eyebrow: 'Nos packs clé en main', title: 'Des solutions prêtes à installer',
+        sub: 'Choisissez votre marque de café — Nespresso, Lavazza ou Covim. Livraison, installation, consommables et reprise inclus.',
+        link: 'Voir toute la boutique →', badge: '★ Le plus complet'
+      },
+      equip: {
+        eyebrow: 'Nos équipements', title: 'Un catalogue complet à la location',
+        sub: 'Composez votre événement à la carte. Tous nos équipements sont livrés, installés et repris sur place.',
+        link: 'Tout voir dans la boutique →'
+      },
+      zones: {
+        eyebrow: "Zone d'intervention", title: 'Nous intervenons sur toute la Côte d’Azur',
+        sub: "De Toulon à Menton, en passant par Cannes, Nice et Monaco, nos équipes livrent et installent votre matériel directement sur le lieu de votre événement.",
+        legendHub: 'Hub principal', legendZone: 'Ville desservie', sea: 'MER MÉDITERRANÉE',
+        eventsEyebrow: 'Sur les plus grands rendez-vous', eventsCount: '30+ salons & événements équipés',
+        eventsSub: "Chaque année, nous équipons les salons, congrès et événements majeurs de la Côte d'Azur et de Monaco."
+      },
+      testi: { eyebrow: 'Ils nous font confiance', title: 'La réactivité qui fait la différence' },
+      devis: {
+        eyebrow: 'Devis gratuit', title: 'Recevez votre devis sous 24h',
+        sub: "Décrivez votre événement : nous vous proposons une solution sur mesure, livraison, installation et reprise incluses.",
+        submit: 'Recevoir mon devis sous 24h →'
+      },
+      form: {
+        nom: 'Nom complet *', societe: 'Société', tel: 'Téléphone *', email: 'Email *',
+        type: "Type d'événement", date: 'Date', participants: 'Nombre de participants',
+        besoins: 'Besoins matériels', adresse: 'Adresse de livraison *', ville: 'Ville *', precisions: 'Précisions / besoins',
+        phNom: 'Jean Dupont', phSociete: 'Votre entreprise', phEmail: 'jean@entreprise.fr',
+        phParticipants: 'ex. 250', phBesoins: 'Fontaines à eau, machines à café, réfrigérateurs…',
+        phAdresse: "Lieu de l'événement, rue, code postal", phPrecisions: "Horaires de livraison, contraintes d'accès…",
+        types: ['Salon professionnel', 'Congrès', 'Séminaire', 'Exposition', 'Événement corporate', 'Bureau temporaire', 'Autre']
+      },
+      foot: {
+        tagline: "Votre partenaire confort pour tous vos événements professionnels. Location de matériel événementiel livré, installé et repris sur toute la Côte d'Azur.",
+        navTitle: 'Navigation', contactTitle: 'Contact', addr: 'Côte d’Azur — Alpes-Maritimes & Var',
+        eq1: 'Fontaines à eau', eq2: 'Machines à café', eq3: 'Réfrigérateurs', eq4: 'Mobilier & confort',
+        seo: "Location fontaine à eau Côte d'Azur · location machine à café événement · location réfrigérateur salon professionnel · matériel événementiel Nice & Cannes · location matériel congrès Monaco · machines à café Nespresso, Lavazza & Covim · équipement de stand & exposition · location matériel séminaire et bureau temporaire à Antibes, Sophia Antipolis et Toulon.",
+        copy: '© 2026 EauService. Tous droits réservés.', legal1: 'Mentions légales', legal2: 'CGV', legal3: 'Confidentialité'
+      },
+      bo: {
+        title: 'La boutique EauService',
+        sub: "Composez votre événement à la carte. Sélectionnez un pack clé en main ou ajoutez vos équipements à l'unité — livraison, installation et reprise incluses.",
+        packsTitle: 'Nos packs clé en main', allTitle: 'Tous nos équipements'
+      },
+      pa: {
+        crumb: 'Panier', title: 'Votre panier', emptyTitle: 'Votre panier est vide',
+        emptySub: 'Découvrez nos packs et équipements pour votre prochain événement.', emptyCta: 'Parcourir la boutique',
+        remove: 'Retirer', continue: '← Continuer mes achats', recap: 'Récapitulatif',
+        subtotal: 'Sous-total estimé', delivery: 'Livraison & installation', total: 'Total estimé',
+        note: 'Tarifs indicatifs / jour. Le montant final est confirmé dans votre devis personnalisé.', validate: 'Valider la commande →'
+      },
+      co: {
+        crumb: 'Validation', title: 'Validation de la commande',
+        sub: 'Renseignez vos coordonnées et les détails de votre événement. Nous confirmons votre devis sous 24h.',
+        coords: 'Vos coordonnées', deliv: 'Livraison & événement', order: 'Votre commande',
+        confirm: 'Confirmer ma demande', note: 'Sans engagement — un conseiller confirme disponibilités et tarif sous 24h.'
+      },
+      cf: {
+        title: 'Demande envoyée !',
+        sub1: 'Merci pour votre confiance. Notre équipe étudie votre demande et vous recontacte avec un devis personnalisé ',
+        sub2: 'sous 24h ouvrées', sub3: '.', ref: 'Référence', home: "Retour à l'accueil", shop: 'Retour à la boutique'
+      },
+      misc: {
+        equips: 'EauService équipe', from: 'à partir de', perDay: '/ jour', idealFor: 'Idéal pour',
+        addCart: 'Ajouter au panier', addShort: '+ Ajouter', photoPh: 'photo produit', product: 'produit',
+        included: 'Incluses', added: ' ajouté au panier', article: 'Article',
+        marquee: ['Salons professionnels', 'Congrès & conventions', 'Séminaires', 'Bureaux temporaires', 'Expositions', "Stands d'exposition", 'Événements corporate', 'Foires'],
+        cats: { tous: 'Tous', eau: 'Eau', cafe: 'Café', froid: 'Froid', confort: 'Confort', mobilier: 'Mobilier' }
+      },
+      seo: {
+        title: "EauService — Location de matériel événementiel sur la Côte d'Azur | Fontaines à eau, machines à café & réfrigérateurs",
+        desc: "Location de fontaines à eau, machines à café et réfrigérateurs pour vos salons, congrès et séminaires sur la Côte d'Azur. Livraison, installation et reprise incluses à Nice, Cannes, Monaco, Antibes et alentours. Devis sous 24h.",
+        keywords: "location fontaine à eau Côte d'Azur, location machine à café événement, location réfrigérateur salon, matériel événementiel Nice Cannes Monaco, location congrès séminaire, Nespresso Lavazza Covim"
+      }
+    };
+    const en = {
+      nav: { accueil: 'Home', packs: 'Packages', equip: 'Equipment', zones: 'Coverage', boutique: 'Shop', devis: 'Request a quote' },
+      hero: {
+        badge: 'EVENT EQUIPMENT RENTAL · FRENCH RIVIERA',
+        titlePre: 'Event equipment rental across the entire ', titleHl: 'French Riviera',
+        sub: 'Water dispensers, coffee machines, refrigerators and professional furniture delivered, installed and collected for your trade shows, conferences, seminars and stands — everywhere from Toulon to Cannes, Nice and Monaco.',
+        cta1: 'Request a quote →', cta2: 'Explore our packages',
+        stat1: 'events equipped', stat2: 'cities covered', stat3: 'response time',
+        chip1: 'Installation included', chip2: 'Consumables supplied',
+        imgAlt: 'Professional water dispenser for event rental on the French Riviera'
+      },
+      why: {
+        eyebrow: 'Why EauService', title: 'Your comfort partner, from quote to collection',
+        sub: 'Turnkey solutions delivered and installed across the French Riviera, so you can stay focused on your event.',
+        f1t: 'Fast delivery', f1d: "We cover the whole French Riviera, always within your event's timeline.",
+        f2t: 'Professional equipment', f2d: 'Reliable, well-maintained gear that meets event-industry standards.',
+        f3t: 'Turnkey service', f3d: 'Delivery, setup, consumables and collection — nothing for you to handle.',
+        f4t: 'Responsiveness', f4d: 'A reply within 24h and a dedicated contact, even for last-minute requests.'
+      },
+      packs: {
+        eyebrow: 'Turnkey packages', title: 'Solutions ready to install',
+        sub: 'Choose your coffee brand — Nespresso, Lavazza or Covim. Delivery, installation, consumables and collection included.',
+        link: 'Browse the full shop →', badge: '★ Most complete'
+      },
+      equip: {
+        eyebrow: 'Our equipment', title: 'A complete rental catalogue',
+        sub: 'Build your event à la carte. Everything is delivered, installed and collected on site.',
+        link: 'See everything in the shop →'
+      },
+      zones: {
+        eyebrow: 'Service area', title: 'We cover the entire French Riviera',
+        sub: 'From Toulon to Menton — via Cannes, Nice and Monaco — our teams deliver and install your equipment right at your venue.',
+        legendHub: 'Main hub', legendZone: 'City served', sea: 'MEDITERRANEAN SEA',
+        eventsEyebrow: 'At the biggest events', eventsCount: '30+ trade shows & events equipped',
+        eventsSub: 'Every year we equip the major trade shows, conferences and events of the French Riviera and Monaco.'
+      },
+      testi: { eyebrow: 'They trust us', title: 'Responsiveness that makes the difference' },
+      devis: {
+        eyebrow: 'Free quote', title: 'Get your quote within 24h',
+        sub: "Tell us about your event: we'll put together a tailored solution — delivery, installation and collection included.",
+        submit: 'Get my quote within 24h →'
+      },
+      form: {
+        nom: 'Full name *', societe: 'Company', tel: 'Phone *', email: 'Email *',
+        type: 'Event type', date: 'Date', participants: 'Number of attendees',
+        besoins: 'Equipment needs', adresse: 'Delivery address *', ville: 'City *', precisions: 'Details / needs',
+        phNom: 'John Smith', phSociete: 'Your company', phEmail: 'john@company.com',
+        phParticipants: 'e.g. 250', phBesoins: 'Water dispensers, coffee machines, refrigerators…',
+        phAdresse: 'Event venue, street, postal code', phPrecisions: 'Delivery times, access constraints…',
+        types: ['Trade show', 'Conference', 'Seminar', 'Exhibition', 'Corporate event', 'Temporary office', 'Other']
+      },
+      foot: {
+        tagline: 'Your comfort partner for all your professional events. Event equipment rental delivered, installed and collected across the French Riviera.',
+        navTitle: 'Navigation', contactTitle: 'Contact', addr: 'French Riviera — Alpes-Maritimes & Var',
+        eq1: 'Water dispensers', eq2: 'Coffee machines', eq3: 'Refrigerators', eq4: 'Furniture & comfort',
+        seo: 'Water dispenser rental French Riviera · event coffee machine rental · refrigerator rental for trade shows · event equipment Nice & Cannes · conference equipment rental Monaco · Nespresso, Lavazza & Covim coffee machines · stand & exhibition equipment · seminar and temporary-office rental in Antibes, Sophia Antipolis and Toulon.',
+        copy: '© 2026 EauService. All rights reserved.', legal1: 'Legal notice', legal2: 'Terms', legal3: 'Privacy'
+      },
+      bo: {
+        title: 'The EauService shop',
+        sub: 'Build your event à la carte. Pick a turnkey package or add equipment individually — delivery, installation and collection included.',
+        packsTitle: 'Our turnkey packages', allTitle: 'All our equipment'
+      },
+      pa: {
+        crumb: 'Cart', title: 'Your cart', emptyTitle: 'Your cart is empty',
+        emptySub: 'Explore our packages and equipment for your next event.', emptyCta: 'Browse the shop',
+        remove: 'Remove', continue: '← Continue shopping', recap: 'Summary',
+        subtotal: 'Estimated subtotal', delivery: 'Delivery & installation', total: 'Estimated total',
+        note: 'Indicative prices / day. The final amount is confirmed in your personalised quote.', validate: 'Place the order →'
+      },
+      co: {
+        crumb: 'Checkout', title: 'Order confirmation',
+        sub: "Enter your details and your event information. We'll confirm your quote within 24h.",
+        coords: 'Your details', deliv: 'Delivery & event', order: 'Your order',
+        confirm: 'Confirm my request', note: "No commitment — an advisor confirms availability and pricing within 24h."
+      },
+      cf: {
+        title: 'Request sent!',
+        sub1: 'Thank you for your trust. Our team is reviewing your request and will get back to you with a personalised quote ',
+        sub2: 'within 24 business hours', sub3: '.', ref: 'Reference', home: 'Back to home', shop: 'Back to shop'
+      },
+      misc: {
+        equips: 'EauService equips', from: 'from', perDay: '/ day', idealFor: 'Ideal for',
+        addCart: 'Add to cart', addShort: '+ Add', photoPh: 'product photo', product: 'product',
+        included: 'Included', added: ' added to cart', article: 'Item',
+        marquee: ['Trade shows', 'Conferences & conventions', 'Seminars', 'Temporary offices', 'Exhibitions', 'Exhibition stands', 'Corporate events', 'Fairs'],
+        cats: { tous: 'All', eau: 'Water', cafe: 'Coffee', froid: 'Cold', confort: 'Comfort', mobilier: 'Furniture' }
+      },
+      seo: {
+        title: 'EauService — Event Equipment Rental on the French Riviera | Water Dispensers, Coffee Machines & Refrigerators',
+        desc: 'Rent water dispensers, coffee machines and refrigerators for your trade shows, conferences and seminars on the French Riviera. Delivery, installation and collection included in Nice, Cannes, Monaco, Antibes and nearby. Quote within 24h.',
+        keywords: 'water dispenser rental French Riviera, event coffee machine rental, refrigerator rental trade show, event equipment Nice Cannes Monaco, conference seminar rental, Nespresso Lavazza Covim'
+      }
+    };
+    return { fr, en };
+  }
+  tr() { return this.strings()[this.state.lang] || this.strings().fr; }
+
+  // ---------- data ----------
+  catData() {
+    return [
+      { id: 'fontaine', catKey: 'eau', price: 35, unit: 'jour', img: 'assets/fontaine-grise.png' },
+      { id: 'fontaine-everest', catKey: 'eau', price: 39, unit: 'jour', img: 'assets/fontaine-everest.png' },
+      { id: 'bonbonne', catKey: 'eau', price: 9, unit: '', img: null },
+      { id: 'nespresso', catKey: 'cafe', price: 45, unit: 'jour', img: 'assets/machine-nespresso.png' },
+      { id: 'lavazza', catKey: 'cafe', price: 45, unit: 'jour', img: 'assets/machine-lavazza.png' },
+      { id: 'covim', catKey: 'cafe', price: 45, unit: 'jour', img: 'assets/machine-covim.png' },
+      { id: 'gemini', catKey: 'cafe', price: 69, unit: 'jour', img: 'assets/machine-gemini.png' },
+      { id: 'kitcafe', catKey: 'cafe', price: 29, unit: '', img: 'assets/kit-cafe.png' },
+      { id: 'frigo-tt', catKey: 'froid', price: 28, unit: 'jour', img: null },
+      { id: 'frigo-grand', catKey: 'froid', price: 39, unit: 'jour', img: null },
+      { id: 'ventilateur', catKey: 'confort', price: 22, unit: 'jour', img: null },
+      { id: 'chaise', catKey: 'mobilier', price: 3, unit: '', img: null },
+      { id: 'table', catKey: 'mobilier', price: 9, unit: '', img: null }
+    ];
+  }
+  prodTxt(lang) {
+    if (lang === 'en') return {
+      'fontaine': { name: 'Professional water dispenser', desc: 'Free-standing, unlimited chilled and room-temperature water.' },
+      'fontaine-everest': { name: 'Everest water dispenser', desc: 'Slim design, perfect for premium stands.' },
+      'bonbonne': { name: '18.9 L water bottle', desc: 'Spring water refill for the dispenser.' },
+      'nespresso': { name: 'Nespresso coffee machine', desc: 'Professional espresso, capsules included.' },
+      'lavazza': { name: 'Lavazza coffee machine', desc: 'Italian coffee, intuitive touchscreen.' },
+      'covim': { name: 'Covim coffee machine', desc: 'Italian roast, compact format.' },
+      'gemini': { name: 'Nespresso Gemini Pro', desc: 'Twin group head, high output for conferences.' },
+      'kitcafe': { name: 'Coffee consumables kit', desc: 'Capsules, cups, sugar and stirrers.' },
+      'frigo-tt': { name: 'Table-top refrigerator', desc: 'Compact, fits under a stand counter.' },
+      'frigo-grand': { name: 'Large-capacity refrigerator', desc: 'High volume for drinks and freshness.' },
+      'ventilateur': { name: 'Professional fan', desc: 'Powerful, quiet air circulation.' },
+      'chaise': { name: 'Folding chair', desc: 'Sturdy, stackable, delivered in bulk.' },
+      'table': { name: 'Folding table', desc: 'Resistant top, instant setup.' }
+    };
+    return {
+      'fontaine': { name: 'Fontaine à eau professionnelle', desc: 'Distributeur sur pied, eau fraîche et tempérée à volonté.' },
+      'fontaine-everest': { name: 'Fontaine à eau Everest', desc: 'Design élancé, idéale pour les stands premium.' },
+      'bonbonne': { name: "Bonbonne d'eau 18,9 L", desc: 'Eau de source, recharge pour fontaine.' },
+      'nespresso': { name: 'Machine à café Nespresso', desc: 'Espresso professionnel, capsules incluses.' },
+      'lavazza': { name: 'Machine à café Lavazza', desc: 'Café italien, écran tactile intuitif.' },
+      'covim': { name: 'Machine à café Covim', desc: 'Torréfaction italienne, format compact.' },
+      'gemini': { name: 'Nespresso Gemini Pro', desc: 'Double groupe, fort débit pour les congrès.' },
+      'kitcafe': { name: 'Kit consommables café', desc: 'Capsules, gobelets, sucre et touillettes.' },
+      'frigo-tt': { name: 'Réfrigérateur Table Top', desc: 'Compact, idéal sous un comptoir de stand.' },
+      'frigo-grand': { name: 'Réfrigérateur grande capacité', desc: 'Grand volume pour boissons et fraîcheur.' },
+      'ventilateur': { name: 'Ventilateur professionnel', desc: "Brassage d'air puissant et silencieux." },
+      'chaise': { name: 'Chaise pliante', desc: 'Robuste, empilable, livrée en nombre.' },
+      'table': { name: 'Table pliante', desc: 'Plateau résistant, montage immédiat.' }
+    };
+  }
+  catalog(lang) {
+    lang = lang || this.state.lang;
+    const txt = this.prodTxt(lang);
+    const cats = this.tr().misc.cats;
+    return this.catData().map(p => ({
+      id: p.id, catKey: p.catKey, cat: cats[p.catKey], price: p.price, unit: p.unit, img: p.img,
+      name: txt[p.id].name, desc: txt[p.id].desc
+    }));
+  }
+  packData(lang) {
+    lang = lang || this.state.lang;
+    const b = this.state.brand;
+    const en = lang === 'en';
+    return [
+      { id: 'pack-eau', name: en ? 'Essential Water Pack' : 'Pack Eau Essentiel', price: 89, img: 'assets/pack-eau.png', brandSelect: false,
+        items: en ? ['Professional water dispenser', 'Water bottle included', 'Cups included'] : ['Fontaine à eau professionnelle', "Bonbonne d'eau incluse", 'Gobelets inclus'],
+        ideal: en ? ['Stands', 'Temporary offices', 'Trade shows'] : ['Stands', 'Bureaux temporaires', 'Salons professionnels'] },
+      { id: 'pack-cafe', name: en ? 'Coffee & Water Pack' : 'Pack Essentiel Café & Eau', price: 149, img: 'assets/pack-base-' + b + '.png', brandSelect: true,
+        items: en ? ['Water dispenser', 'Professional coffee machine', 'Water bottle', 'Coffee capsules', 'Cups', 'Sugar', 'Stirrers'] : ['Fontaine à eau', 'Machine à café professionnelle', "Bonbonne d'eau", 'Capsules café', 'Gobelets', 'Sucre', 'Touillettes'],
+        ideal: en ? ['Meetings', 'Seminars', 'Conferences'] : ['Réunions', 'Séminaires', 'Congrès'] },
+      { id: 'pack-complet', name: en ? 'Complete Event Pack' : 'Pack Complet Événement', price: 229, img: 'assets/pack-complet-' + b + '.png', brandSelect: true, featured: true,
+        items: en ? ['Water dispenser', 'Professional coffee machine', 'Refrigerator', 'Water bottle', 'Coffee capsules', 'Cups', 'Sugar', 'Stirrers'] : ['Fontaine à eau', 'Machine à café professionnelle', 'Réfrigérateur', "Bonbonne d'eau", 'Capsules café', 'Gobelets', 'Sucre', 'Touillettes'],
+        ideal: en ? ['Trade shows', 'Exhibitions', 'Corporate events', 'International conferences'] : ['Salons professionnels', 'Expositions', "Événements d'entreprise", 'Congrès internationaux'] }
+    ];
+  }
+  findItem(id) {
+    return this.catalog().find(p => p.id === id) || this.packData().find(p => p.id === id);
+  }
+  fmt(n) { return (n || 0).toLocaleString(this.state.lang === 'en' ? 'en-GB' : 'fr-FR') + ' €'; }
+
+  // ---------- tweaks / theme ----------
+  themePalettes() {
+    return {
+      'Aqua':      { a1: '#6fe0ff', a2: '#2eb6e6', a3: '#35c6f0', rgb: '53,198,240',  deep: '#1b86bc' },
+      'Corail':    { a1: '#ffc7ac', a2: '#ff7a4d', a3: '#ff9264', rgb: '255,122,77',  deep: '#d75a2e' },
+      'Émeraude':  { a1: '#79efc1', a2: '#13b87f', a3: '#2cd29a', rgb: '19,184,127',  deep: '#0e8f62' },
+      'Améthyste': { a1: '#d1baff', a2: '#8b5cf6', a3: '#a98bff', rgb: '139,92,246',  deep: '#6d3fd1' }
+    };
+  }
+  applyTheme() {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
+    const accent = this.props.accent || 'Aqua';
+    const motion = this.props.motion || 'Immersif';
+    const shape = this.props.shape || 'Doux';
+    const p = this.themePalettes()[accent] || this.themePalettes()['Aqua'];
+    root.style.setProperty('--es-a1', p.a1);
+    root.style.setProperty('--es-a2', p.a2);
+    root.style.setProperty('--es-a3', p.a3);
+    root.style.setProperty('--es-rgb', p.rgb);
+    root.style.setProperty('--es-deep', p.deep);
+    root.setAttribute('data-es-motion', motion === 'Épuré' ? 'epure' : 'immersif');
+    root.setAttribute('data-es-shape', shape === 'Net' ? 'net' : (shape === 'Galets' ? 'galets' : 'doux'));
+    this.injectTweakCss();
+  }
+  injectTweakCss() {
+    if (typeof document === 'undefined' || document.getElementById('es-tweaks')) return;
+    const net = { 9:'2px',10:'2px',11:'2px',12:'3px',13:'3px',14:'3px',15:'4px',18:'4px',20:'5px',22:'5px',24:'6px',28:'7px' };
+    const gal = { 9:'14px',10:'16px',11:'18px',12:'20px',13:'22px',14:'24px',15:'26px',18:'30px',20:'34px',22:'36px',24:'40px',28:'46px' };
+    let css = '';
+    Object.keys(net).forEach(r => {
+      css += '[data-es-shape="net"] [style*="border-radius: ' + r + 'px"]{border-radius:' + net[r] + ' !important}';
+      css += '[data-es-shape="galets"] [style*="border-radius: ' + r + 'px"]{border-radius:' + gal[r] + ' !important}';
+    });
+    css += '[data-es-motion="epure"] [style*="animation"]{animation:none !important}';
+    const st = document.createElement('style');
+    st.id = 'es-tweaks';
+    st.textContent = css;
+    document.head.appendChild(st);
+  }
+
+  // ---------- SEO chrome ----------
+  setMetaTag(attr, key, val) {
+    let el = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+    el.setAttribute('content', val);
+  }
+  applySeo(langArg) {
+    if (typeof document === 'undefined') return;
+    const lang = langArg || this.state.lang || 'fr';
+    const s = (this.strings()[lang] || this.strings().fr).seo;
+    document.documentElement.lang = lang;
+    document.title = s.title;
+    this.setMetaTag('name', 'description', s.desc);
+    this.setMetaTag('name', 'keywords', s.keywords);
+    this.setMetaTag('property', 'og:title', s.title);
+    this.setMetaTag('property', 'og:description', s.desc);
+    this.setMetaTag('property', 'og:type', 'website');
+    this.setMetaTag('property', 'og:locale', lang === 'en' ? 'en_US' : 'fr_FR');
+    const cities = ['Nice', 'Cannes', 'Antibes', 'Monaco', 'Sophia Antipolis', 'Grasse', 'Mandelieu', 'Fréjus', 'Saint-Raphaël', 'Menton', 'Toulon'];
+    const ld = {
+      '@context': 'https://schema.org', '@type': 'LocalBusiness', name: 'EauService',
+      description: s.desc, telephone: '+33 4 22 22 11 00', email: 'contact@events-cafe.com',
+      url: (typeof location !== 'undefined' ? location.href : ''), priceRange: '€€',
+      areaServed: cities.map(c => ({ '@type': 'City', name: c })),
+      address: { '@type': 'PostalAddress', addressRegion: 'Alpes-Maritimes & Var', addressCountry: 'FR' },
+      makesOffer: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'en' ? 'Water dispenser rental' : 'Location de fontaines à eau' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'en' ? 'Coffee machine rental' : 'Location de machines à café' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'en' ? 'Refrigerator rental' : 'Location de réfrigérateurs' } }
+      ]
+    };
+    let ldEl = document.getElementById('es-jsonld');
+    if (!ldEl) { ldEl = document.createElement('script'); ldEl.type = 'application/ld+json'; ldEl.id = 'es-jsonld'; document.head.appendChild(ldEl); }
+    ldEl.textContent = JSON.stringify(ld);
+  }
+
+  // ---------- lifecycle ----------
+  componentDidMount() {
+    let cart = [], lang = 'fr';
+    try { const s = localStorage.getItem('es_cart'); if (s) cart = JSON.parse(s) || []; } catch (e) {}
+    try { const l = localStorage.getItem('es_lang'); if (l === 'fr' || l === 'en') lang = l; } catch (e) {}
+    this.setState({ cart, lang });
+    this.applyTheme();
+    this.applySeo();
+    this._processed = new WeakSet();
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { this.revealEl(en.target); this._io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    this.initReveal();
+    this._onScroll = () => this.applyParallax();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this.applyParallax();
+  }
+  componentDidUpdate(pp, ps) {
+    this.applyTheme();
+    this.applySeo();
+    if (ps.cart !== this.state.cart) { try { localStorage.setItem('es_cart', JSON.stringify(this.state.cart)); } catch (e) {} }
+    this.initReveal();
+    this.applyParallax();
+  }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); window.removeEventListener('scroll', this._onScroll); }
+
+  initReveal() {
+    if (!this._io) return;
+    requestAnimationFrame(() => {
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        if (this._processed.has(el)) return;
+        this._processed.add(el);
+        const delay = parseInt(el.getAttribute('data-reveal-delay') || '0', 10);
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity .75s cubic-bezier(.16,.84,.44,1) ' + delay + 'ms, transform .75s cubic-bezier(.16,.84,.44,1) ' + delay + 'ms';
+        el.style.willChange = 'opacity, transform';
+        this._io.observe(el);
+      });
+    });
+  }
+  revealEl(el) {
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+    if (el.hasAttribute('data-count')) this.countUp(el);
+    if (el.querySelectorAll) el.querySelectorAll('[data-count]').forEach(c => this.countUp(c));
+  }
+  countUp(el) {
+    if (el._counted) return; el._counted = true;
+    const to = parseFloat(el.getAttribute('data-count-to') || '0');
+    const suf = el.getAttribute('data-count-suffix') || '';
+    const pre = el.getAttribute('data-count-prefix') || '';
+    const dur = 1500, start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + Math.round(to * e) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  applyParallax() {
+    const y = window.scrollY || window.pageYOffset || 0;
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      const sp = parseFloat(el.getAttribute('data-parallax') || '0');
+      el.style.transform = 'translate3d(0,' + (y * sp) + 'px,0)';
+    });
+  }
+
+  // ---------- navigation ----------
+  setLang(l) { this.setState({ lang: l }, () => this.applySeo(l)); try { localStorage.setItem('es_lang', l); } catch (e) {} }
+  setView(v) { this.setState({ view: v }); window.scrollTo(0, 0); }
+  scrollToId(id) {
+    const go = () => { const el = document.getElementById(id); if (el) { const y = el.getBoundingClientRect().top + (window.scrollY || 0) - 64; window.scrollTo({ top: y, behavior: 'smooth' }); } };
+    if (this.state.view !== 'accueil') { this.setState({ view: 'accueil' }, () => setTimeout(go, 80)); }
+    else go();
+  }
+
+  // ---------- cart ----------
+  addToCart(id) {
+    const c = this.state.cart.map(x => ({ ...x }));
+    const i = c.findIndex(x => x.id === id);
+    if (i >= 0) c[i].qty += 1; else c.push({ id, qty: 1 });
+    const it = this.findItem(id);
+    const m = this.tr().misc;
+    this.setState({ cart: c, toast: (it ? it.name : m.article) + m.added });
+    clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: null }), 2000);
+  }
+  setQty(id, qty) {
+    qty = Math.max(0, qty);
+    let c = this.state.cart.map(x => x.id === id ? { ...x, qty } : x).filter(x => x.qty > 0);
+    this.setState({ cart: c });
+  }
+  removeFromCart(id) { this.setState({ cart: this.state.cart.filter(x => x.id !== id) }); }
+  clearCart() { this.setState({ cart: [] }); }
+
+  submitForm(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const ref = 'ES-' + Math.floor(100000 + Math.random() * 900000);
+    this.setState({ orderRef: ref, cart: [] });
+    this.setView('confirmation');
+  }
+
+  // ---------- map ----------
+  buildMap() {
+    const coast = [
+      { name: 'Toulon', left: 6, top: 60, kind: 'town', lab: 'b' },
+      { name: 'Hyères', left: 13, top: 63, kind: 'town', lab: 't' },
+      { name: 'Saint-Tropez', left: 21, top: 65, kind: 'town', lab: 'b' },
+      { name: 'Fréjus', left: 29, top: 61, kind: 'town', lab: 't' },
+      { name: 'Saint-Raphaël', left: 36, top: 63, kind: 'town', lab: 'b' },
+      { name: 'Mandelieu', left: 44, top: 59, kind: 'town', lab: 't' },
+      { name: 'Cannes', left: 52, top: 56, kind: 'hub', lab: 'b' },
+      { name: 'Antibes', left: 62, top: 55, kind: 'town', lab: 't' },
+      { name: 'Cagnes-sur-Mer', left: 69, top: 53, kind: 'town', lab: 'b' },
+      { name: 'Nice', left: 77, top: 50, kind: 'hub', lab: 't' },
+      { name: 'Villefranche', left: 84, top: 49, kind: 'town', lab: 'b' },
+      { name: 'Monaco', left: 90, top: 46, kind: 'hub', lab: 't' },
+      { name: 'Menton', left: 95, top: 44, kind: 'town', lab: 'b' }
+    ];
+    const inland = [
+      { name: 'Grasse', left: 46, top: 37, kind: 'inland', lab: 't' },
+      { name: 'Mougins', left: 56, top: 44, kind: 'inland', lab: 't' },
+      { name: 'Sophia Antipolis', left: 67, top: 39, kind: 'inland', lab: 't' },
+      { name: 'Vence', left: 74, top: 35, kind: 'inland', lab: 't' }
+    ];
+    const dot = (k) => {
+      if (k === 'hub') return { size: '18px', bg: 'var(--es-a1,#6fe0ff)', border: '3px solid rgba(255,255,255,.9)', shadow: '0 0 22px var(--es-a1,#6fe0ff)', lsize: '14.5px', lweight: '700', lcolor: '#ffffff' };
+      if (k === 'inland') return { size: '10px', bg: 'transparent', border: '2px solid var(--es-a1,#6fe0ff)', shadow: '0 0 8px rgba(var(--es-rgb,53,198,240),.6)', lsize: '11px', lweight: '600', lcolor: '#9fc0db' };
+      return { size: '11px', bg: 'var(--es-a1,#6fe0ff)', border: '2px solid rgba(8,26,43,.6)', shadow: '0 0 12px var(--es-a1,#6fe0ff)', lsize: '11.5px', lweight: '600', lcolor: '#cfe3f3' };
+    };
+    const geom = (lab) => lab === 't'
+      ? { labelEdge: 'top:-11px', labelTransform: 'translate(-50%,-100%)' }
+      : { labelEdge: 'top:11px', labelTransform: 'translate(-50%,0)' };
+    const mapPins = coast.concat(inland).map((m, i) => {
+      const d = dot(m.kind); const g = geom(m.lab);
+      return { name: m.name, left: m.left + '%', top: m.top + '%', size: d.size, bg: d.bg, border: d.border, shadow: d.shadow,
+        pulse: (3 + (i % 5) * 0.25) + 's', lsize: d.lsize, lweight: d.lweight, lcolor: d.lcolor, labelEdge: g.labelEdge, labelTransform: g.labelTransform };
+    });
+    const pts = coast.map(m => ({ x: m.left * 6, y: m.top * 3.6 }));
+    let routePath = 'M' + pts[0].x.toFixed(1) + ',' + pts[0].y.toFixed(1);
+    for (let i = 1; i < pts.length - 1; i++) {
+      const xc = ((pts[i].x + pts[i + 1].x) / 2).toFixed(1);
+      const yc = ((pts[i].y + pts[i + 1].y) / 2).toFixed(1);
+      routePath += ' Q' + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' ' + xc + ',' + yc;
+    }
+    const n = pts.length - 1;
+    routePath += ' L' + pts[n].x.toFixed(1) + ',' + pts[n].y.toFixed(1);
+    return { mapPins, routePath };
+  }
+  buildEvents() {
+    const raw = [
+      ['Festival de Cannes', 'Cannes', 1], ['Cannes Lions', 'Cannes', 1], ['MIPCOM', 'Cannes', 1],
+      ['MIPTV', 'Cannes', 0], ['MIDEM', 'Cannes', 0], ['TFWA — Tax Free', 'Cannes', 1],
+      ['ILTM', 'Cannes', 0], ['MIPIM', 'Cannes', 0], ['MAPIC', 'Cannes', 0],
+      ['NRJ Music Awards', 'Cannes', 0], ['Yachting Festival', 'Cannes', 0],
+      ['Monaco Yacht Show', 'Monaco', 1], ['Grand Prix F1', 'Monaco', 1], ['Top Marques', 'Monaco', 0],
+      ['Sportel', 'Monaco', 0], ['Monte-Carlo TV Festival', 'Monaco', 0], ['Rolex MC Masters', 'Monaco', 0],
+      ['Jumping de Monaco', 'Monaco', 0], ['EVER Monaco', 'Monaco', 0],
+      ['Carnaval de Nice', 'Nice', 1], ['Nice Jazz Festival', 'Nice', 0], ['Ironman France', 'Nice', 0],
+      ['Innovative City', 'Nice', 0],
+      ['Jazz à Juan', 'Juan-les-Pins', 0], ['Antibes Yacht Show', 'Antibes', 0],
+      ['Les Voiles', 'Saint-Tropez', 0], ["Roc d'Azur", 'Fréjus', 0], ['Expo Rose', 'Grasse', 0],
+      ['Festival de Hyères', 'Hyères', 0], ['Fête du Mimosa', 'Mandelieu', 0], ['Festival de Ramatuelle', 'Ramatuelle', 0]
+    ];
+    return raw.map(([name, city, feat]) => feat
+      ? { name, city: '· ' + city, border: '1px solid rgba(var(--es-rgb,53,198,240),.5)', bg: 'rgba(var(--es-rgb,53,198,240),.1)', dot: 'var(--es-a1,#6fe0ff)', color: '#eaf3fb' }
+      : { name, city: '· ' + city, border: '1px solid rgba(255,255,255,.12)', bg: 'rgba(255,255,255,.03)', dot: 'rgba(255,255,255,.38)', color: '#c3d4e6' });
+  }
+
+  // ---------- render ----------
+  renderVals() {
+    const t = this.tr();
+    const lang = this.state.lang;
+    if (typeof document !== 'undefined' && this._seoLang !== lang) { this._seoLang = lang; this.applySeo(lang); }
+    const view = this.state.view;
+    const cart = this.state.cart;
+    const cartCount = cart.reduce((s, x) => s + x.qty, 0);
+    const unitLbl = (u) => u ? '/ ' + (lang === 'en' ? 'day' : 'jour') : '';
+    const cartLines = cart.map(x => {
+      const p = this.findItem(x.id) || { name: t.misc.article, price: 0, img: null, unit: '' };
+      const line = p.price * x.qty;
+      return {
+        id: x.id, name: p.name, qty: x.qty, price: p.price, img: p.img, hasImg: !!p.img, noImg: !p.img,
+        unit: p.unit ? unitLbl(p.unit) : '', priceLabel: this.fmt(p.price), lineLabel: this.fmt(line),
+        onInc: () => this.setQty(x.id, x.qty + 1), onDec: () => this.setQty(x.id, x.qty - 1), onRemove: () => this.removeFromCart(x.id)
+      };
+    });
+    const subtotal = cartLines.reduce((s, l) => s + l.price * l.qty, 0);
+
+    const products = this.catalog(lang).map(p => ({
+      ...p, hasImg: !!p.img, noImg: !p.img,
+      priceLabel: this.fmt(p.price), unitLabel: unitLbl(p.unit),
+      onAdd: () => this.addToCart(p.id)
+    }));
+    const zoneNames = ['Nice', 'Cannes', 'Antibes', 'Monaco', 'Sophia Antipolis', 'Grasse', 'Mandelieu', 'Fréjus', 'Saint-Raphaël', 'Menton', 'Toulon', lang === 'en' ? '& nearby' : 'et alentours'];
+    const zones = zoneNames.map(n => ({ name: n }));
+    const testimonials = (lang === 'en' ? [
+      { initials: 'CL', name: 'Camille Laurent', role: 'Event manager, Nice', delay: 0, quote: 'Everything delivered and installed the day before our show, flawlessly. Rare responsiveness on the Riviera.' },
+      { initials: 'TM', name: 'Thomas Mercier', role: 'Conference director, Cannes', delay: 100, quote: 'The complete pack equipped our 4-day conference: dispensers, coffee, fridges. Impeccable, and we never ran out of consumables.' },
+      { initials: 'SB', name: 'Sophie Bernard', role: 'Office manager, Sophia Antipolis', delay: 200, quote: 'An urgent request on Friday, equipment installed by Monday. Simple, professional service with deadlines always met.' }
+    ] : [
+      { initials: 'CL', name: 'Camille Laurent', role: 'Responsable événementiel, Nice', delay: 0, quote: "Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur." },
+      { initials: 'TM', name: 'Thomas Mercier', role: 'Directeur de congrès, Cannes', delay: 100, quote: "Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué." },
+      { initials: 'SB', name: 'Sophie Bernard', role: 'Office manager, Sophia Antipolis', delay: 200, quote: "Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés." }
+    ]);
+    const productsTeaser = products.filter(p => ['fontaine', 'nespresso', 'lavazza', 'covim', 'frigo-grand', 'kitcafe'].includes(p.id));
+
+    const cats = ['tous', 'eau', 'cafe', 'froid', 'confort', 'mobilier'];
+    const catFilters = cats.map(c => {
+      const active = this.state.cat === c;
+      return { key: c, label: t.misc.cats[c], active, onSelect: () => this.setState({ cat: c }),
+        bg: active ? '#0a2942' : '#ffffff', color: active ? '#ffffff' : '#51647a', border: active ? '#0a2942' : '#e2e8ee' };
+    });
+    const filteredProducts = this.state.cat === 'tous' ? products : products.filter(p => p.catKey === this.state.cat);
+
+    const brands = ['nespresso', 'lavazza', 'covim'];
+    const brandLabels = { nespresso: 'Nespresso', lavazza: 'Lavazza', covim: 'Covim' };
+    const brandChips = brands.map(b => ({ key: b, label: brandLabels[b], active: this.state.brand === b, onSelect: () => this.setState({ brand: b }) }));
+
+    const chipColors = (active) => active
+      ? { borderColor: 'var(--es-a2,#2eb6e6)', bgColor: '#e7f7fe', textColor: '#0a2942' }
+      : { borderColor: '#e2e8ee', bgColor: '#ffffff', textColor: '#6b7d90' };
+    const packs = this.packData(lang).map((p, i) => ({
+      ...p, delay: i * 100, priceLabel: this.fmt(p.price),
+      brandChips: p.brandSelect ? brandChips.map(b => ({ ...b, ...chipColors(b.active) })) : [],
+      itemRows: p.items.map(x => ({ label: x })),
+      idealRows: p.ideal.map(x => ({ label: x })),
+      onAdd: () => this.addToCart(p.id)
+    }));
+
+    const marquee = t.misc.marquee.map(n => ({ name: n }));
+    const devisBullets = (lang === 'en'
+      ? ['Guaranteed reply within 24 business hours', 'No commitment, personalised quote', 'A dedicated advisor for your event']
+      : ['Réponse garantie sous 24h ouvrées', 'Sans engagement, devis personnalisé', 'Un conseiller dédié à votre événement']
+    ).map(x => ({ label: x }));
+    const typeOptions = t.form.types.map(x => ({ label: x }));
+    const villeNames = ['Nice', 'Cannes', 'Antibes', 'Monaco', 'Sophia Antipolis', 'Grasse', 'Mandelieu', 'Fréjus', 'Saint-Raphaël', 'Toulon', lang === 'en' ? 'Other' : 'Autre'];
+    const villeOptions = villeNames.map(x => ({ label: x }));
+
+    const map = this.buildMap();
+    const events = this.buildEvents();
+
+    const langActive = (l) => this.state.lang === l;
+
+    return {
+      t, view,
+      isAccueil: view === 'accueil', isBoutique: view === 'boutique', isPanier: view === 'panier',
+      isCommande: view === 'commande', isConfirmation: view === 'confirmation',
+      setFr: () => this.setLang('fr'), setEn: () => this.setLang('en'),
+      langFrColor: langActive('fr') ? '#051726' : '#c3d4e6', langFrBg: langActive('fr') ? 'var(--es-a1,#6fe0ff)' : 'transparent',
+      langEnColor: langActive('en') ? '#051726' : '#c3d4e6', langEnBg: langActive('en') ? 'var(--es-a1,#6fe0ff)' : 'transparent',
+      navAccueil: () => this.setView('accueil'),
+      navBoutique: () => this.setView('boutique'),
+      navPanier: () => this.setView('panier'),
+      navCommande: () => this.setView('commande'),
+      navPacks: () => this.scrollToId('packs'),
+      navEquip: () => this.scrollToId('equipements'),
+      navZones: () => this.scrollToId('zones'),
+      navDevis: () => this.scrollToId('devis'),
+      cartCount, cartHasItems: cartCount > 0, cartEmpty: cartCount === 0,
+      cartLines, subtotalLabel: this.fmt(subtotal), totalLabel: this.fmt(subtotal),
+      products, productsTeaser, filteredProducts, catFilters, packs, brandChips, zones, testimonials,
+      marquee, devisBullets, typeOptions, villeOptions,
+      mapPins: map.mapPins, routePath: map.routePath, events,
+      addToCart: (id) => this.addToCart(id),
+      clearCart: () => this.clearCart(),
+      submitForm: (e) => this.submitForm(e),
+      toast: this.state.toast, hasToast: !!this.state.toast,
+      orderRef: this.state.orderRef || 'ES-204815'
+    };
+  }
+}
+</script>
+</body>
+</html>
