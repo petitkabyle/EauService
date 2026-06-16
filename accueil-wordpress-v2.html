@@ -888,8 +888,8 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 <script>
 (function(){
   var root=document.getElementById('esliv'); if(!root) return;
-  var DEPOT=[43.5915,7.0985];               // Dépôt : Chemin des Frères Garbero, 06600 Antibes
-  var ROAD=1.45;                            // facteur "vol d'oiseau -> route"
+  var DEPOT=[43.5915,7.0985];               /* Depot Antibes */
+  var ROAD=1.45;                            /* facteur vol d oiseau vers route */
   var PC={ '06600':[43.581,7.123],'06160':[43.567,7.108],'06220':[43.580,7.057],'06410':[43.629,7.095],'06270':[43.658,7.122],'06560':[43.625,7.048],'06110':[43.576,7.019],'06400':[43.552,7.017],'06150':[43.547,6.978],'06250':[43.600,7.000],'06210':[43.546,6.938],'06130':[43.659,6.924],'06800':[43.664,7.149],'06700':[43.668,7.190],'06000':[43.700,7.268],'06100':[43.703,7.246],'06200':[43.690,7.210],'06300':[43.708,7.290],'06140':[43.722,7.112],'06570':[43.695,7.122],'06320':[43.717,7.402],'06310':[43.707,7.331],'06230':[43.704,7.311],'06360':[43.727,7.362],'98000':[43.738,7.424],'06240':[43.743,7.423],'06190':[43.759,7.461],'06500':[43.775,7.497],'83700':[43.425,6.768],'83600':[43.433,6.737],'83120':[43.309,6.638],'83990':[43.270,6.640],'83350':[43.215,6.612],'83310':[43.273,6.521],'83580':[43.234,6.587],'83000':[43.124,5.928] };
   function hav(a,b){var R=6371,p=Math.PI/180,dLa=(b[0]-a[0])*p,dLo=(b[1]-a[1])*p,la1=a[0]*p,la2=b[0]*p,x=Math.sin(dLa/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
   function feeKm(km){if(km<=5)return 0;if(km<=15)return 30;if(km<=30)return 50;if(km<=70)return 120;if(km<=120)return 150;return 200;}
@@ -916,8 +916,8 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
     q=(q||'').trim(); if(q.length<3) return;
     var m=q.match(/\b(\d{5})\b/), cp=m?m[1]:null;
     if(cp && PC[cp]) return fromCoords(PC[cp]);
-    if(cp && cp.indexOf('98')===0) return fromCoords([43.738,7.424]); // Monaco
-    if(isFar(cp)) return showFar(); // CP hors zone proche => +120 km => 200 EUR
+    if(cp && cp.indexOf('98')===0) return fromCoords([43.738,7.424]); /* Monaco */
+    if(isFar(cp)) return showFar(); /* CP hors zone proche */
     pending();
     fetch('https://api-adresse.data.gouv.fr/search/?limit=1&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
       if(j&&j.features&&j.features.length){var c=j.features[0].geometry.coordinates;fromCoords([c[1],c[0]]);}
