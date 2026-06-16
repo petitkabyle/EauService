@@ -369,13 +369,14 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 @media(max-width:900px){#esroot .es-bub{display:none !important}}
 
 /* ===== Packs interactifs (toggle supplément Nespresso) ===== */
-#esroot .es-pr-switch-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 46px;flex-wrap:wrap;opacity:1 !important;transform:none !important}
-#esroot .es-pr-opt{font-family:'Sora',sans-serif !important;font-weight:600;font-size:14.5px;color:#7d8fa1;cursor:pointer;transition:color .2s;display:inline-flex;align-items:center;gap:6px;-webkit-user-select:none;user-select:none}
+#esroot .es-pr-switch-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 46px;flex-wrap:wrap}
+#esroot .es-pr-opt{font-family:'Sora',sans-serif !important;font-weight:600;font-size:14.5px;color:#7d8fa1;cursor:pointer;transition:color .2s;display:inline-flex;align-items:center;gap:6px}
 #esroot .es-pr-opt.on{color:#0a2942}
 #esroot .es-pr-opt .es-pr-note{font-size:12.5px;color:var(--deep);font-weight:700}
-#esroot .es-switch{width:58px;height:30px;border-radius:100px;background:#dce4ec;position:relative;cursor:pointer;border:none;transition:background .25s;flex:none;padding:0;z-index:10;pointer-events:auto !important;-webkit-appearance:none;appearance:none;display:inline-block;-webkit-user-select:none;user-select:none}
+#esroot .es-switch{width:58px;height:30px;border-radius:100px;background:#dce4ec;position:relative;cursor:pointer;border:none;transition:background .25s;flex:none;padding:0}
 #esroot .es-switch.on{background:linear-gradient(135deg,var(--a1),var(--a2))}
 #esroot .es-switch-thumb{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(10,22,40,.3);transition:transform .25s;pointer-events:none}
+#esroot .es-switch.on .es-switch-thumb{transform:translateX(28px)}
 #esroot .es-switch.on .es-switch-thumb{transform:translateX(28px)}
 
 #esroot .es-pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:center;perspective:1400px}
@@ -559,7 +560,11 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
     <p class="sec-sub" data-fr="Café Covim ou Lavazza — ou supplément Nespresso. Livraison et installation incluses." data-en="Covim or Lavazza coffee — or the Nespresso add-on. Delivery and setup included.">Café Covim ou Lavazza — ou supplément Nespresso. Livraison et installation incluses.</p>
   </div>
 
-  <div class="es-pr-switch-wrap" id="esSwitchZone"></div>
+  <div class="es-pr-switch-wrap sr">
+    <span class="es-pr-opt on" id="esOptStd" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
+    <button type="button" class="es-switch" id="esBrandSwitch" role="switch" aria-checked="false" aria-label="Supplément Nespresso"><span class="es-switch-thumb"></span></button>
+    <span class="es-pr-opt" id="esOptNes"><span data-fr="Nespresso" data-en="Nespresso">Nespresso</span> <span class="es-pr-note" data-fr="(+40 € HT)" data-en="(+€40 excl. tax)">(+40 € HT)</span></span>
+  </div>
 
   <div class="es-pr-grid sr">
 
@@ -1043,57 +1048,40 @@ function setLang(lang){
 
 <script>
 (function(){
-  function init(){
-    /* ===== 1. Créer le toggle switch entièrement en JS ===== */
-    var zone=document.getElementById('esSwitchZone');
-    if(!zone){setTimeout(init,200);return;}
-    zone.innerHTML='<span class="es-pr-opt on" id="esOptStd">Caf\u00e9 Covim / Lavazza</span>'
-      +'<div class="es-switch" id="esBrandSwitch"><span class="es-switch-thumb"></span></div>'
-      +'<span class="es-pr-opt" id="esOptNes">Nespresso <span class="es-pr-note">(+40 \u20ac HT)</span></span>';
-
-    var sw=document.getElementById('esBrandSwitch');
-    var brand='std';
-
-    function lang(){ return document.documentElement.lang==='en'?'en':'fr'; }
-    var TXT={
-      brand:{std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'},nes:{fr:'Nespresso',en:'Nespresso'}},
-      machine:{std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'},nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'}}
-    };
-
-    function animNum(el,to){
-      var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);
-      if(isNaN(from)||from===to){el.textContent=to;return;}
-      var t0=performance.now(),d=400;
-      (function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f);})(t0);
-    }
-
-    window.esRenderPacks=function(){
-      var lg=lang();
-      document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
-        var price=brand==='nes'?+c.getAttribute('data-nes'):+c.getAttribute('data-base');
-        var newImg=brand==='nes'?c.getAttribute('data-img-nes'):c.getAttribute('data-img-std');
-        var img=c.querySelector('.es-pcard-img img');
-        if(img&&newImg&&img.getAttribute('src')!==newImg){img.style.opacity='0';setTimeout(function(){img.src=newImg;img.style.opacity='1';},180);}
-        var amt=c.querySelector('.es-pcard-price .amt');if(amt)animNum(amt,price);
-        var bl=c.querySelector('.es-brandlbl');if(bl)bl.textContent=TXT.brand[brand][lg];
-        var mc=c.querySelector('.es-machine');if(mc)mc.textContent=TXT.machine[brand][lg];
-      });
-      document.getElementById('esOptStd').classList.toggle('on',brand==='std');
-      document.getElementById('esOptNes').classList.toggle('on',brand==='nes');
-      sw.classList.toggle('on',brand==='nes');
-    };
-
-    function doToggle(){brand=brand==='std'?'nes':'std';esRenderPacks();}
-
-    /* ===== 2. Event listeners directement sur les éléments créés ===== */
-    sw.addEventListener('click',doToggle);
-    document.getElementById('esOptStd').addEventListener('click',function(){if(brand!=='std'){brand='std';esRenderPacks();}});
-    document.getElementById('esOptNes').addEventListener('click',function(){if(brand!=='nes')doToggle();});
-
-    esRenderPacks();
+  var sw=document.getElementById('esBrandSwitch'); if(!sw) return;
+  var brand='std';
+  function lang(){ return document.documentElement.lang==='en' ? 'en' : 'fr'; }
+  var TXT={
+    brand:{ std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'}, nes:{fr:'Nespresso',en:'Nespresso'} },
+    machine:{ std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'}, nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'} }
+  };
+  function animNum(el,to){
+    var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);
+    if(isNaN(from)||from===to){el.textContent=to;return;}
+    var t0=performance.now(),d=450;
+    (function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f);})(t0);
   }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}
-  else{init();}
+  window.esRenderPacks=function(){
+    var lg=lang();
+    document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
+      var price = brand==='nes' ? +c.getAttribute('data-nes') : +c.getAttribute('data-base');
+      var newImg = brand==='nes' ? c.getAttribute('data-img-nes') : c.getAttribute('data-img-std');
+      var img=c.querySelector('.es-pcard-img img');
+      if(img && newImg && img.getAttribute('src')!==newImg){ img.style.opacity='0'; setTimeout(function(){ img.src=newImg; img.style.opacity='1'; },180); }
+      var amt=c.querySelector('.es-pcard-price .amt'); if(amt) animNum(amt,price);
+      var bl=c.querySelector('.es-brandlbl'); if(bl) bl.textContent=TXT.brand[brand][lg];
+      var mc=c.querySelector('.es-machine'); if(mc) mc.textContent=TXT.machine[brand][lg];
+    });
+    var os=document.getElementById('esOptStd'), on=document.getElementById('esOptNes');
+    if(os) os.classList.toggle('on',brand==='std');
+    if(on) on.classList.toggle('on',brand==='nes');
+    sw.classList.toggle('on',brand==='nes');
+  };
+  sw.onclick=function(){
+    brand = brand==='std' ? 'nes' : 'std';
+    esRenderPacks();
+  };
+  esRenderPacks();
 })();
 </script>
 
