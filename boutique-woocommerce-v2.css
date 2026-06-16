@@ -1215,3 +1215,18 @@ p.woocommerce-thankyou-order-received{
 @media(prefers-reduced-motion:reduce){
   .woocommerce ul.products li.product{animation:none !important;}
 }
+
+
+
+/* ===================================================================== */
+/*  TRANSITION D'ENTRÉE "vague d'eau" (même effet que la page d'accueil) */
+/*  Pur CSS, GPU (transform), se joue une fois au chargement — 0 délai.  */
+/* ===================================================================== */
+@keyframes esWaterReveal{0%{transform:translateY(0)}100%{transform:translateY(-112%)}}
+html::before{
+  content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-index:2147483646;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 1180' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1440 V1030 C1200,1095 960,975 720,1035 C480,1095 240,975 0,1035 Z' fill='%230a2942'/%3E%3Cpath d='M0,1035 C240,975 480,1095 720,1035 C960,975 1200,1095 1440,1030' fill='none' stroke='%236fe0ff' stroke-width='5' opacity='0.85'/%3E%3C/svg%3E");
+  background-size:100% 100%;background-repeat:no-repeat;
+  animation:esWaterReveal .95s cubic-bezier(.76,0,.24,1) .05s forwards;
+}
+@media(prefers-reduced-motion:reduce){html::before{display:none !important}}
