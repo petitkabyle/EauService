@@ -559,11 +559,7 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
     <p class="sec-sub" data-fr="Café Covim ou Lavazza — ou supplément Nespresso. Livraison et installation incluses." data-en="Covim or Lavazza coffee — or the Nespresso add-on. Delivery and setup included.">Café Covim ou Lavazza — ou supplément Nespresso. Livraison et installation incluses.</p>
   </div>
 
-  <div class="es-pr-switch-wrap">
-    <span class="es-pr-opt on" id="esOptStd" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
-    <div class="es-switch" id="esBrandSwitch" tabindex="0" role="switch" aria-checked="false" aria-label="Supplément Nespresso"><span class="es-switch-thumb"></span></div>
-    <span class="es-pr-opt" id="esOptNes"><span data-fr="Nespresso" data-en="Nespresso">Nespresso</span> <span class="es-pr-note" data-fr="(+40 € HT)" data-en="(+€40 excl. tax)">(+40 € HT)</span></span>
-  </div>
+  <div class="es-pr-switch-wrap" id="esSwitchZone"></div>
 
   <div class="es-pr-grid sr">
 
@@ -1047,69 +1043,57 @@ function setLang(lang){
 
 <script>
 (function(){
-  function initBrandSwitch(){
+  function init(){
+    /* ===== 1. Créer le toggle switch entièrement en JS ===== */
+    var zone=document.getElementById('esSwitchZone');
+    if(!zone){setTimeout(init,200);return;}
+    zone.innerHTML='<span class="es-pr-opt on" id="esOptStd">Caf\u00e9 Covim / Lavazza</span>'
+      +'<div class="es-switch" id="esBrandSwitch"><span class="es-switch-thumb"></span></div>'
+      +'<span class="es-pr-opt" id="esOptNes">Nespresso <span class="es-pr-note">(+40 \u20ac HT)</span></span>';
+
     var sw=document.getElementById('esBrandSwitch');
-    if(!sw){setTimeout(initBrandSwitch,200);return;}
     var brand='std';
-    function lang(){ return document.documentElement.lang==='en' ? 'en' : 'fr'; }
+
+    function lang(){ return document.documentElement.lang==='en'?'en':'fr'; }
     var TXT={
-      brand:{ std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'}, nes:{fr:'Nespresso',en:'Nespresso'} },
-      machine:{ std:{fr:'Machine à café Covim / Lavazza',en:'Covim / Lavazza coffee machine'}, nes:{fr:'Machine à café Nespresso',en:'Nespresso coffee machine'} }
+      brand:{std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'},nes:{fr:'Nespresso',en:'Nespresso'}},
+      machine:{std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'},nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'}}
     };
+
     function animNum(el,to){
       var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);
       if(isNaN(from)||from===to){el.textContent=to;return;}
-      var t0=performance.now(),d=450;
+      var t0=performance.now(),d=400;
       (function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f);})(t0);
     }
+
     window.esRenderPacks=function(){
       var lg=lang();
       document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
-        var price = brand==='nes' ? +c.getAttribute('data-nes') : +c.getAttribute('data-base');
-        var newImg = brand==='nes' ? c.getAttribute('data-img-nes') : c.getAttribute('data-img-std');
+        var price=brand==='nes'?+c.getAttribute('data-nes'):+c.getAttribute('data-base');
+        var newImg=brand==='nes'?c.getAttribute('data-img-nes'):c.getAttribute('data-img-std');
         var img=c.querySelector('.es-pcard-img img');
-        if(img && newImg && img.getAttribute('src')!==newImg){ img.style.opacity='0'; setTimeout(function(){ img.setAttribute('src',newImg); img.style.opacity='1'; },150); }
-        var amt=c.querySelector('.es-pcard-price .amt'); if(amt) animNum(amt,price);
-        var bl=c.querySelector('.es-brandlbl'); if(bl) bl.textContent=TXT.brand[brand][lg];
-        var mc=c.querySelector('.es-machine'); if(mc) mc.textContent=TXT.machine[brand][lg];
+        if(img&&newImg&&img.getAttribute('src')!==newImg){img.style.opacity='0';setTimeout(function(){img.src=newImg;img.style.opacity='1';},180);}
+        var amt=c.querySelector('.es-pcard-price .amt');if(amt)animNum(amt,price);
+        var bl=c.querySelector('.es-brandlbl');if(bl)bl.textContent=TXT.brand[brand][lg];
+        var mc=c.querySelector('.es-machine');if(mc)mc.textContent=TXT.machine[brand][lg];
       });
-      var os=document.getElementById('esOptStd'), on=document.getElementById('esOptNes');
-      if(os) os.classList.toggle('on',brand==='std');
-      if(on) on.classList.toggle('on',brand==='nes');
+      document.getElementById('esOptStd').classList.toggle('on',brand==='std');
+      document.getElementById('esOptNes').classList.toggle('on',brand==='nes');
       sw.classList.toggle('on',brand==='nes');
-      sw.setAttribute('aria-checked',brand==='nes'?'true':'false');
     };
-    function doToggle(){
-      brand = brand==='std' ? 'nes' : 'std';
-      esRenderPacks();
-    }
-    /* Event delegation sur #esroot pour contourner tout stripping WP */
-    var root=document.getElementById('esroot');
-    if(root){
-      root.addEventListener('click',function(e){
-        var target=e.target;
-        /* Clic sur le switch ou son thumb */
-        if(target.id==='esBrandSwitch'||target.closest('#esBrandSwitch')){
-          e.preventDefault();
-          doToggle();
-          return;
-        }
-        /* Clic sur label Std */
-        if(target.id==='esOptStd'||target.closest('#esOptStd')){
-          if(brand!=='std'){brand='std';esRenderPacks();}
-          return;
-        }
-        /* Clic sur label Nes */
-        if(target.id==='esOptNes'||target.closest('#esOptNes')){
-          if(brand!=='nes'){doToggle();}
-          return;
-        }
-      });
-    }
+
+    function doToggle(){brand=brand==='std'?'nes':'std';esRenderPacks();}
+
+    /* ===== 2. Event listeners directement sur les éléments créés ===== */
+    sw.addEventListener('click',doToggle);
+    document.getElementById('esOptStd').addEventListener('click',function(){if(brand!=='std'){brand='std';esRenderPacks();}});
+    document.getElementById('esOptNes').addEventListener('click',function(){if(brand!=='nes')doToggle();});
+
     esRenderPacks();
   }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initBrandSwitch);}
-  else{initBrandSwitch();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}
+  else{init();}
 })();
 </script>
 
