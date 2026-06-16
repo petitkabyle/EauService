@@ -373,10 +373,10 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 #esroot .es-pr-opt{font-family:'Sora',sans-serif !important;font-weight:600;font-size:14.5px;color:#7d8fa1;cursor:pointer;transition:color .2s;display:inline-flex;align-items:center;gap:6px}
 #esroot .es-pr-opt.on{color:#0a2942}
 #esroot .es-pr-opt .es-pr-note{font-size:12.5px;color:var(--deep);font-weight:700}
-#esroot .es-switch{width:58px;height:30px;border-radius:100px;background:#dce4ec;position:relative;cursor:pointer;border:none;transition:background .25s;flex:none;padding:0}
+#esroot .es-switch{display:inline-flex;align-items:center;width:58px;height:30px;border-radius:100px;background:#dce4ec;position:relative;cursor:pointer;transition:background .25s;flex:none}
 #esroot .es-switch.on{background:linear-gradient(135deg,var(--a1),var(--a2))}
-#esroot .es-switch-thumb{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(10,22,40,.3);transition:transform .25s;pointer-events:none}
-#esroot .es-switch.on .es-switch-thumb{transform:translateX(28px)}
+#esroot .es-switch-thumb{display:block;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(10,22,40,.3);transition:transform .25s;transform:translateX(3px)}
+#esroot .es-switch.on .es-switch-thumb{transform:translateX(31px)}
 #esroot .es-switch.on .es-switch-thumb{transform:translateX(28px)}
 
 #esroot .es-pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:center;perspective:1400px}
@@ -561,10 +561,43 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
   </div>
 
   <div class="es-pr-switch-wrap sr">
-    <span class="es-pr-opt on" id="esOptStd" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
-    <button type="button" class="es-switch" id="esBrandSwitch" role="switch" aria-checked="false" aria-label="Supplément Nespresso"><span class="es-switch-thumb"></span></button>
-    <span class="es-pr-opt" id="esOptNes"><span data-fr="Nespresso" data-en="Nespresso">Nespresso</span> <span class="es-pr-note" data-fr="(+40 € HT)" data-en="(+€40 excl. tax)">(+40 € HT)</span></span>
+    <span class="es-pr-opt on" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
+    <span class="es-switch"><span class="es-switch-thumb"></span></span>
+    <span class="es-pr-opt" data-fr="Nespresso (+40 € HT)" data-en="Nespresso (+€40 excl. tax)">Nespresso <span class="es-pr-note">(+40 € HT)</span></span>
   </div>
+  <script>
+  /* Toggle Nespresso — script inline juste apres le HTML */
+  (function(){
+    var wrap=document.querySelector('.es-pr-switch-wrap');
+    if(!wrap)return;
+    var toggle=wrap.querySelector('.es-switch');
+    var opts=wrap.querySelectorAll('.es-pr-opt');
+    var optStd=opts[0],optNes=opts[1];
+    var brand='std';
+    function lang(){return document.documentElement.lang==='en'?'en':'fr';}
+    var TXT={brand:{std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'},nes:{fr:'Nespresso',en:'Nespresso'}},machine:{std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'},nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'}}};
+    function animNum(el,to){var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);if(isNaN(from)||from===to){el.textContent=to;return;}var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/400);el.textContent=Math.round(from+(to-from)*p);if(p<1)requestAnimationFrame(f);})(t0);}
+    window.esRenderPacks=function(){
+      var lg=lang();
+      document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
+        var price=brand==='nes'?+c.getAttribute('data-nes'):+c.getAttribute('data-base');
+        var newImg=brand==='nes'?c.getAttribute('data-img-nes'):c.getAttribute('data-img-std');
+        var img=c.querySelector('.es-pcard-img img');
+        if(img&&newImg&&img.src!==newImg){img.style.opacity='0';setTimeout(function(){img.src=newImg;img.style.opacity='1';},180);}
+        var amt=c.querySelector('.es-pcard-price .amt');if(amt)animNum(amt,price);
+        var bl=c.querySelector('.es-brandlbl');if(bl)bl.textContent=TXT.brand[brand][lg];
+        var mc=c.querySelector('.es-machine');if(mc)mc.textContent=TXT.machine[brand][lg];
+      });
+      if(brand==='nes'){toggle.classList.add('on');optStd.classList.remove('on');optNes.classList.add('on');}
+      else{toggle.classList.remove('on');optStd.classList.add('on');optNes.classList.remove('on');}
+    };
+    function doSwitch(){brand=brand==='std'?'nes':'std';esRenderPacks();}
+    toggle.onclick=doSwitch;
+    optStd.onclick=function(){if(brand!=='std'){brand='std';esRenderPacks();}};
+    optNes.onclick=function(){if(brand!=='nes'){brand='nes';esRenderPacks();}};
+    esRenderPacks();
+  })();
+  </script>
 
   <div class="es-pr-grid sr">
 
@@ -1046,44 +1079,7 @@ function setLang(lang){
 
 
 
-<script>
-(function(){
-  var sw=document.getElementById('esBrandSwitch'); if(!sw) return;
-  var brand='std';
-  function lang(){ return document.documentElement.lang==='en' ? 'en' : 'fr'; }
-  var TXT={
-    brand:{ std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'}, nes:{fr:'Nespresso',en:'Nespresso'} },
-    machine:{ std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'}, nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'} }
-  };
-  function animNum(el,to){
-    var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);
-    if(isNaN(from)||from===to){el.textContent=to;return;}
-    var t0=performance.now(),d=450;
-    (function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f);})(t0);
-  }
-  window.esRenderPacks=function(){
-    var lg=lang();
-    document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
-      var price = brand==='nes' ? +c.getAttribute('data-nes') : +c.getAttribute('data-base');
-      var newImg = brand==='nes' ? c.getAttribute('data-img-nes') : c.getAttribute('data-img-std');
-      var img=c.querySelector('.es-pcard-img img');
-      if(img && newImg && img.getAttribute('src')!==newImg){ img.style.opacity='0'; setTimeout(function(){ img.src=newImg; img.style.opacity='1'; },180); }
-      var amt=c.querySelector('.es-pcard-price .amt'); if(amt) animNum(amt,price);
-      var bl=c.querySelector('.es-brandlbl'); if(bl) bl.textContent=TXT.brand[brand][lg];
-      var mc=c.querySelector('.es-machine'); if(mc) mc.textContent=TXT.machine[brand][lg];
-    });
-    var os=document.getElementById('esOptStd'), on=document.getElementById('esOptNes');
-    if(os) os.classList.toggle('on',brand==='std');
-    if(on) on.classList.toggle('on',brand==='nes');
-    sw.classList.toggle('on',brand==='nes');
-  };
-  sw.onclick=function(){
-    brand = brand==='std' ? 'nes' : 'std';
-    esRenderPacks();
-  };
-  esRenderPacks();
-})();
-</script>
+<!-- (toggle Nespresso: script inline plus haut, juste apres le switch HTML) -->
 
 
 <script>
