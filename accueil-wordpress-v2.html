@@ -408,6 +408,15 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
   #esroot .es-pcard:hover{transform:translateY(-6px)}
 }
 
+
+/* ===== Avis clients : carrousel animé ===== */
+@keyframes esTestiScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#esroot .es-testi-marquee{position:relative;overflow:hidden;padding:10px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+#esroot .es-testi-track{display:flex;gap:24px;width:max-content;animation:esTestiScroll 75s linear infinite;will-change:transform}
+#esroot .es-testi-marquee:hover .es-testi-track{animation-play-state:paused}
+#esroot .es-testi-marquee .testi{width:374px;flex:none;margin:0}
+@media(max-width:560px){#esroot .es-testi-marquee .testi{width:286px}#esroot .es-testi-track{animation-duration:55s}}
+
 </style>
 
 <div id="esroot" class="es-fullbleed">
@@ -573,12 +582,12 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
     </div>
 
     <!-- Pack Complet Événement (brandable, populaire) -->
-    <div class="es-pcard popular" data-brandable data-base="229" data-nes="269" data-img-std="Pack%20complet%20covim.png" data-img-nes="pack%20complet%20nespresso.png">
+    <div class="es-pcard popular" data-brandable data-base="320" data-nes="360" data-img-std="Pack%20complet%20covim.png" data-img-nes="pack%20complet%20nespresso.png">
       <div class="es-pcard-badge"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.8 5.8 20.9l1.6-6.8L2.2 8.9l6.9-.6z"/></svg><span data-fr="Populaire" data-en="Popular">Populaire</span></div>
       <div class="es-pcard-img"><img src="Pack%20complet%20covim.png" alt="Pack Complet Événement"></div>
       <div class="es-pbrand">☕ <span class="es-brandlbl">Covim / Lavazza</span></div>
       <div class="es-pcard-name" data-fr="Pack Complet Événement" data-en="Complete Event Pack">Pack Complet Événement</div>
-      <div class="es-pcard-price"><span class="amt">229</span><span class="cur">€ HT</span></div>
+      <div class="es-pcard-price"><span class="amt">320</span><span class="cur">€ HT</span></div>
       <div class="es-pcard-billed" data-fr="Livraison, installation &amp; reprise incluses" data-en="Delivery, setup &amp; collection included">Livraison, installation &amp; reprise incluses</div>
       <ul class="es-pcard-feats">
         <li><span class="ck">✓</span><span class="es-machine">Machine à café Covim / Lavazza</span></li>
@@ -720,40 +729,59 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
   <div class="center-head sr">
     <div class="eyebrow center" data-fr="Avis clients" data-en="Client reviews">Avis clients</div>
     <h2 class="sec-h" data-fr="La réactivité qui fait la différence" data-en="Responsiveness that makes the difference">La réactivité qui fait la différence</h2>
+    <p class="sec-sub" data-fr="Plus de 250 clients nous font confiance sur la Côte d'Azur et à Monaco." data-en="Over 250 clients trust us across the French Riviera and Monaco.">Plus de 250 clients nous font confiance sur la Côte d'Azur et à Monaco.</p>
   </div>
-  <div class="testis">
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur." data-en="Everything delivered and installed the day before our show, flawlessly. Rare responsiveness on the Riviera.">Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur.</p>
-      <div class="testi-who"><div class="testi-av">CL</div><div><div class="testi-name">Camille Laurent</div><div class="testi-role" data-fr="Responsable événementiel, Nice" data-en="Event manager, Nice">Responsable événementiel, Nice</div></div></div>
-    </div>
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué." data-en="The complete pack equipped our 4-day conference: dispensers, coffee, fridges. Impeccable, and we never ran out of consumables.">Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué.</p>
-      <div class="testi-who"><div class="testi-av">TM</div><div><div class="testi-name">Thomas Mercier</div><div class="testi-role" data-fr="Directeur de congrès, Cannes" data-en="Conference director, Cannes">Directeur de congrès, Cannes</div></div></div>
-    </div>
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés." data-en="An urgent request on Friday, equipment installed by Monday. Simple, professional service with deadlines always met.">Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés.</p>
-      <div class="testi-who"><div class="testi-av">SB</div><div><div class="testi-name">Sophie Bernard</div><div class="testi-role" data-fr="Office manager, Sophia Antipolis" data-en="Office manager, Sophia Antipolis">Office manager, Sophia Antipolis</div></div></div>
-    </div>
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Du matériel haut de gamme, livré pile à l'heure pour notre soirée VIP. Rien à redire — on refait appel à eux sans hésiter." data-en="Premium equipment, delivered right on time for our VIP evening. Nothing to fault — we'll book them again without hesitation.">Du matériel haut de gamme, livré pile à l'heure pour notre soirée VIP. Rien à redire — on refait appel à eux sans hésiter.</p>
-      <div class="testi-who"><div class="testi-av">JR</div><div><div class="testi-name">Julien Roche</div><div class="testi-role" data-fr="Chef de projet événementiel, Monaco" data-en="Event project manager, Monaco">Chef de projet événementiel, Monaco</div></div></div>
-    </div>
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Fontaines et machines à café impeccables pendant tout le salon. Installation rapide et reprise sans le moindre souci." data-en="Water dispensers and coffee machines flawless throughout the whole show. Quick setup and collection without a hitch.">Fontaines et machines à café impeccables pendant tout le salon. Installation rapide et reprise sans le moindre souci.</p>
-      <div class="testi-who"><div class="testi-av">AM</div><div><div class="testi-name">Aurélie Martin</div><div class="testi-role" data-fr="Responsable accueil, Antibes" data-en="Front-desk manager, Antibes">Responsable accueil, Antibes</div></div></div>
-    </div>
-    <div class="testi sr">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-q" data-fr="Une équipe à l'écoute et des tarifs clairs. Le pack complet a impressionné nos exposants — service vraiment professionnel." data-en="An attentive team and clear pricing. The complete pack impressed our exhibitors — truly professional service.">Une équipe à l'écoute et des tarifs clairs. Le pack complet a impressionné nos exposants — service vraiment professionnel.</p>
-      <div class="testi-who"><div class="testi-av">KB</div><div><div class="testi-name">Karim Benali</div><div class="testi-role" data-fr="Organisateur d'événements, Cannes" data-en="Event organizer, Cannes">Organisateur d'événements, Cannes</div></div></div>
+  <div class="es-testi-marquee">
+    <div class="es-testi-track" id="esTestiTrack">
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur." data-en="Everything delivered and installed the day before our show, flawlessly. Rare responsiveness on the Riviera.">Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur.</p>
+        <div class="testi-who"><div class="testi-av">CL</div><div><div class="testi-name">Camille Laurent</div><div class="testi-role" data-fr="Responsable événementiel, Nice" data-en="Event manager, Nice">Responsable événementiel, Nice</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué." data-en="The complete pack equipped our 4-day conference: dispensers, coffee, fridges. Impeccable, and we never ran out of consumables.">Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué.</p>
+        <div class="testi-who"><div class="testi-av">TM</div><div><div class="testi-name">Thomas Mercier</div><div class="testi-role" data-fr="Directeur de congrès, Cannes" data-en="Conference director, Cannes">Directeur de congrès, Cannes</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés." data-en="An urgent request on Friday, equipment installed by Monday. Simple, professional service with deadlines always met.">Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés.</p>
+        <div class="testi-who"><div class="testi-av">SB</div><div><div class="testi-name">Sophie Bernard</div><div class="testi-role" data-fr="Office manager, Sophia Antipolis" data-en="Office manager, Sophia Antipolis">Office manager, Sophia Antipolis</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Du matériel haut de gamme, livré pile à l'heure pour notre soirée VIP. Rien à redire — on refait appel à eux sans hésiter." data-en="Premium equipment, delivered right on time for our VIP evening. Nothing to fault — we'll book them again without hesitation.">Du matériel haut de gamme, livré pile à l'heure pour notre soirée VIP. Rien à redire — on refait appel à eux sans hésiter.</p>
+        <div class="testi-who"><div class="testi-av">JR</div><div><div class="testi-name">Julien Roche</div><div class="testi-role" data-fr="Chef de projet événementiel, Monaco" data-en="Event project manager, Monaco">Chef de projet événementiel, Monaco</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Fontaines et machines à café impeccables pendant tout le salon. Installation rapide et reprise sans le moindre souci." data-en="Water dispensers and coffee machines flawless throughout the whole show. Quick setup and collection without a hitch.">Fontaines et machines à café impeccables pendant tout le salon. Installation rapide et reprise sans le moindre souci.</p>
+        <div class="testi-who"><div class="testi-av">AM</div><div><div class="testi-name">Aurélie Martin</div><div class="testi-role" data-fr="Responsable accueil, Antibes" data-en="Front-desk manager, Antibes">Responsable accueil, Antibes</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Une équipe à l'écoute et des tarifs clairs. Le pack complet a impressionné nos exposants — service vraiment professionnel." data-en="An attentive team and clear pricing. The complete pack impressed our exhibitors — truly professional service.">Une équipe à l'écoute et des tarifs clairs. Le pack complet a impressionné nos exposants — service vraiment professionnel.</p>
+        <div class="testi-who"><div class="testi-av">KB</div><div><div class="testi-name">Karim Benali</div><div class="testi-role" data-fr="Organisateur d'événements, Cannes" data-en="Event organizer, Cannes">Organisateur d'événements, Cannes</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Organisation parfaite pour notre lancement produit : matériel premium, équipe ponctuelle et discrète. Un vrai partenaire de confiance." data-en="Perfect organization for our product launch: premium equipment, a punctual and discreet team. A true trusted partner.">Organisation parfaite pour notre lancement produit : matériel premium, équipe ponctuelle et discrète. Un vrai partenaire de confiance.</p>
+        <div class="testi-who"><div class="testi-av">LF</div><div><div class="testi-name">Laure Fontaine</div><div class="testi-role" data-fr="Directrice marketing, Monaco" data-en="Marketing director, Monaco">Directrice marketing, Monaco</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Je travaille sur de nombreux salons : EauService fait partie des prestataires les plus fiables de la région. Zéro imprévu." data-en="I work on many trade shows: EauService is one of the most reliable providers in the region. Zero surprises.">Je travaille sur de nombreux salons : EauService fait partie des prestataires les plus fiables de la région. Zéro imprévu.</p>
+        <div class="testi-who"><div class="testi-av">MD</div><div><div class="testi-name">Marc Dubois</div><div class="testi-role" data-fr="Régisseur général, Cannes" data-en="Stage manager, Cannes">Régisseur général, Cannes</div></div></div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-q" data-fr="Réactivité bluffante et matériel toujours nickel. Nos visiteurs ont apprécié le café et l'eau fraîche en continu." data-en="Impressive responsiveness and spotless equipment. Our visitors loved the non-stop coffee and chilled water.">Réactivité bluffante et matériel toujours nickel. Nos visiteurs ont apprécié le café et l'eau fraîche en continu.</p>
+        <div class="testi-who"><div class="testi-av">NE</div><div><div class="testi-name">Nadia El Amrani</div><div class="testi-role" data-fr="Cheffe de projet, Antibes" data-en="Project lead, Antibes">Cheffe de projet, Antibes</div></div></div>
+      </div>
     </div>
   </div>
 </section></div>
+
 
 <!-- CONTACT / CTA PRINCIPAL -->
 <div class="contact-wrap"><section class="sec" id="contact">
@@ -913,6 +941,15 @@ function setLang(lang){
 })();
 </script>
 
+
+<script>
+(function(){
+  var t=document.getElementById('esTestiTrack'); if(!t) return;
+  t.setAttribute('aria-label','Avis clients');
+  t.innerHTML += t.innerHTML; /* duplication pour boucle fluide */
+})();
+</script>
+
 <!-- SEO : donnees structurees -->
 <script type="application/ld+json">
 {
@@ -999,7 +1036,7 @@ function setLang(lang){
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
-    "reviewCount": "6",
+    "reviewCount": "9",
     "bestRating": "5",
     "worstRating": "1"
   },
