@@ -850,18 +850,18 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
     <div class="liv-body">
       <label class="liv-label" for="livInput">Adresse, ville ou code postal de livraison</label>
       <div class="liv-row">
-        <input class="liv-input" id="livInput" list="livCities" placeholder="Ex. 06400 Cannes, ou 12 rue d'Antibes Cannes" autocomplete="off" onkeydown="esLivKey(event)" onchange="esLivGo()">
-        <button type="button" class="liv-go" id="livGo" onclick="esLivGo()">Calculer</button>
+        <input class="liv-input" id="livInput" list="livCities" placeholder="Ex. 06400 Cannes, ou 12 rue d'Antibes Cannes" autocomplete="off">
+        <button type="button" class="liv-go" id="livGo">Calculer</button>
       </div>
       <datalist id="livCities">
         <option>Antibes</option><option>Juan-les-Pins</option><option>Cannes</option><option>Le Cannet</option><option>Mougins</option><option>Mandelieu-la-Napoule</option><option>Grasse</option><option>Vallauris</option><option>Biot</option><option>Valbonne</option><option>Villeneuve-Loubet</option><option>Cagnes-sur-Mer</option><option>Saint-Laurent-du-Var</option><option>Nice</option><option>Vence</option><option>Villefranche-sur-Mer</option><option>Beaulieu-sur-Mer</option><option>Èze</option><option>Cap-d'Ail</option><option>Monaco</option><option>Beausoleil</option><option>Roquebrune-Cap-Martin</option><option>Menton</option><option>Saint-Raphaël</option><option>Fréjus</option><option>Sainte-Maxime</option><option>Saint-Tropez</option><option>Toulon</option>
       </datalist>
       <div class="liv-chips">
-        <button type="button" data-q="Antibes 06600" onclick="esLivChip(this)">Antibes</button>
-        <button type="button" data-q="Cannes 06400" onclick="esLivChip(this)">Cannes</button>
-        <button type="button" data-q="Nice 06000" onclick="esLivChip(this)">Nice</button>
-        <button type="button" data-q="Monaco 98000" onclick="esLivChip(this)">Monaco</button>
-        <button type="button" data-q="Saint-Tropez 83990" onclick="esLivChip(this)">Saint-Tropez</button>
+        <button type="button" data-q="Antibes 06600">Antibes</button>
+        <button type="button" data-q="Cannes 06400">Cannes</button>
+        <button type="button" data-q="Nice 06000">Nice</button>
+        <button type="button" data-q="Monaco 98000">Monaco</button>
+        <button type="button" data-q="Saint-Tropez 83990">Saint-Tropez</button>
       </div>
 
       <div class="liv-result" id="livResult" hidden>
@@ -885,8 +885,53 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
   </div>
 </div>
 
-<!-- (Simulateur livraison: logique deplacee en bas en fonctions globales, voir esLivGo/esLivChip/esLivKey) -->
+<script>
+(function(){
+  var root=document.getElementById('esliv'); if(!root) return;
+  var DEPOT=[43.5915,7.0985];               /* Depot Antibes */
+  var ROAD=1.45;                            /* facteur vol d oiseau vers route */
+  var PC={ '06600':[43.581,7.123],'06160':[43.567,7.108],'06220':[43.580,7.057],'06410':[43.629,7.095],'06270':[43.658,7.122],'06560':[43.625,7.048],'06110':[43.576,7.019],'06400':[43.552,7.017],'06150':[43.547,6.978],'06250':[43.600,7.000],'06210':[43.546,6.938],'06130':[43.659,6.924],'06800':[43.664,7.149],'06700':[43.668,7.190],'06000':[43.700,7.268],'06100':[43.703,7.246],'06200':[43.690,7.210],'06300':[43.708,7.290],'06140':[43.722,7.112],'06570':[43.695,7.122],'06320':[43.717,7.402],'06310':[43.707,7.331],'06230':[43.704,7.311],'06360':[43.727,7.362],'98000':[43.738,7.424],'06240':[43.743,7.423],'06190':[43.759,7.461],'06500':[43.775,7.497],'83700':[43.425,6.768],'83600':[43.433,6.737],'83120':[43.309,6.638],'83990':[43.270,6.640],'83350':[43.215,6.612],'83310':[43.273,6.521],'83580':[43.234,6.587],'83000':[43.124,5.928] };
+  function hav(a,b){var R=6371,p=Math.PI/180,dLa=(b[0]-a[0])*p,dLo=(b[1]-a[1])*p,la1=a[0]*p,la2=b[0]*p,x=Math.sin(dLa/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+  function feeKm(km){if(km<=5)return 0;if(km<=15)return 30;if(km<=30)return 50;if(km<=70)return 120;if(km<=120)return 150;return 200;}
+  function zoneLabel(km){if(km<=5)return"Zone Antibes — proximité immédiate";if(km<=15)return"Jusqu'à 15 km du dépôt";if(km<=30)return"15 à 30 km du dépôt";if(km<=70)return"30 à 70 km du dépôt";if(km<=120)return"70 à 120 km du dépôt";return"Plus de 120 km du dépôt";}
 
+  var elR=document.getElementById('livResult'),elZ=document.getElementById('livZone'),elF=document.getElementById('livFee'),elFill=document.getElementById('livFill'),elDrop=document.getElementById('livDrop'),elD=document.getElementById('livDist'),input=document.getElementById('livInput');
+  function animNum(to){var from=parseInt((elF.textContent||'').replace(/[^0-9]/g,''),10);if(isNaN(from))from=0;if(from===to){elF.innerHTML=to+' <small>€ HT</small>';return;}var t0=performance.now(),d=500;(function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3),v=Math.round(from+(to-from)*e);elF.innerHTML=v+' <small>€ HT</small>';if(p<1)requestAnimationFrame(f);})(t0);}
+  function render(km){
+    elR.hidden=false;
+    var fee=feeKm(km),pct=Math.min(100,Math.round(km/120*100));
+    elD.textContent='≈ '+Math.round(km)+' km de notre dépôt (Antibes)';
+    elZ.textContent=zoneLabel(km);
+    if(fee===0){elFill.style.background='linear-gradient(90deg,#35e0a0,#13b87f)';elF.innerHTML='Offert <small>🎉</small>';}
+    else{elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';animNum(fee);}
+    elFill.style.width=Math.max(6,pct)+'%';elDrop.style.left=Math.max(6,pct)+'%';
+  }
+  function fromCoords(c){ render(hav(DEPOT,c)*ROAD); }
+  function pending(){ elR.hidden=false; elD.textContent='Calcul en cours…'; elZ.textContent=''; elF.textContent='…'; elFill.style.width='30%'; elDrop.style.left='30%'; }
+  function unknown(){ elR.hidden=false; elD.textContent='Adresse non reconnue'; elZ.textContent='Sur devis — contactez-nous'; elF.innerHTML='Sur devis'; elFill.style.background='#b9c6d4'; elFill.style.width='60%'; elDrop.style.left='60%'; }
+  function isFar(cp){ return !!cp && cp.indexOf('98')!==0 && ['06','83','04'].indexOf(cp.substring(0,2))===-1; }
+  var FAR=/marseille|montpellier|lyon|paris|toulouse|bordeaux|nantes|lille|strasbourg|rennes|avignon|aix|n[i\u00ee]mes|grenoble|valence|arles|gap|digne|orange|salon/i;
+  function showFar(){ elR.hidden=false; elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)'; elD.textContent='Zone \u00e9loign\u00e9e \u2014 plus de 120 km'; elZ.textContent='Plus de 120 km du d\u00e9p\u00f4t'; animNum(200); elFill.style.width='100%'; elDrop.style.left='100%'; }
+  function compute(q){
+    q=(q||'').trim(); if(q.length<3) return;
+    var m=q.match(/\b(\d{5})\b/), cp=m?m[1]:null;
+    if(cp && PC[cp]) return fromCoords(PC[cp]);
+    if(cp && cp.indexOf('98')===0) return fromCoords([43.738,7.424]); /* Monaco */
+    if(isFar(cp)) return showFar(); /* CP hors zone proche */
+    pending();
+    fetch('https://api-adresse.data.gouv.fr/search/?limit=1&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      if(j&&j.features&&j.features.length){var c=j.features[0].geometry.coordinates;fromCoords([c[1],c[0]]);}
+      else if(/monaco/i.test(q)) fromCoords([43.738,7.424]);
+      else if(FAR.test(q)) showFar();
+      else unknown();
+    }).catch(function(){ if(cp&&PC[cp])fromCoords(PC[cp]); else if(isFar(cp)||FAR.test(q)) showFar(); else unknown(); });
+  }
+  document.getElementById('livGo').addEventListener('click',function(){compute(input.value);});
+  input.addEventListener('change',function(){compute(input.value);});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();compute(input.value);}});
+  root.querySelectorAll('.liv-chips button').forEach(function(b){b.addEventListener('click',function(){input.value=b.getAttribute('data-q');compute(b.getAttribute('data-q'));});});
+})();
+</script>
 
 </section></div>
 
@@ -998,39 +1043,6 @@ function esRenderPacks(){
 }
 function esSetBrand(b){ if(esBrand!==b){esBrand=b;esRenderPacks();} }
 function esToggleBrand(){ esSetBrand(esBrand==='std'?'nes':'std'); }
-
-/* ===== SIMULATEUR LIVRAISON — fonctions globales (onclick inline) ===== */
-var ES_DEPOT=[43.5915,7.0985], ES_ROAD=1.45;
-var ES_PC={ '06600':[43.581,7.123],'06160':[43.567,7.108],'06220':[43.580,7.057],'06410':[43.629,7.095],'06270':[43.658,7.122],'06560':[43.625,7.048],'06110':[43.576,7.019],'06400':[43.552,7.017],'06150':[43.547,6.978],'06250':[43.600,7.000],'06210':[43.546,6.938],'06130':[43.659,6.924],'06800':[43.664,7.149],'06700':[43.668,7.190],'06000':[43.700,7.268],'06100':[43.703,7.246],'06200':[43.690,7.210],'06300':[43.708,7.290],'06140':[43.722,7.112],'06570':[43.695,7.122],'06320':[43.717,7.402],'06310':[43.707,7.331],'06230':[43.704,7.311],'06360':[43.727,7.362],'98000':[43.738,7.424],'06240':[43.743,7.423],'06190':[43.759,7.461],'06500':[43.775,7.497],'83700':[43.425,6.768],'83600':[43.433,6.737],'83120':[43.309,6.638],'83990':[43.270,6.640],'83350':[43.215,6.612],'83310':[43.273,6.521],'83580':[43.234,6.587],'83000':[43.124,5.928] };
-var ES_FAR=/marseille|montpellier|lyon|paris|toulouse|bordeaux|nantes|lille|strasbourg|rennes|avignon|aix|n[i\u00ee]mes|grenoble|valence|arles|gap|digne|orange|salon/i;
-function esLivHav(a,b){var R=6371,p=Math.PI/180,dLa=(b[0]-a[0])*p,dLo=(b[1]-a[1])*p,la1=a[0]*p,la2=b[0]*p,x=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(x));}
-function esLivFee(km){if(km<=5)return 0;if(km<=15)return 30;if(km<=30)return 50;if(km<=70)return 120;if(km<=120)return 150;return 200;}
-function esLivZone(km){if(km<=5)return'Zone Antibes \u2014 proximit\u00e9 imm\u00e9diate';if(km<=15)return"Jusqu'\u00e0 15 km du d\u00e9p\u00f4t";if(km<=30)return'15 \u00e0 30 km du d\u00e9p\u00f4t';if(km<=70)return'30 \u00e0 70 km du d\u00e9p\u00f4t';if(km<=120)return'70 \u00e0 120 km du d\u00e9p\u00f4t';return'Plus de 120 km du d\u00e9p\u00f4t';}
-function esLivEls(){return{R:document.getElementById('livResult'),Z:document.getElementById('livZone'),F:document.getElementById('livFee'),Fill:document.getElementById('livFill'),Drop:document.getElementById('livDrop'),D:document.getElementById('livDist'),I:document.getElementById('livInput')};}
-function esLivAnim(to){var e=esLivEls();if(!e.F)return;var from=parseInt((e.F.textContent||'').replace(/[^0-9]/g,''),10);if(isNaN(from))from=0;if(from===to){e.F.innerHTML=to+' <small>\u20ac HT</small>';return;}var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/500),k=1-Math.pow(1-p,3),v=Math.round(from+(to-from)*k);e.F.innerHTML=v+' <small>\u20ac HT</small>';if(p<1)requestAnimationFrame(f);})(t0);}
-function esLivRender(km){var e=esLivEls();if(!e.R)return;e.R.hidden=false;var fee=esLivFee(km),pct=Math.min(100,Math.round(km/120*100));e.D.textContent='\u2248 '+Math.round(km)+' km de notre d\u00e9p\u00f4t (Antibes)';e.Z.textContent=esLivZone(km);if(fee===0){e.Fill.style.background='linear-gradient(90deg,#35e0a0,#13b87f)';e.F.innerHTML='Offert <small>\ud83c\udf89</small>';}else{e.Fill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';esLivAnim(fee);}e.Fill.style.width=Math.max(6,pct)+'%';e.Drop.style.left=Math.max(6,pct)+'%';}
-function esLivCoords(c){esLivRender(esLivHav(ES_DEPOT,c)*ES_ROAD);}
-function esLivPending(){var e=esLivEls();if(!e.R)return;e.R.hidden=false;e.D.textContent='Calcul en cours\u2026';e.Z.textContent='';e.F.textContent='\u2026';e.Fill.style.width='30%';e.Drop.style.left='30%';}
-function esLivUnknown(){var e=esLivEls();if(!e.R)return;e.R.hidden=false;e.D.textContent='Adresse non reconnue';e.Z.textContent='Sur devis \u2014 contactez-nous';e.F.innerHTML='Sur devis';e.Fill.style.background='#b9c6d4';e.Fill.style.width='60%';e.Drop.style.left='60%';}
-function esLivIsFar(cp){return !!cp && cp.indexOf('98')!==0 && ['06','83','04'].indexOf(cp.substring(0,2))===-1;}
-function esLivFarShow(){var e=esLivEls();if(!e.R)return;e.R.hidden=false;e.Fill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';e.D.textContent='Zone \u00e9loign\u00e9e \u2014 plus de 120 km';e.Z.textContent='Plus de 120 km du d\u00e9p\u00f4t';esLivAnim(200);e.Fill.style.width='100%';e.Drop.style.left='100%';}
-function esLivCompute(q){
-  q=(q||'').trim(); if(q.length<3) return;
-  var m=q.match(/\b(\d{5})\b/), cp=m?m[1]:null;
-  if(cp && ES_PC[cp]) return esLivCoords(ES_PC[cp]);
-  if(cp && cp.indexOf('98')===0) return esLivCoords([43.738,7.424]);
-  if(esLivIsFar(cp)) return esLivFarShow();
-  esLivPending();
-  fetch('https://api-adresse.data.gouv.fr/search/?limit=1&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
-    if(j&&j.features&&j.features.length){var c=j.features[0].geometry.coordinates;esLivCoords([c[1],c[0]]);}
-    else if(/monaco/i.test(q)) esLivCoords([43.738,7.424]);
-    else if(ES_FAR.test(q)) esLivFarShow();
-    else esLivUnknown();
-  }).catch(function(){ if(cp&&ES_PC[cp])esLivCoords(ES_PC[cp]); else if(esLivIsFar(cp)||ES_FAR.test(q)) esLivFarShow(); else esLivUnknown(); });
-}
-function esLivGo(){var i=document.getElementById('livInput');if(i)esLivCompute(i.value);}
-function esLivKey(e){if(e&&(e.key==='Enter'||e.keyCode===13)){e.preventDefault();esLivGo();}}
-function esLivChip(b){var i=document.getElementById('livInput');var q=b.getAttribute('data-q');if(i)i.value=q;esLivCompute(q);}
 </script>
 
 <script>
