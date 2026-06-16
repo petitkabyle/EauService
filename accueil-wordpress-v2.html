@@ -35,10 +35,10 @@ body.ast-separate-container,body{background:#f4f7fb !important;}
   --a1:#6fe0ff;--a2:#2eb6e6;--a3:#35c6f0;--deep:#1b86bc;--rgb:53,198,240;
 }
 html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
-#esroot{font-family:'Manrope',sans-serif;background:#f4f7fb;color:#0a2942;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
+#esroot{font-family:'Manrope',sans-serif;background:#f4f7fb;color:#0a2942;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
 
 /* ===== Keyframes ===== */
-@keyframes esmarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes esmarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
 @keyframes esGlow{0%,100%{opacity:.45}50%{opacity:.85}}
 @keyframes esShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
@@ -58,8 +58,8 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 /* HEADER */
 #esroot header{position:sticky;top:0;z-index:500;background:rgba(7,23,40,.97);border-bottom:1px solid rgba(255,255,255,.08)}
 /* BANDEAU DEFILANT */
-#esroot .marquee{background:#06223a;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;white-space:nowrap;position:relative;z-index:600}
-#esroot .marquee-track{display:flex;width:max-content;animation:esmarquee 32s linear infinite}
+#esroot .marquee{background:#06223a;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;white-space:nowrap;position:relative;z-index:600;contain:content}
+#esroot .marquee-track{display:flex;width:max-content;animation:esmarquee 32s linear infinite;will-change:transform;transform:translateZ(0)}
 #esroot .marquee:hover .marquee-track{animation-play-state:paused}
 #esroot .marquee-group{display:flex;align-items:center;flex-shrink:0}
 #esroot .marquee-group span{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#bcd2e6;white-space:nowrap;padding:9px 28px;letter-spacing:.2px}
@@ -87,13 +87,13 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 #esroot .btn-form{background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726;border:none;text-decoration:none;padding:11px 20px;border-radius:100px;font-size:13px;font-weight:700;transition:all .2s;white-space:nowrap;box-shadow:0 8px 22px -8px rgba(46,182,230,.6)}
 #esroot .btn-form:hover{filter:brightness(1.08);transform:translateY(-1px)}
 #esroot .hdr-wa{background:#25D366;color:#fff;text-decoration:none;padding:9px 16px;border-radius:100px;font-size:13px;font-weight:700;display:flex;align-items:center;transition:all .2s}#esroot .hdr-wa:hover{background:#1eb858}
-#esroot .btn-shop{background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726;border:none;padding:11px 22px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif !important;text-decoration:none;transition:all .2s;box-shadow:0 8px 22px -8px rgba(46,182,230,.6);animation:shopPulse 2.8s ease-in-out infinite}
-#esroot .btn-shop:hover{filter:brightness(1.06);transform:translateY(-1px);animation:none}
+#esroot .btn-shop{background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726;border:none;padding:11px 22px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif !important;text-decoration:none;transition:all .2s;box-shadow:0 8px 22px -8px rgba(46,182,230,.6)}
+#esroot .btn-shop:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 10px 30px -6px rgba(111,224,255,.8)}
 
 /* HERO */
 #esroot .hero{position:relative;min-height:84vh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 82% 0%,#11436b 0%,#0a2942 46%,#061726 100%);padding-bottom:90px}
 #esroot .hero::before{content:'';position:absolute;top:-140px;right:-60px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.32),transparent 65%);animation:esGlow 6s ease-in-out infinite;pointer-events:none}
-#esroot .hero::after{content:'';position:absolute;left:0;bottom:-1px;width:200%;height:60px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C120,108 240,108 360,60 C480,12 600,12 720,60 L720,120 L0,120 Z' fill='%23f4f7fb'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 14s linear infinite;pointer-events:none;z-index:4;transform:translateZ(0)}
+#esroot .hero::after{content:'';position:absolute;left:0;bottom:-1px;width:200%;height:60px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C120,108 240,108 360,60 C480,12 600,12 720,60 L720,120 L0,120 Z' fill='%23f4f7fb'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 14s linear infinite;pointer-events:none;z-index:4;transform:translateZ(0);will-change:transform}
 #esroot .hero-inner{max-width:1240px;margin:0 auto;padding:70px 40px 40px;position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
 #esroot .hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border:1px solid rgba(111,224,255,.32);border-radius:100px;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--a1);margin-bottom:22px}
 #esroot .hero h1{font-size:clamp(32px,4.4vw,56px);font-weight:700;letter-spacing:-1.4px;line-height:1.05;color:#f3f9ff;margin-bottom:22px;word-spacing:normal}
@@ -111,7 +111,7 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 #esroot .hmini-s{font-size:11px;color:var(--txt-lg)}
 #esroot .hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
 #esroot .hero-visual::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.4),transparent 62%);animation:esGlow 5s ease-in-out infinite}
-#esroot .hero-visual img{position:relative;max-width:100%;max-height:460px;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55));animation:floaty 7s ease-in-out infinite}
+#esroot .hero-visual img{position:relative;max-width:100%;max-height:460px;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55));animation:floaty 7s ease-in-out infinite;will-change:transform;transform:translateZ(0)}
 
 /* SECTION GENERIC */
 #esroot .sec{padding:88px 40px;max-width:1240px;margin:0 auto}
@@ -211,8 +211,8 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 #esroot .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:22px;text-align:center;font-size:12.5px;color:#9fb6cc;max-width:1240px;margin:0 auto}
 
 /* SCROLL REVEAL */
-#esroot .sr{opacity:0;transform:translateY(34px);transition:opacity .75s cubic-bezier(.16,.84,.44,1),transform .75s cubic-bezier(.16,.84,.44,1)}
-#esroot .sr.on{opacity:1;transform:none}
+#esroot .sr{opacity:0;transform:translate3d(0,34px,0);transition:opacity .6s cubic-bezier(.16,.84,.44,1),transform .6s cubic-bezier(.16,.84,.44,1);will-change:opacity,transform}
+#esroot .sr.on{opacity:1;transform:translate3d(0,0,0)}
 
 @media(max-width:900px){
   #esroot .hero-inner{grid-template-columns:1fr}#esroot .hero-visual{display:none}
@@ -295,7 +295,7 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 #esroot .hero .es-bub{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--a3));pointer-events:none;z-index:2;box-shadow:0 0 10px rgba(var(--rgb),.5)}
 
 /* --- Vagues plus fines + effet de perspective (2 couches) --- */
-#esroot .hero-wave-back{position:absolute;left:0;bottom:-1px;width:200%;height:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 50' preserveAspectRatio='none'%3E%3Cpath d='M0,25 C120,5 240,5 360,25 C480,45 600,45 720,25 L720,50 L0,50 Z' fill='rgba(53,198,240,0.42)'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 10s linear infinite reverse;z-index:3;pointer-events:none;transform:translateZ(0)}
+#esroot .hero-wave-back{position:absolute;left:0;bottom:-1px;width:200%;height:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 50' preserveAspectRatio='none'%3E%3Cpath d='M0,25 C120,5 240,5 360,25 C480,45 600,45 720,25 L720,50 L0,50 Z' fill='rgba(53,198,240,0.42)'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:50% 100%;animation:esWaveX 10s linear infinite reverse;z-index:3;pointer-events:none;transform:translateZ(0);will-change:transform}
 
 /* --- Section Zones d'intervention (sombre, comme la v2) --- */
 #esroot .zones-wrap{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 15% 10%,#11436b 0%,#0a2942 50%,#061726 100%)}
@@ -412,15 +412,15 @@ html{scroll-behavior:smooth}#esroot{scroll-behavior:smooth}
 
 /* ===== Avis clients : carrousel animé ===== */
 @keyframes esTestiScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-#esroot .es-testi-marquee{position:relative;overflow:hidden;padding:10px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-#esroot .es-testi-track{display:flex;gap:24px;width:max-content;animation:esTestiScroll 75s linear infinite;will-change:transform}
+#esroot .es-testi-marquee{position:relative;overflow:hidden;padding:10px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);contain:content}
+#esroot .es-testi-track{display:flex;gap:24px;width:max-content;animation:esTestiScroll 75s linear infinite;will-change:transform;transform:translateZ(0)}
 #esroot .es-testi-marquee:hover .es-testi-track{animation-play-state:paused}
 #esroot .es-testi-marquee .testi{width:374px;flex:none;margin:0}
 @media(max-width:560px){#esroot .es-testi-marquee .testi{width:286px}#esroot .es-testi-track{animation-duration:55s}}
 
 /* ===== Transition d'entrée façon vague d'eau ===== */
 @keyframes esWaterReveal{0%{transform:translateY(0)}100%{transform:translateY(-112%)}}
-html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-index:2147483646;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 1180' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1440 V1030 C1200,1095 960,975 720,1035 C480,1095 240,975 0,1035 Z' fill='%230a2942'/%3E%3Cpath d='M0,1035 C240,975 480,1095 720,1035 C960,975 1200,1095 1440,1030' fill='none' stroke='%236fe0ff' stroke-width='5' opacity='0.85'/%3E%3C/svg%3E");background-size:100% 100%;background-repeat:no-repeat;animation:esWaterReveal .9s cubic-bezier(.76,0,.24,1) .05s forwards}
+html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-index:2147483646;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 1180' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1440 V1030 C1200,1095 960,975 720,1035 C480,1095 240,975 0,1035 Z' fill='%230a2942'/%3E%3Cpath d='M0,1035 C240,975 480,1095 720,1035 C960,975 1200,1095 1440,1030' fill='none' stroke='%236fe0ff' stroke-width='5' opacity='0.85'/%3E%3C/svg%3E");background-size:100% 100%;background-repeat:no-repeat;animation:esWaterReveal .6s cubic-bezier(.76,0,.24,1) .05s forwards;will-change:transform}
 #esroot #loader{display:none !important}
 @media(prefers-reduced-motion:reduce){html::before{display:none !important}}
 </style>
@@ -519,12 +519,9 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
     <div class="hero-visual"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/Zenius-1.png" alt="Machine à café professionnelle pour location de matériel événementiel"></div>
   </div>
   <div class="hero-wave-back" aria-hidden="true"></div>
-  <span class="es-bub" style="left:58%;bottom:120px;width:12px;height:12px;animation:esBubble 6s ease-in infinite .4s"></span>
-  <span class="es-bub" style="left:70%;bottom:80px;width:8px;height:8px;animation:esBubble 7s ease-in infinite 1.5s"></span>
-  <span class="es-bub" style="left:64%;bottom:60px;width:6px;height:6px;animation:esBubble 5.5s ease-in infinite 2.2s"></span>
-  <span class="es-bub" style="left:80%;bottom:140px;width:10px;height:10px;animation:esBubble 8s ease-in infinite .9s"></span>
-  <span class="es-bub" style="left:88%;bottom:90px;width:7px;height:7px;animation:esBubble 6.5s ease-in infinite 3s"></span>
-  <span class="es-bub" style="left:52%;bottom:150px;width:5px;height:5px;animation:esBubble 7.5s ease-in infinite 1.1s"></span>
+  <span class="es-bub" style="left:58%;bottom:120px;width:10px;height:10px;animation:esBubble 7s ease-in infinite .4s"></span>
+  <span class="es-bub" style="left:72%;bottom:80px;width:7px;height:7px;animation:esBubble 8s ease-in infinite 1.5s"></span>
+  <span class="es-bub" style="left:84%;bottom:140px;width:5px;height:5px;animation:esBubble 9s ease-in infinite 2.5s"></span>
 </section>
 
 <!-- BOUTIQUE EN LIGNE -->
@@ -725,8 +722,8 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
   <div class="cats">
     <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/covim_blanche-removebg-preview.png" alt="Machines à café - location de matériel événementiel"></div><div class="cat-body"><div class="cat-name" data-fr="Machines à café" data-en="Coffee machines">Machines à café</div><div class="cat-desc" data-fr="Nespresso, Lavazza, Covim — professionnelles et domestiques." data-en="Nespresso, Lavazza, Covim — professional and domestic.">Nespresso, Lavazza, Covim — professionnelles et domestiques.</div><div class="cat-link" data-fr="Voir les machines →" data-en="View machines →">Voir les machines →</div></div></a>
     <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/fontaine_a_eau_grise_everest-removebg-preview-1.png" alt="Fontaines à eau - location de matériel événementiel"></div><div class="cat-body"><div class="cat-name" data-fr="Fontaines à eau" data-en="Water fountains">Fontaines à eau</div><div class="cat-desc" data-fr="À bonbonne ou réseau, eau fraîche et chaude. Zéro plastique." data-en="Bottle or mains-fed, cold and hot water. Zero plastic.">À bonbonne ou réseau, eau fraîche et chaude. Zéro plastique.</div><div class="cat-link" data-fr="Voir les fontaines →" data-en="View fountains →">Voir les fontaines →</div></div></a>
-    <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/grand-refregirateur.png" alt="Réfrigération - location de matériel événementiel"></div><div class="cat-body"><div class="cat-name" data-fr="Réfrigération" data-en="Refrigeration">Réfrigération</div><div class="cat-desc" data-fr="Frigo table top et réfrigérateurs pour vos boissons fraîches." data-en="Table-top fridge and refrigerators to keep your drinks cool.">Frigo table top et réfrigérateurs pour vos boissons fraîches.</div><div class="cat-link" data-fr="Voir la réfrigération →" data-en="View refrigeration →">Voir la réfrigération →</div></div></a>
-    <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/ventilateur-1.png" alt="Suppléments"></div><div class="cat-body"><div class="cat-name" data-fr="Suppléments" data-en="Add-ons">Suppléments</div><div class="cat-desc" data-fr="Bouilloire, mousseur à lait, chaises, tables, ventilateurs, gobelets… et bien plus, en location." data-en="Kettle, milk frother, chairs, tables, fans, cups… and much more, for rent.">Bouilloire, mousseur à lait, chaises, tables, ventilateurs, gobelets… et bien plus, en location.</div><div class="cat-link" data-fr="Voir les suppléments →" data-en="View add-ons →">Voir les suppléments →</div></div></a>
+    <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/table-top.png" alt="Réfrigération - location de matériel événementiel"></div><div class="cat-body"><div class="cat-name" data-fr="Réfrigération" data-en="Refrigeration">Réfrigération</div><div class="cat-desc" data-fr="Frigo table top et réfrigérateurs pour vos boissons fraîches." data-en="Table-top fridge and refrigerators to keep your drinks cool.">Frigo table top et réfrigérateurs pour vos boissons fraîches.</div><div class="cat-link" data-fr="Voir la réfrigération →" data-en="View refrigeration →">Voir la réfrigération →</div></div></a>
+    <a href="/boutique/" class="cat sr"><div class="cat-img"><img src="https://eau-service-events.fr/wp-content/uploads/2026/06/bouilloire-1.png" alt="Suppléments"></div><div class="cat-body"><div class="cat-name" data-fr="Suppléments" data-en="Add-ons">Suppléments</div><div class="cat-desc" data-fr="Bouilloire, mousseur à lait, chaises, tables, ventilateurs, gobelets… et bien plus, en location." data-en="Kettle, milk frother, chairs, tables, fans, cups… and much more, for rent.">Bouilloire, mousseur à lait, chaises, tables, ventilateurs, gobelets… et bien plus, en location.</div><div class="cat-link" data-fr="Voir les suppléments →" data-en="View add-ons →">Voir les suppléments →</div></div></a>
   </div>
   </section></div>
 
@@ -971,28 +968,29 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 </footer>
 
 <script>
-window.addEventListener('load',()=>{
-  const l=document.getElementById('ldlogo'),b=document.getElementById('ldbar');
-  setTimeout(()=>{l.classList.add('in');setTimeout(()=>b.classList.add('go'),200)},150);
-  setTimeout(()=>{document.getElementById('loader').classList.add('out');setTimeout(()=>document.getElementById('loader').style.display='none',700)},1700);
-});
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}}),{threshold:.1});
-document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
-
+/* === Scroll reveal (lightweight, uses requestIdleCallback) === */
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('#esroot .sr').forEach(function(el){obs.observe(el);});
+})();
 
 function toggleMenu(){
-  const burger=document.getElementById('burger');
-  const menu=document.getElementById('mobileMenu');
-  const back=document.getElementById('menuBackdrop');
+  var burger=document.getElementById('burger');
+  var menu=document.getElementById('mobileMenu');
+  var back=document.getElementById('menuBackdrop');
   if(burger) burger.classList.toggle('open');
   if(menu) menu.classList.toggle('open');
   if(back) back.classList.toggle('open');
   document.body.style.overflow=(menu&&menu.classList.contains('open'))?'hidden':'';
 }
 function closeMenu(){
-  const burger=document.getElementById('burger');
-  const menu=document.getElementById('mobileMenu');
-  const back=document.getElementById('menuBackdrop');
+  var burger=document.getElementById('burger');
+  var menu=document.getElementById('mobileMenu');
+  var back=document.getElementById('menuBackdrop');
   if(burger) burger.classList.remove('open');
   if(menu) menu.classList.remove('open');
   if(back) back.classList.remove('open');
@@ -1001,11 +999,14 @@ function closeMenu(){
 
 function setLang(lang){
   document.documentElement.lang=lang;
-  document.getElementById('lfr').classList.toggle('on',lang==='fr');
-  document.getElementById('len').classList.toggle('on',lang==='en');
-  document.querySelectorAll('[data-fr]').forEach(el=>{
-    const val=el.getAttribute('data-'+lang);
-    if(val!==null){ if(/<span/.test(val)){el.innerHTML=val;}else{el.textContent=val;} }
+  var lfr=document.getElementById('lfr'), len=document.getElementById('len');
+  if(lfr) lfr.classList.toggle('on',lang==='fr');
+  if(len) len.classList.toggle('on',lang==='en');
+  document.querySelectorAll('[data-fr]').forEach(function(el){
+    var val=el.getAttribute('data-'+lang);
+    if(val===null) return;
+    /* Always use innerHTML so elements with <span> or other tags are preserved correctly */
+    el.innerHTML=val;
   });
   if(window.esRenderPacks) esRenderPacks();
 }
@@ -1077,11 +1078,11 @@ function setLang(lang){
     var c=document.createElement('canvas'); var W=c.width=innerWidth, H=c.height=innerHeight;
     c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998'; document.body.appendChild(c);
     var ctx=c.getContext('2d'); var cols=['#6fe0ff','#2eb6e6','#35c6f0','#bff0ff','#ffffff']; var P=[];
-    for(var i=0;i<64;i++){var a=Math.random()*Math.PI*2,v=4+Math.random()*7;P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,s:3+Math.random()*4,c:cols[i%5]});}
+    for(var i=0;i<32;i++){var a=Math.random()*Math.PI*2,v=4+Math.random()*6;P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,s:2+Math.random()*3,c:cols[i%5]});}
     var t0=performance.now();
-    (function f(t){var e=t-t0;ctx.clearRect(0,0,W,H);ctx.globalAlpha=Math.max(0,1-e/1300);
-      P.forEach(function(p){p.vy+=0.16;p.x+=p.vx;p.y+=p.vy;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.283);ctx.fill();});
-      if(e<1300){requestAnimationFrame(f);}else{c.remove();}
+    (function f(t){var e=t-t0;ctx.clearRect(0,0,W,H);ctx.globalAlpha=Math.max(0,1-e/900);
+      P.forEach(function(p){p.vy+=0.18;p.x+=p.vx;p.y+=p.vy;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.283);ctx.fill();});
+      if(e<900){requestAnimationFrame(f);}else{c.remove();}
     })(t0);
   }
   sw.addEventListener('click',function(){
