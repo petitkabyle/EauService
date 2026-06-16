@@ -561,9 +561,9 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
   </div>
 
   <div class="es-pr-switch-wrap sr">
-    <span class="es-pr-opt on" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
-    <span class="es-switch"><span class="es-switch-thumb"></span></span>
-    <span class="es-pr-opt" data-fr="Nespresso (+40 € HT)" data-en="Nespresso (+€40 excl. tax)">Nespresso <span class="es-pr-note">(+40 € HT)</span></span>
+    <span class="es-pr-opt on" onclick="esSetBrand('std')" data-fr="Café Covim / Lavazza" data-en="Covim / Lavazza coffee">Café Covim / Lavazza</span>
+    <span class="es-switch" onclick="esToggleBrand()"><span class="es-switch-thumb"></span></span>
+    <span class="es-pr-opt" onclick="esSetBrand('nes')" data-fr="Nespresso (+40 € HT)" data-en="Nespresso (+€40 excl. tax)">Nespresso <span class="es-pr-note">(+40 € HT)</span></span>
   </div>
 
   <div class="es-pr-grid sr">
@@ -1014,6 +1014,35 @@ function setLang(lang){
   });
   if(window.esRenderPacks) esRenderPacks();
 }
+
+/* ===== TOGGLE NESPRESSO — fonctions globales (meme mecanisme que setLang) ===== */
+var esBrand='std';
+function esRenderPacks(){
+  var lg=document.documentElement.lang==='en'?'en':'fr';
+  var TXT={
+    brand:{std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'},nes:{fr:'Nespresso',en:'Nespresso'}},
+    machine:{std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'},nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'}}
+  };
+  document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
+    var price=esBrand==='nes'?+c.getAttribute('data-nes'):+c.getAttribute('data-base');
+    var newImg=esBrand==='nes'?c.getAttribute('data-img-nes'):c.getAttribute('data-img-std');
+    var img=c.querySelector('.es-pcard-img img');
+    if(img&&newImg&&img.getAttribute('src')!==newImg){img.style.opacity='0';setTimeout(function(){img.src=newImg;img.style.opacity='1';},180);}
+    var amt=c.querySelector('.es-pcard-price .amt');if(amt)amt.textContent=price;
+    var bl=c.querySelector('.es-brandlbl');if(bl)bl.textContent=TXT.brand[esBrand][lg];
+    var mc=c.querySelector('.es-machine');if(mc)mc.textContent=TXT.machine[esBrand][lg];
+  });
+  var wrap=document.querySelector('.es-pr-switch-wrap');
+  if(wrap){
+    var sw=wrap.querySelector('.es-switch');
+    var opts=wrap.querySelectorAll('.es-pr-opt');
+    if(sw) sw.classList.toggle('on',esBrand==='nes');
+    if(opts[0]) opts[0].classList.toggle('on',esBrand==='std');
+    if(opts[1]) opts[1].classList.toggle('on',esBrand==='nes');
+  }
+}
+function esSetBrand(b){ if(esBrand!==b){esBrand=b;esRenderPacks();} }
+function esToggleBrand(){ esSetBrand(esBrand==='std'?'nes':'std'); }
 </script>
 
 <script>
@@ -1046,55 +1075,12 @@ function setLang(lang){
 
 
 
-<!-- ===== TOGGLE NESPRESSO (delegation sur document, place en bas avec les scripts qui marchent) ===== -->
+<!-- (toggle Nespresso: fonctions globales esToggleBrand/esSetBrand definies avec setLang) -->
 <script>
+/* Rendu initial du toggle apres chargement complet du DOM */
 (function(){
-  var brand='std';
-  function lang(){return document.documentElement.lang==='en'?'en':'fr';}
-  var TXT={
-    brand:{std:{fr:'Covim / Lavazza',en:'Covim / Lavazza'},nes:{fr:'Nespresso',en:'Nespresso'}},
-    machine:{std:{fr:'Machine \u00e0 caf\u00e9 Covim / Lavazza',en:'Covim / Lavazza coffee machine'},nes:{fr:'Machine \u00e0 caf\u00e9 Nespresso',en:'Nespresso coffee machine'}}
-  };
-  function animNum(el,to){
-    var from=parseInt((el.textContent||'').replace(/[^0-9]/g,''),10);
-    if(isNaN(from)||from===to){el.textContent=to;return;}
-    var t0=performance.now();
-    (function f(t){var p=Math.min(1,(t-t0)/400);el.textContent=Math.round(from+(to-from)*p);if(p<1)requestAnimationFrame(f);})(t0);
-  }
-  window.esRenderPacks=function(){
-    var lg=lang();
-    document.querySelectorAll('.es-pcard[data-brandable]').forEach(function(c){
-      var price=brand==='nes'?+c.getAttribute('data-nes'):+c.getAttribute('data-base');
-      var newImg=brand==='nes'?c.getAttribute('data-img-nes'):c.getAttribute('data-img-std');
-      var img=c.querySelector('.es-pcard-img img');
-      if(img&&newImg&&img.getAttribute('src')!==newImg){img.style.opacity='0';setTimeout(function(){img.src=newImg;img.style.opacity='1';},180);}
-      var amt=c.querySelector('.es-pcard-price .amt');if(amt)animNum(amt,price);
-      var bl=c.querySelector('.es-brandlbl');if(bl)bl.textContent=TXT.brand[brand][lg];
-      var mc=c.querySelector('.es-machine');if(mc)mc.textContent=TXT.machine[brand][lg];
-    });
-    var wrap=document.querySelector('.es-pr-switch-wrap');
-    if(wrap){
-      var toggle=wrap.querySelector('.es-switch');
-      var opts=wrap.querySelectorAll('.es-pr-opt');
-      if(toggle) toggle.classList.toggle('on',brand==='nes');
-      if(opts[0]) opts[0].classList.toggle('on',brand==='std');
-      if(opts[1]) opts[1].classList.toggle('on',brand==='nes');
-    }
-  };
-  /* Delegation: un seul listener sur document, capte tous les clics */
-  document.addEventListener('click',function(e){
-    var sw=e.target.closest && e.target.closest('.es-switch');
-    var opt=e.target.closest && e.target.closest('.es-pr-opt');
-    if(sw){ brand=brand==='std'?'nes':'std'; esRenderPacks(); return; }
-    if(opt){
-      var wrap=opt.parentNode;
-      var opts=wrap.querySelectorAll('.es-pr-opt');
-      var wanted=(opt===opts[1])?'nes':'std';
-      if(brand!==wanted){ brand=wanted; esRenderPacks(); }
-    }
-  });
-  /* Rendu initial */
-  if(window.esRenderPacks) esRenderPacks();
+  function go(){ if(window.esRenderPacks) esRenderPacks(); }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',go);}else{go();}
 })();
 </script>
 
