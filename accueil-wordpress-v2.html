@@ -793,14 +793,13 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 <div class="sec-light-wrap"><section class="sec sec-light" id="livraison">
   <div class="center-head sr">
     <div class="eyebrow center" data-fr="Livraison" data-en="Delivery">Livraison</div>
-    <h2 class="sec-h" data-fr="Des frais de livraison clairs, partout sur la Côte d'Azur" data-en="Clear delivery fees, all over the French Riviera">Des frais de livraison clairs, partout sur la Côte d'Azur</h2>
-    <p class="sec-sub" data-fr="Estimez votre tarif en un clic — ou contactez-nous pour un arrangement sur mesure et un code promo." data-en="Estimate your fee in one click — or contact us for a custom arrangement and a promo code.">Estimez votre tarif en un clic — ou contactez-nous pour un arrangement sur mesure et un code promo.</p>
+    <h2 class="sec-h" data-fr="Des frais de livraison calculés à la distance" data-en="Delivery fees calculated by distance">Des frais de livraison calculés à la distance</h2>
+    <p class="sec-sub" data-fr="Saisissez votre adresse : le tarif s'affiche selon la distance depuis Antibes. Antibes offert." data-en="Enter your address: the fee shows based on distance from Antibes. Antibes free.">Saisissez votre adresse : le tarif s'affiche selon la distance depuis Antibes. Antibes offert.</p>
   </div>
   <style>
 #esliv,#esliv *{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
 #esliv{--a1:#6fe0ff;--a2:#2eb6e6;--deep:#1b86bc;--ink:#0a2942;--muted:#5b6b7d;max-width:720px;margin:0 auto;color:var(--ink)}
 #esliv a{text-decoration:none}
-@keyframes esLivFill{from{width:0}}
 #esliv .liv-card{background:#fff;border:1px solid #e7edf3;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px -34px rgba(10,41,66,.5)}
 #esliv .liv-top{position:relative;background:radial-gradient(120% 120% at 85% 0%,#11436b,#0a2942 55%,#061726);padding:26px 28px 34px;color:#eaf3fb;overflow:hidden}
 #esliv .liv-top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:26px;background:#fff;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C240,60 480,60 720,30 C960,0 1200,0 1440,30 L1440,60 L0,60 Z' fill='%23000'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C240,60 480,60 720,30 C960,0 1200,0 1440,30 L1440,60 L0,60 Z' fill='%23000'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
@@ -810,16 +809,20 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 #esliv .liv-head p{font-size:13.5px;color:#a9c1d8;margin-top:4px;line-height:1.5}
 #esliv .liv-body{padding:24px 28px 28px}
 #esliv .liv-label{display:block;font-size:13px;font-weight:700;color:#4a6076;margin-bottom:8px}
-#esliv .liv-input{width:100%;font-size:15px;padding:14px 16px;border:1.5px solid #dde5ec;border-radius:13px;background:#f8fafc;outline:none;transition:border-color .2s,background .2s}
+#esliv .liv-row{display:flex;gap:10px;flex-wrap:wrap}
+#esliv .liv-input{flex:1;min-width:200px;font-size:15px;padding:14px 16px;border:1.5px solid #dde5ec;border-radius:13px;background:#f8fafc;outline:none;transition:border-color .2s,background .2s}
 #esliv .liv-input:focus{border-color:var(--a2);background:#fff;box-shadow:0 0 0 4px rgba(46,182,230,.12)}
+#esliv .liv-go{font-family:'Sora',sans-serif;font-size:14.5px;font-weight:600;padding:0 22px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726;cursor:pointer;transition:filter .2s}
+#esliv .liv-go:hover{filter:brightness(1.06)}
 #esliv .liv-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 #esliv .liv-chips button{font-family:'Sora',sans-serif;font-size:13px;font-weight:600;padding:8px 14px;border-radius:100px;border:1.5px solid #c7ebfa;background:#e7f7fe;color:var(--deep);cursor:pointer;transition:all .2s}
 #esliv .liv-chips button:hover{background:var(--a2);color:#fff;border-color:var(--a2)}
 #esliv .liv-result{margin-top:22px;border:1px solid #e7edf3;border-radius:18px;padding:22px;background:radial-gradient(120% 100% at 50% 0%,#f6fafd,#eef3f8);text-align:center;animation:esLivIn .4s ease}
 @keyframes esLivIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 #esliv .liv-gauge{position:relative;height:12px;border-radius:100px;background:#e2ebf2;overflow:visible;margin:4px 0 22px}
-#esliv .liv-gauge-fill{position:absolute;left:0;top:0;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--a1),var(--a2));transition:width .6s cubic-bezier(.16,.84,.44,1);animation:esLivFill .6s}
-#esliv .liv-drop{position:absolute;top:-9px;transform:translateX(-50%);font-size:18px;transition:left .6s cubic-bezier(.16,.84,.44,1)}
+#esliv .liv-gauge-fill{position:absolute;left:0;top:0;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--a1),var(--a2));width:0;transition:width .6s cubic-bezier(.16,.84,.44,1)}
+#esliv .liv-drop{position:absolute;top:-9px;left:0;transform:translateX(-50%);font-size:18px;transition:left .6s cubic-bezier(.16,.84,.44,1)}
+#esliv .liv-dist{font-size:13px;color:var(--muted);margin-bottom:2px}
 #esliv .liv-zone{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--deep)}
 #esliv .liv-fee{font-family:'Sora',sans-serif;font-size:46px;font-weight:800;color:var(--ink);letter-spacing:-1.5px;line-height:1.1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
 #esliv .liv-fee small{font-size:18px;font-weight:700}
@@ -832,7 +835,7 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 #esliv .liv-tel{background:#fff;color:var(--ink);border:1px solid #c7ebfa}
 #esliv .liv-devis{background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726}
 #esliv .liv-disc{font-size:12px;color:#8295a8;margin-top:14px;text-align:center;line-height:1.5}
-@media(max-width:560px){#esliv .liv-fee{font-size:38px}#esliv .liv-head h3{font-size:18px}}
+@media(max-width:560px){#esliv .liv-fee{font-size:38px}#esliv .liv-head h3{font-size:18px}#esliv .liv-go{padding:13px 18px}}
 </style>
 
 <div id="esliv">
@@ -842,44 +845,44 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
         <span class="liv-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#051726" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z"/></svg></span>
         <div>
           <h3>Estimez vos frais de livraison</h3>
-          <p>Basés à Antibes, nous livrons, installons et reprenons votre matériel sur toute la Côte d'Azur.</p>
+          <p>Saisissez votre adresse : nous calculons la distance depuis notre dépôt d'Antibes et vos frais en temps réel.</p>
         </div>
       </div>
     </div>
     <div class="liv-body">
-      <label class="liv-label" for="livInput">Votre ville de livraison</label>
-      <input class="liv-input" id="livInput" list="livCities" placeholder="Ex. Cannes, Nice, Monaco, Saint-Tropez…" autocomplete="off">
+      <label class="liv-label" for="livInput">Adresse, ville ou code postal de livraison</label>
+      <div class="liv-row">
+        <input class="liv-input" id="livInput" list="livCities" placeholder="Ex. 06400 Cannes, ou 12 rue d'Antibes Cannes" autocomplete="off">
+        <button type="button" class="liv-go" id="livGo">Calculer</button>
+      </div>
       <datalist id="livCities">
-        <option>Antibes</option><option>Juan-les-Pins</option><option>Vallauris</option><option>Golfe-Juan</option><option>Biot</option><option>Valbonne</option><option>Sophia Antipolis</option><option>Villeneuve-Loubet</option>
-        <option>Cannes</option><option>Le Cannet</option><option>Mougins</option><option>Mandelieu-la-Napoule</option><option>Grasse</option><option>Pégomas</option><option>La Roquette-sur-Siagne</option>
-        <option>Nice</option><option>Cagnes-sur-Mer</option><option>Saint-Laurent-du-Var</option><option>Vence</option><option>Saint-Paul-de-Vence</option>
-        <option>Monaco</option><option>Monte-Carlo</option><option>Menton</option><option>Roquebrune-Cap-Martin</option><option>Beausoleil</option><option>Cap-d'Ail</option><option>Èze</option><option>Beaulieu-sur-Mer</option><option>Villefranche-sur-Mer</option>
-        <option>Saint-Tropez</option><option>Sainte-Maxime</option><option>Ramatuelle</option><option>Grimaud</option><option>Cogolin</option><option>Gassin</option>
+        <option>Antibes</option><option>Juan-les-Pins</option><option>Cannes</option><option>Le Cannet</option><option>Mougins</option><option>Mandelieu-la-Napoule</option><option>Grasse</option><option>Vallauris</option><option>Biot</option><option>Valbonne</option><option>Villeneuve-Loubet</option><option>Cagnes-sur-Mer</option><option>Saint-Laurent-du-Var</option><option>Nice</option><option>Vence</option><option>Villefranche-sur-Mer</option><option>Beaulieu-sur-Mer</option><option>Èze</option><option>Cap-d'Ail</option><option>Monaco</option><option>Beausoleil</option><option>Roquebrune-Cap-Martin</option><option>Menton</option><option>Saint-Raphaël</option><option>Fréjus</option><option>Sainte-Maxime</option><option>Saint-Tropez</option><option>Toulon</option>
       </datalist>
       <div class="liv-chips">
-        <button type="button" data-city="Antibes">Antibes</button>
-        <button type="button" data-city="Cannes">Cannes</button>
-        <button type="button" data-city="Nice">Nice</button>
-        <button type="button" data-city="Monaco">Monaco</button>
-        <button type="button" data-city="Saint-Tropez">Saint-Tropez</button>
+        <button type="button" data-q="Antibes 06600">Antibes</button>
+        <button type="button" data-q="Cannes 06400">Cannes</button>
+        <button type="button" data-q="Nice 06000">Nice</button>
+        <button type="button" data-q="Monaco 98000">Monaco</button>
+        <button type="button" data-q="Saint-Tropez 83990">Saint-Tropez</button>
       </div>
 
       <div class="liv-result" id="livResult" hidden>
-        <div class="liv-gauge"><span class="liv-gauge-fill" id="livFill" style="width:0"></span><span class="liv-drop" id="livDrop" style="left:0">💧</span></div>
+        <div class="liv-gauge"><span class="liv-gauge-fill" id="livFill"></span><span class="liv-drop" id="livDrop">💧</span></div>
+        <div class="liv-dist" id="livDist"></div>
         <div class="liv-zone" id="livZone"></div>
         <div class="liv-fee" id="livFee">—</div>
         <div class="liv-incl">Livraison, installation &amp; reprise incluses</div>
       </div>
 
       <div class="liv-note">
-        💬 Votre ville n'est pas listée, zone éloignée ou besoin d'un tarif sur mesure ? <strong>Contactez-nous avant de commander</strong> — nous nous arrangeons et pouvons appliquer un <strong>code promo</strong>.
+        💬 Zone éloignée, besoin particulier ou <strong>code promo</strong> ? <strong>Contactez-nous avant de commander</strong>, on s'arrange.
         <div class="liv-cta">
           <a class="liv-wa" href="https://api.whatsapp.com/send?phone=33761465720" target="_blank" rel="noopener">WhatsApp</a>
           <a class="liv-tel" href="tel:+33761465720">07 61 46 57 20</a>
           <a class="liv-devis" href="https://formulaire.events-cafe.com/formulaire.html">Demander un devis</a>
         </div>
       </div>
-      <p class="liv-disc">Estimation indicative HT. Le montant définitif est confirmé automatiquement dans votre panier et sur votre devis personnalisé.</p>
+      <p class="liv-disc">Estimation indicative HT calculée à vol d'oiseau et ajustée à la route. Le montant définitif est confirmé automatiquement dans votre panier.</p>
     </div>
   </div>
 </div>
@@ -887,50 +890,43 @@ html::before{content:"";position:fixed;left:0;top:0;width:100%;height:116vh;z-in
 <script>
 (function(){
   var root=document.getElementById('esliv'); if(!root) return;
-  var ZONES={
-    antibes:{f:0,l:'Antibes — livraison offerte 🎉',p:8},
-    cannes:{f:30,l:'Zone Cannes — à ~12 km',p:30},
-    nice:{f:50,l:'Zone Nice — à ~20 km',p:48},
-    monaco:{f:120,l:'Zone Est — Monaco, Menton, Roquebrune…',p:80},
-    tropez:{f:150,l:'Zone Saint-Tropez — la plus éloignée',p:100}
-  };
-  function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');}
-  var MAP={};
-  function set(list,z){list.forEach(function(c){MAP[norm(c)]=z;});}
-  set(['Antibes','Juan-les-Pins'],'antibes');
-  set(['Vallauris','Golfe-Juan','Biot','Valbonne','Sophia Antipolis','Villeneuve-Loubet'],'cannes');
-  set(['Cannes','Le Cannet','Mougins','Mandelieu-la-Napoule','Mandelieu','La Napoule','Grasse','Pegomas','La Roquette-sur-Siagne','Theoule-sur-Mer'],'cannes');
-  set(['Nice','Cagnes-sur-Mer','Saint-Laurent-du-Var','Vence','Saint-Paul-de-Vence','Saint-Paul'],'nice');
-  set(['Monaco','Monte-Carlo','Menton','Roquebrune-Cap-Martin','Roquebrune','Beausoleil','Cap-d-Ail','Cap d Ail','Eze','Beaulieu-sur-Mer','Beaulieu','Villefranche-sur-Mer','Villefranche'],'monaco');
-  set(['Saint-Tropez','St-Tropez','Saint Tropez','Sainte-Maxime','Ramatuelle','Grimaud','Cogolin','Gassin'],'tropez');
+  var DEPOT=[43.5915,7.0985];               // Dépôt : Chemin des Frères Garbero, 06600 Antibes
+  var ROAD=1.45;                            // facteur "vol d'oiseau -> route"
+  var PC={ '06600':[43.581,7.123],'06160':[43.567,7.108],'06220':[43.580,7.057],'06410':[43.629,7.095],'06270':[43.658,7.122],'06560':[43.625,7.048],'06110':[43.576,7.019],'06400':[43.552,7.017],'06150':[43.547,6.978],'06250':[43.600,7.000],'06210':[43.546,6.938],'06130':[43.659,6.924],'06800':[43.664,7.149],'06700':[43.668,7.190],'06000':[43.700,7.268],'06100':[43.703,7.246],'06200':[43.690,7.210],'06300':[43.708,7.290],'06140':[43.722,7.112],'06570':[43.695,7.122],'06320':[43.717,7.402],'06310':[43.707,7.331],'06230':[43.704,7.311],'06360':[43.727,7.362],'98000':[43.738,7.424],'06240':[43.743,7.423],'06190':[43.759,7.461],'06500':[43.775,7.497],'83700':[43.425,6.768],'83600':[43.433,6.737],'83120':[43.309,6.638],'83990':[43.270,6.640],'83350':[43.215,6.612],'83310':[43.273,6.521],'83580':[43.234,6.587],'83000':[43.124,5.928] };
+  function hav(a,b){var R=6371,p=Math.PI/180,dLa=(b[0]-a[0])*p,dLo=(b[1]-a[1])*p,la1=a[0]*p,la2=b[0]*p,x=Math.sin(dLa/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+  function feeKm(km){if(km<=5)return 0;if(km<=15)return 30;if(km<=30)return 50;if(km<=70)return 120;if(km<=120)return 150;return 200;}
+  function zoneLabel(km){if(km<=5)return"Zone Antibes — proximité immédiate";if(km<=15)return"Jusqu'à 15 km du dépôt";if(km<=30)return"15 à 30 km du dépôt";if(km<=70)return"30 à 70 km du dépôt";if(km<=120)return"70 à 120 km du dépôt";return"Plus de 120 km du dépôt";}
 
-  var elR=document.getElementById('livResult'),elZ=document.getElementById('livZone'),elF=document.getElementById('livFee'),elFill=document.getElementById('livFill'),elDrop=document.getElementById('livDrop');
-  function animNum(to){
-    var from=parseInt((elF.textContent||'').replace(/[^0-9]/g,''),10); if(isNaN(from))from=0;
-    if(from===to){elF.innerHTML=to+' <small>€ HT</small>';return;}
-    var t0=performance.now(),d=500;
-    (function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3),v=Math.round(from+(to-from)*e);elF.innerHTML=v+' <small>€ HT</small>';if(p<1)requestAnimationFrame(f);})(t0);
-  }
-  function show(city){
-    var z=MAP[norm(city)];
+  var elR=document.getElementById('livResult'),elZ=document.getElementById('livZone'),elF=document.getElementById('livFee'),elFill=document.getElementById('livFill'),elDrop=document.getElementById('livDrop'),elD=document.getElementById('livDist'),input=document.getElementById('livInput');
+  function animNum(to){var from=parseInt((elF.textContent||'').replace(/[^0-9]/g,''),10);if(isNaN(from))from=0;if(from===to){elF.innerHTML=to+' <small>€ HT</small>';return;}var t0=performance.now(),d=500;(function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3),v=Math.round(from+(to-from)*e);elF.innerHTML=v+' <small>€ HT</small>';if(p<1)requestAnimationFrame(f);})(t0);}
+  function render(km){
     elR.hidden=false;
-    if(!z){
-      elZ.textContent='Zone non listée — sur devis';
-      elF.innerHTML='Sur devis';
-      elFill.style.width='62%'; elFill.style.background='#b9c6d4'; elDrop.style.left='62%';
-      return;
-    }
-    var d=ZONES[z];
-    elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';
-    elFill.style.width=d.p+'%'; elDrop.style.left=d.p+'%';
-    elZ.textContent=d.l;
-    if(d.f===0){elFill.style.background='linear-gradient(90deg,#35e0a0,#13b87f)';elF.innerHTML='Offert <small>🎉</small>';}else{animNum(d.f);}
+    var fee=feeKm(km),pct=Math.min(100,Math.round(km/120*100));
+    elD.textContent='≈ '+Math.round(km)+' km de notre dépôt (Antibes)';
+    elZ.textContent=zoneLabel(km);
+    if(fee===0){elFill.style.background='linear-gradient(90deg,#35e0a0,#13b87f)';elF.innerHTML='Offert <small>🎉</small>';}
+    else{elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';animNum(fee);}
+    elFill.style.width=Math.max(6,pct)+'%';elDrop.style.left=Math.max(6,pct)+'%';
   }
-  document.getElementById('livInput').addEventListener('input',function(){ if(this.value.trim().length>=3) show(this.value); });
-  document.getElementById('livInput').addEventListener('change',function(){ show(this.value); });
-  root.querySelectorAll('.liv-chips button').forEach(function(b){
-    b.addEventListener('click',function(){ var c=b.getAttribute('data-city'); document.getElementById('livInput').value=c; show(c); });
-  });
+  function fromCoords(c){ render(hav(DEPOT,c)*ROAD); }
+  function pending(){ elR.hidden=false; elD.textContent='Calcul en cours…'; elZ.textContent=''; elF.textContent='…'; elFill.style.width='30%'; elDrop.style.left='30%'; }
+  function unknown(){ elR.hidden=false; elD.textContent='Adresse non reconnue'; elZ.textContent='Sur devis — contactez-nous'; elF.innerHTML='Sur devis'; elFill.style.background='#b9c6d4'; elFill.style.width='60%'; elDrop.style.left='60%'; }
+  function compute(q){
+    q=(q||'').trim(); if(q.length<3) return;
+    var m=q.match(/\b(\d{5})\b/), cp=m?m[1]:null;
+    if(cp && PC[cp]) return fromCoords(PC[cp]);
+    if(cp && cp.indexOf('98')===0) return fromCoords([43.738,7.424]); // Monaco
+    pending();
+    fetch('https://api-adresse.data.gouv.fr/search/?limit=1&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      if(j&&j.features&&j.features.length){var c=j.features[0].geometry.coordinates;fromCoords([c[1],c[0]]);}
+      else if(/monaco/i.test(q)) fromCoords([43.738,7.424]);
+      else unknown();
+    }).catch(function(){ if(cp&&PC[cp])fromCoords(PC[cp]); else unknown(); });
+  }
+  document.getElementById('livGo').addEventListener('click',function(){compute(input.value);});
+  input.addEventListener('change',function(){compute(input.value);});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();compute(input.value);}});
+  root.querySelectorAll('.liv-chips button').forEach(function(b){b.addEventListener('click',function(){input.value=b.getAttribute('data-q');compute(b.getAttribute('data-q'));});});
 })();
 </script>
 
