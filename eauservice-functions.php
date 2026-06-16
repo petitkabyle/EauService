@@ -848,8 +848,16 @@ function eauservice_appliquer_frais_livraison( $cart ) {
 	$ville   = $c->get_shipping_city()      ? $c->get_shipping_city()      : $c->get_billing_city();
 	$adresse = $c->get_shipping_address_1() ? $c->get_shipping_address_1() : $c->get_billing_address_1();
 
+	// Code postal hors zone proche (autre departement) => plus de 120 km => 200 EUR
+	$cp5 = substr( preg_replace( '/\D/', '', (string) $cp ), 0, 5 );
+	$dep = substr( $cp5, 0, 2 );
+	if ( '' !== $cp5 && 0 !== strpos( $cp5, '98' ) && ! in_array( $dep, array( '06', '83', '04' ), true ) ) {
+		$cart->add_fee( 'Frais de livraison & installation', 200, false );
+		return;
+	}
+
 	$coords = eauservice_coords( $cp, $ville, $adresse );
-	if ( null === $coords ) { return; } // adresse inconnue -> sur devis (aucun frais auto)
+	if ( null === $coords ) { return; } // adresse inconnue -> sur devis
 
 	$km  = eauservice_haversine( eauservice_depot(), $coords ) * eauservice_road_factor();
 	$fee = eauservice_fee_km( $km );

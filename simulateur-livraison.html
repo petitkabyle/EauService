@@ -121,17 +121,22 @@
   function fromCoords(c){ render(hav(DEPOT,c)*ROAD); }
   function pending(){ elR.hidden=false; elD.textContent='Calcul en cours…'; elZ.textContent=''; elF.textContent='…'; elFill.style.width='30%'; elDrop.style.left='30%'; }
   function unknown(){ elR.hidden=false; elD.textContent='Adresse non reconnue'; elZ.textContent='Sur devis — contactez-nous'; elF.innerHTML='Sur devis'; elFill.style.background='#b9c6d4'; elFill.style.width='60%'; elDrop.style.left='60%'; }
+  function isFar(cp){ return !!cp && cp.indexOf('98')!==0 && ['06','83','04'].indexOf(cp.substring(0,2))===-1; }
+  var FAR=/marseille|montpellier|lyon|paris|toulouse|bordeaux|nantes|lille|strasbourg|rennes|avignon|aix|n[i\u00ee]mes|grenoble|valence|arles|gap|digne|orange|salon/i;
+  function showFar(){ elR.hidden=false; elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)'; elD.textContent='Zone \u00e9loign\u00e9e \u2014 plus de 120 km'; elZ.textContent='Plus de 120 km du d\u00e9p\u00f4t'; animNum(200); elFill.style.width='100%'; elDrop.style.left='100%'; }
   function compute(q){
     q=(q||'').trim(); if(q.length<3) return;
     var m=q.match(/\b(\d{5})\b/), cp=m?m[1]:null;
     if(cp && PC[cp]) return fromCoords(PC[cp]);
     if(cp && cp.indexOf('98')===0) return fromCoords([43.738,7.424]); // Monaco
+    if(isFar(cp)) return showFar(); // CP hors zone proche => +120 km => 200 EUR
     pending();
     fetch('https://api-adresse.data.gouv.fr/search/?limit=1&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
       if(j&&j.features&&j.features.length){var c=j.features[0].geometry.coordinates;fromCoords([c[1],c[0]]);}
       else if(/monaco/i.test(q)) fromCoords([43.738,7.424]);
+      else if(FAR.test(q)) showFar();
       else unknown();
-    }).catch(function(){ if(cp&&PC[cp])fromCoords(PC[cp]); else unknown(); });
+    }).catch(function(){ if(cp&&PC[cp])fromCoords(PC[cp]); else if(isFar(cp)||FAR.test(q)) showFar(); else unknown(); });
   }
   document.getElementById('livGo').addEventListener('click',function(){compute(input.value);});
   input.addEventListener('change',function(){compute(input.value);});
