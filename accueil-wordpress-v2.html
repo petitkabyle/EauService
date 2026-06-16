@@ -1,0 +1,850 @@
+<!-- ============================================================= -->
+<!--  EauService by Events Cafe — ACCUEIL v2 (nouveau design)       -->
+<!--  Pret a coller dans un bloc "HTML personnalise" WordPress.     -->
+<!--  Tout est scope sous #esroot => aucun conflit avec le theme.   -->
+<!--  Design : theme clair, hero marine, vagues animees, packs.     -->
+<!-- ============================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Overrides WordPress / Astra (ciblent le THEME, non scopes) ===== */
+html,body{overflow-x:hidden !important;margin:0 !important;padding:0 !important;}
+#masthead,#colophon,.site-header,.site-footer,header.site-header,footer.site-footer,.ast-above-header-wrap,.ast-below-header-wrap,.ast-main-header-wrap,.main-header-bar,.ast-primary-header-bar{display:none !important;}
+#secondary,.widget-area,.ast-sidebar-wrapper,.ast-sidebar,aside.sidebar,.sidebar-area,.secondary{display:none !important;}
+.site,#page,#content,.site-content,.ast-container,.ast-container-fluid,#primary,.content-area,.ast-article-single,.ast-article-post,.entry-content,article.page,.ast-row,.wp-block-group,.wp-block-post-content,.ast-separate-container .ast-article-single,.ast-separate-container .ast-article-post{
+  max-width:100% !important;width:100% !important;flex:1 1 100% !important;
+  margin:0 !important;padding:0 !important;float:none !important;
+  background:transparent !important;box-shadow:none !important;border:none !important;border-radius:0 !important;}
+.ast-container{display:block !important;}
+body.ast-separate-container,body{background:#f4f7fb !important;}
+#esroot,.es-fullbleed{width:100% !important;background:#f4f7fb;}
+#esroot a{text-decoration:none !important;}
+#esroot,#esroot *{-webkit-tap-highlight-color:transparent !important;}
+#esroot a:focus,#esroot button:focus,#esroot input:focus,#esroot textarea:focus,#esroot select:focus{outline:none !important;}
+
+/* ===== Base scopee ===== */
+#esroot,#esroot *{margin:0;padding:0;box-sizing:border-box;}
+#esroot{
+  --a1:#6fe0ff;--a2:#2eb6e6;--a3:#35c6f0;--rgb:53,198,240;--deep:#1b86bc;--deep2:#2191c4;
+  --ink:#0a2942;--ink2:#061726;--bg:#f4f7fb;--card:#ffffff;--line:#e7edf3;
+  --muted:#5b6b7d;--muted2:#8295a8;
+  font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;line-height:1.6;scroll-behavior:smooth;
+}
+#esroot h1,#esroot h2,#esroot h3,#esroot .font-sora{font-family:'Sora',system-ui,sans-serif;}
+#esroot img{max-width:100%;display:block;}
+#esroot .es-wrap{max-width:1280px;margin:0 auto;padding-left:32px;padding-right:32px;}
+#esroot .es-hide{display:none !important;}
+
+/* ===== Keyframes ===== */
+@keyframes esWave{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes esFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes esFloatSlow{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-22px) rotate(1deg)}}
+@keyframes esBubble{0%{transform:translateY(10px) scale(.5);opacity:0}18%{opacity:.7}100%{transform:translateY(-280px) scale(1);opacity:0}}
+@keyframes esGlow{0%,100%{opacity:.45}50%{opacity:.85}}
+@keyframes esShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes esChip{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes esDash{to{stroke-dashoffset:-240}}
+
+/* ===== Header ===== */
+#esroot header.es-hdr{position:sticky;top:0;z-index:500;background:rgba(8,26,43,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);}
+#esroot .es-hdr-row{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;gap:20px;}
+#esroot .es-logo{display:flex;align-items:center;gap:12px;cursor:pointer;}
+#esroot .es-logo-mark{position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:13px;background:linear-gradient(155deg,#0e3753,#06223a);border:1px solid rgba(111,224,255,.28);box-shadow:0 0 22px rgba(var(--rgb),.32),inset 0 1px 0 rgba(255,255,255,.08);}
+#esroot .es-logo-txt{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+#esroot .es-logo-txt span{color:var(--a1);}
+#esroot nav.es-nav{display:flex;gap:26px;font-size:14.5px;font-weight:500;color:#c3d4e6;}
+#esroot nav.es-nav a{color:#c3d4e6;cursor:pointer;transition:color .2s;}
+#esroot nav.es-nav a:hover{color:var(--a1);}
+#esroot nav.es-nav a.es-nav-shop{color:var(--a1);font-weight:600;}
+#esroot .es-hdr-actions{display:flex;align-items:center;gap:14px;}
+#esroot .es-lang{display:flex;align-items:center;border:1px solid rgba(255,255,255,.16);border-radius:100px;overflow:hidden;}
+#esroot .es-lang button{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;padding:6px 12px;cursor:pointer;border:none;background:transparent;color:#c3d4e6;}
+#esroot .es-lang button.active{color:#051726;background:var(--a1);}
+#esroot .es-hdr-phone{font-size:13.5px;font-weight:600;color:#eaf3fb;white-space:nowrap;}
+#esroot .es-cart{position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.16);cursor:pointer;transition:border-color .2s;}
+#esroot .es-cart:hover{border-color:rgba(111,224,255,.5);}
+#esroot .es-cart .es-badge{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--a1),var(--a2));color:#051726;font-size:11.5px;font-weight:800;border-radius:100px;}
+#esroot .es-btn-quote{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:#051726;background:linear-gradient(135deg,var(--a1),var(--a2));padding:11px 20px;border-radius:100px;cursor:pointer;box-shadow:0 8px 22px -8px rgba(var(--rgb),.7);white-space:nowrap;transition:filter .2s;}
+#esroot .es-btn-quote:hover{filter:brightness(1.08);}
+#esroot .es-burger{display:none;width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;cursor:pointer;align-items:center;justify-content:center;}
+#esroot .es-burger svg{stroke:#eaf3fb;}
+
+/* ===== Hero ===== */
+#esroot .es-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 82% 0%,#11436b 0%,#0a2942 46%,#061726 100%);}
+#esroot .es-hero-glow{position:absolute;top:-140px;right:-60px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.32),transparent 65%);animation:esGlow 6s ease-in-out infinite;pointer-events:none;}
+#esroot .es-hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;align-items:center;padding:70px 32px 130px;min-height:78vh;}
+#esroot .es-badge{display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border:1px solid rgba(111,224,255,.32);border-radius:100px;color:var(--a1);font-size:12px;font-weight:700;letter-spacing:.13em;}
+#esroot .es-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--a1);box-shadow:0 0 10px var(--a1);}
+#esroot .es-hero h1{font-size:56px;line-height:1.04;font-weight:700;color:#f3f9ff;letter-spacing:-.025em;margin:22px 0 0;}
+#esroot .es-hl{background:linear-gradient(90deg,var(--a1),var(--a3),var(--a1));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:esShimmer 4s linear infinite;}
+#esroot .es-hero-sub{font-size:17.5px;line-height:1.6;color:#a9c1d8;max-width:520px;margin:24px 0 0;}
+#esroot .es-hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+#esroot .es-cta-primary{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:#051726;background:linear-gradient(135deg,var(--a1),var(--a2));padding:16px 28px;border-radius:100px;cursor:pointer;box-shadow:0 16px 36px -12px rgba(var(--rgb),.75);transition:filter .2s;}
+#esroot .es-cta-primary:hover{filter:brightness(1.08);}
+#esroot .es-cta-ghost{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:#eaf3fb;border:1px solid rgba(255,255,255,.22);padding:16px 28px;border-radius:100px;cursor:pointer;transition:border-color .2s,background .2s;}
+#esroot .es-cta-ghost:hover{border-color:rgba(111,224,255,.5);background:rgba(255,255,255,.04);}
+#esroot .es-stats{display:flex;gap:38px;margin-top:46px;}
+#esroot .es-stat-n{font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:var(--a1);}
+#esroot .es-stat-l{font-size:13px;color:#8ba6c2;margin-top:2px;}
+#esroot .es-stat-div{width:1px;background:rgba(255,255,255,.12);}
+#esroot .es-hero-visual{position:relative;height:540px;display:flex;align-items:center;justify-content:center;}
+#esroot .es-hero-halo{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.4),transparent 62%);animation:esGlow 5s ease-in-out infinite;}
+#esroot .es-hero-img{height:432px;width:348px;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55));animation:esFloatSlow 7s ease-in-out infinite;}
+#esroot .es-floatchip{position:absolute;display:flex;align-items:center;gap:8px;padding:11px 16px;background:rgba(8,30,48,.82);backdrop-filter:blur(8px);border:1px solid rgba(111,224,255,.25);border-radius:12px;color:#eaf3fb;font-size:13px;font-weight:600;animation:esChip 5s ease-in-out infinite;}
+#esroot .es-bub{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bff0ff,var(--a3));}
+#esroot .es-wave{position:absolute;left:0;right:0;bottom:-1px;overflow:hidden;pointer-events:none;}
+#esroot .es-wave .es-wave-track{display:flex;width:200%;height:100%;}
+#esroot .es-wave svg{width:50%;height:100%;}
+
+/* ===== Marquee ===== */
+#esroot .es-marquee{background:#fff;border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;}
+#esroot .es-marquee-row{display:flex;align-items:center;gap:18px;max-width:1280px;margin:0 auto;padding:0 32px;}
+#esroot .es-marquee-lbl{flex:none;font-size:12.5px;font-weight:700;letter-spacing:.12em;color:#94a6b8;text-transform:uppercase;}
+#esroot .es-marquee-mask{position:relative;flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+#esroot .es-marquee-track{display:flex;width:max-content;gap:44px;animation:esWave 26s linear infinite;white-space:nowrap;}
+#esroot .es-marquee-track .grp{display:flex;gap:44px;align-items:center;color:#5b6b7d;font-weight:600;font-size:15px;}
+#esroot .es-marquee-track .sep{color:#cdd8e3;}
+
+/* ===== Sections claires ===== */
+#esroot .es-sec{max-width:1280px;margin:0 auto;padding:92px 32px 40px;}
+#esroot .es-eyebrow{display:inline-block;color:var(--deep2);font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+#esroot .es-h2{font-size:40px;font-weight:700;color:var(--ink);letter-spacing:-.025em;margin:14px 0 0;line-height:1.1;}
+#esroot .es-lead{font-size:16.5px;color:var(--muted);line-height:1.6;margin:16px 0 0;}
+#esroot .es-center{text-align:center;max-width:720px;margin:0 auto;}
+#esroot .es-sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:44px;}
+#esroot .es-sec-link{font-family:'Sora',sans-serif;font-size:14.5px;font-weight:600;color:var(--deep);cursor:pointer;white-space:nowrap;transition:color .2s;}
+#esroot .es-sec-link:hover{color:var(--ink);}
+
+/* Why cards */
+#esroot .es-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:52px;}
+#esroot .es-why-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 26px;box-shadow:0 10px 30px -22px rgba(10,41,66,.4);transition:transform .35s,box-shadow .35s,border-color .35s;}
+#esroot .es-why-card:hover{transform:translateY(-7px);box-shadow:0 26px 46px -26px rgba(10,41,66,.5);border-color:#bfe6f6;}
+#esroot .es-why-ic{width:54px;height:54px;border-radius:15px;background:linear-gradient(135deg,#e7f7fe,#d2effb);display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
+#esroot .es-why-card h3{font-size:18px;font-weight:600;color:var(--ink);margin:0 0 8px;}
+#esroot .es-why-card p{font-size:14.5px;color:var(--muted);line-height:1.55;margin:0;}
+
+/* Packs */
+#esroot .es-packs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;}
+#esroot .es-pack{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 14px 36px -24px rgba(10,41,66,.45);transition:transform .35s,box-shadow .35s;}
+#esroot .es-pack:hover{transform:translateY(-8px);box-shadow:0 34px 60px -30px rgba(10,41,66,.5);}
+#esroot .es-pack-tag{position:absolute;top:18px;right:18px;z-index:2;padding:7px 13px;border-radius:100px;background:linear-gradient(135deg,#0a2942,#16405f);color:var(--a1);font-size:11.5px;font-weight:700;letter-spacing:.04em;}
+#esroot .es-pack-img{position:relative;height:230px;background:radial-gradient(120% 100% at 50% 10%,#f2f8fc,#e7eef4);display:flex;align-items:center;justify-content:center;padding:18px;}
+#esroot .es-pack-img img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(10,41,66,.18));}
+#esroot .es-pack-body{display:flex;flex-direction:column;flex:1;padding:26px;}
+#esroot .es-pack-body h3{font-size:21px;font-weight:700;color:var(--ink);margin:0;}
+#esroot .es-price{display:flex;align-items:baseline;gap:7px;margin:10px 0 0;}
+#esroot .es-price .from{font-size:13px;color:var(--muted2);}
+#esroot .es-price .amt{font-family:'Sora',sans-serif;font-size:26px;font-weight:700;color:var(--ink);}
+#esroot .es-price .per{font-size:13px;color:var(--muted2);}
+#esroot .es-brands{display:flex;gap:8px;margin:18px 0 4px;}
+#esroot .es-brand{flex:1;text-align:center;padding:9px 6px;border-radius:10px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8ee;background:#fff;color:#6b7d90;transition:all .2s;}
+#esroot .es-brand.active{border-color:var(--a2);background:#e7f7fe;color:var(--ink);}
+#esroot .es-rule{height:1px;background:#eef2f6;margin:20px 0;}
+#esroot .es-feats{display:flex;flex-direction:column;gap:9px;flex:1;}
+#esroot .es-feat{display:flex;align-items:center;gap:10px;font-size:14px;color:#34465a;}
+#esroot .es-feat .ck{flex:none;display:flex;width:18px;height:18px;align-items:center;justify-content:center;border-radius:50%;background:#dff4fc;color:var(--deep);font-size:11px;font-weight:800;}
+#esroot .es-ideal-lbl{font-size:12px;font-weight:700;letter-spacing:.06em;color:#94a6b8;text-transform:uppercase;margin-bottom:9px;}
+#esroot .es-tags{display:flex;flex-wrap:wrap;gap:7px;}
+#esroot .es-tag{padding:5px 11px;border-radius:100px;background:#f1f5f9;color:#51647a;font-size:12.5px;font-weight:600;}
+#esroot .es-pack-add{margin-top:24px;width:100%;display:block;text-align:center;font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:#051726;background:linear-gradient(135deg,var(--a1),var(--a2));border:none;padding:15px;border-radius:14px;cursor:pointer;box-shadow:0 14px 30px -14px rgba(46,182,230,.8);transition:filter .2s;}
+#esroot .es-pack-add:hover{filter:brightness(1.06);}
+
+/* Equipement teaser */
+#esroot .es-prods{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+#esroot .es-prod{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 12px 30px -24px rgba(10,41,66,.4);transition:transform .35s,box-shadow .35s;}
+#esroot .es-prod:hover{transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(10,41,66,.5);}
+#esroot .es-prod-img{position:relative;height:200px;background:radial-gradient(120% 100% at 50% 12%,#f3f8fc,#e8eef4);display:flex;align-items:center;justify-content:center;padding:16px;}
+#esroot .es-prod-img img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 16px 18px rgba(10,41,66,.15));}
+#esroot .es-prod-cat{position:absolute;top:14px;left:14px;padding:5px 11px;border-radius:100px;background:rgba(10,41,66,.06);color:#4a6076;font-size:11.5px;font-weight:700;}
+#esroot .es-prod-ph{width:100%;height:100%;border-radius:12px;background:repeating-linear-gradient(135deg,#eaf1f7,#eaf1f7 10px,#e2ebf2 10px,#e2ebf2 20px);display:flex;align-items:center;justify-content:center;}
+#esroot .es-prod-ph span{font-family:ui-monospace,monospace;font-size:12px;color:#9aabbc;}
+#esroot .es-prod-body{display:flex;flex-direction:column;flex:1;padding:22px;}
+#esroot .es-prod-body h3{font-size:17px;font-weight:600;color:var(--ink);margin:0;}
+#esroot .es-prod-body p{font-size:13.5px;color:#6b7d90;line-height:1.5;margin:7px 0 0;flex:1;}
+#esroot .es-prod-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+#esroot .es-prod-price{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;color:var(--ink);}
+#esroot .es-prod-unit{font-size:12.5px;color:var(--muted2);}
+#esroot .es-prod-add{display:flex;align-items:center;gap:6px;font-family:'Sora',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink);background:#e7f7fe;border:1px solid #c7ebfa;padding:10px 15px;border-radius:10px;cursor:pointer;transition:background .2s;}
+#esroot .es-prod-add:hover{background:#d4f0fb;}
+</style>
+
+
+<style>
+/* ===== Zones (sombre) ===== */
+#esroot .es-dark{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 15% 10%,#11436b 0%,#0a2942 50%,#061726 100%);margin-top:56px;}
+#esroot .es-dark-glow{position:absolute;top:-120px;left:-60px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.22),transparent 65%);animation:esGlow 7s ease-in-out infinite;pointer-events:none;}
+#esroot .es-zones-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding:90px 32px 52px;max-width:1280px;margin:0 auto;}
+#esroot .es-eyebrow-l{display:inline-block;color:var(--a1);font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+#esroot .es-h2-l{font-size:40px;font-weight:700;color:#f3f9ff;letter-spacing:-.025em;margin:14px 0 0;line-height:1.1;}
+#esroot .es-lead-l{font-size:16.5px;color:#a9c1d8;line-height:1.6;margin:16px 0 24px;}
+#esroot .es-zone-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+#esroot .es-zone{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;color:#d7e6f4;}
+#esroot .es-zone .dot{width:7px;height:7px;border-radius:50%;background:var(--a1);box-shadow:0 0 8px var(--a1);}
+#esroot .es-map{position:relative;height:460px;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:linear-gradient(170deg,rgba(20,64,95,.55),rgba(6,23,38,.9));}
+#esroot .es-map-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;}
+#esroot .es-pin{position:absolute;}
+#esroot .es-pin .pdot{position:absolute;transform:translate(-50%,-50%);border-radius:50%;animation:esGlow 3.4s ease-in-out infinite;}
+#esroot .es-pin .plabel{position:absolute;left:50%;white-space:nowrap;font-family:'Sora',sans-serif;text-shadow:0 1px 7px rgba(2,12,22,.9);pointer-events:none;}
+#esroot .es-map-legend{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:14px;padding:9px 14px;border-radius:12px;background:rgba(6,23,38,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);}
+#esroot .es-map-legend span{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;}
+#esroot .es-events{max-width:1280px;margin:0 auto;padding:8px 32px 90px;}
+#esroot .es-events-head{display:flex;align-items:center;gap:16px;margin:0 0 12px;flex-wrap:wrap;}
+#esroot .es-events-head .lbl{color:var(--a1);font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;}
+#esroot .es-events-head .ln{height:1px;flex:1;min-width:40px;background:rgba(255,255,255,.12);}
+#esroot .es-events-head .cnt{font-size:13px;color:#8ba6c2;white-space:nowrap;}
+#esroot .es-events-sub{font-size:15.5px;color:#a9c1d8;line-height:1.6;max-width:720px;margin:0 0 24px;}
+#esroot .es-events-list{display:flex;flex-wrap:wrap;gap:10px;}
+#esroot .es-event{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:100px;font-size:13.5px;font-weight:600;transition:border-color .25s,transform .25s;}
+#esroot .es-event:hover{transform:translateY(-2px);border-color:var(--a1);}
+#esroot .es-event .dot{width:6px;height:6px;border-radius:50%;}
+#esroot .es-event .city{color:#7d97ad;font-weight:500;font-size:12px;}
+
+/* ===== Testimonials ===== */
+#esroot .es-testis{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+#esroot .es-testi{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:0 14px 36px -26px rgba(10,41,66,.4);}
+#esroot .es-stars{color:var(--a2);font-size:16px;letter-spacing:2px;}
+#esroot .es-testi p{font-size:16px;line-height:1.62;color:#2c3e52;margin:18px 0 0;flex:1;font-weight:500;}
+#esroot .es-testi-who{display:flex;align-items:center;gap:13px;margin-top:26px;}
+#esroot .es-testi-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#0a2942,var(--deep));display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;color:#fff;font-weight:700;font-size:16px;}
+#esroot .es-testi-name{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:var(--ink);}
+#esroot .es-testi-role{font-size:13px;color:#7d8fa1;}
+
+/* ===== Devis ===== */
+#esroot .es-devis{position:relative;overflow:hidden;background:radial-gradient(120% 100% at 85% 0%,#11436b 0%,#0a2942 48%,#061726 100%);margin-top:56px;}
+#esroot .es-devis-glow{position:absolute;bottom:-140px;right:-80px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(var(--rgb),.22),transparent 65%);animation:esGlow 7s ease-in-out infinite;pointer-events:none;}
+#esroot .es-devis-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;padding:84px 32px;max-width:1280px;margin:0 auto;}
+#esroot .es-devis h2{font-size:42px;font-weight:700;color:#f3f9ff;letter-spacing:-.025em;margin:14px 0 0;line-height:1.08;}
+#esroot .es-bullets{display:flex;flex-direction:column;gap:16px;margin-top:28px;}
+#esroot .es-bullet{display:flex;align-items:center;gap:13px;color:#d7e6f4;font-size:15px;font-weight:500;}
+#esroot .es-bullet .bk{display:flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:10px;background:rgba(111,224,255,.14);color:var(--a1);}
+#esroot .es-form{background:#fff;border-radius:24px;padding:34px;box-shadow:0 40px 90px -40px rgba(0,0,0,.5);}
+#esroot .es-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+#esroot .es-form label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4a6076;}
+#esroot .es-form .full{margin-top:16px;}
+#esroot .es-form input,#esroot .es-form select,#esroot .es-form textarea{font-family:'Manrope',sans-serif;font-size:14.5px;padding:13px 14px;border:1px solid #dde5ec;border-radius:11px;background:#f8fafc;outline:none;color:var(--ink);transition:border-color .2s,background .2s;width:100%;}
+#esroot .es-form input:focus,#esroot .es-form select:focus,#esroot .es-form textarea:focus{border-color:var(--a2);background:#fff;}
+#esroot .es-form textarea{resize:vertical;}
+#esroot .es-form-submit{margin-top:22px;width:100%;font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:#051726;background:linear-gradient(135deg,var(--a1),var(--a2));border:none;padding:16px;border-radius:14px;cursor:pointer;box-shadow:0 16px 34px -14px rgba(46,182,230,.8);transition:filter .2s;}
+#esroot .es-form-submit:hover{filter:brightness(1.06);}
+
+/* ===== Footer ===== */
+#esroot .es-foot{background:#061726;color:#9fb6cc;padding:70px 32px 36px;}
+#esroot .es-foot-inner{max-width:1280px;margin:0 auto;}
+#esroot .es-foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+#esroot .es-foot-brand{display:flex;align-items:center;gap:11px;margin-bottom:18px;}
+#esroot .es-foot p.tag{font-size:14.5px;line-height:1.65;max-width:320px;margin:0 0 18px;}
+#esroot .es-foot-soc{display:flex;gap:10px;}
+#esroot .es-foot-soc a{display:flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);font-size:13px;color:#cfe0ef;}
+#esroot .es-foot-col-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;}
+#esroot .es-foot-links{display:flex;flex-direction:column;gap:11px;font-size:14px;}
+#esroot .es-foot-links a{color:#9fb6cc;cursor:pointer;transition:color .2s;}
+#esroot .es-foot-links a:hover{color:var(--a1);}
+#esroot .es-foot-contact{display:flex;flex-direction:column;gap:11px;font-size:14px;}
+#esroot .es-foot-contact a{color:#9fb6cc;}
+#esroot .es-foot-contact .strong{color:#cfe0ef;font-weight:600;}
+#esroot .es-foot-contact .quote-l{color:var(--a1);font-weight:600;cursor:pointer;}
+#esroot .es-foot-seo{font-size:12px;line-height:1.7;color:#54697d;margin:26px 0 0;max-width:980px;}
+#esroot .es-foot-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:26px;font-size:13px;}
+#esroot .es-foot-bottom .legal{display:flex;gap:22px;}
+
+/* ===== Mobile menu ===== */
+#esroot .es-mm{position:fixed;inset:0;z-index:900;background:rgba(6,23,38,.97);backdrop-filter:blur(10px);display:none;flex-direction:column;padding:90px 32px 40px;gap:6px;}
+#esroot .es-mm.open{display:flex;}
+#esroot .es-mm a{font-family:'Sora',sans-serif;font-size:22px;font-weight:600;color:#eaf3fb;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer;}
+#esroot .es-mm .es-mm-cta{margin-top:18px;text-align:center;color:#051726;background:linear-gradient(135deg,var(--a1),var(--a2));border-radius:100px;border-bottom:none;}
+#esroot .es-mm .es-mm-wa{text-align:center;color:#eaf3fb;border:1px solid rgba(255,255,255,.2);border-radius:100px;border-bottom:none;margin-top:10px;}
+#esroot .es-mm-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#eaf3fb;font-size:24px;cursor:pointer;}
+
+/* ===== Reveal ===== */
+#esroot [data-reveal]{opacity:0;transform:translateY(30px);transition:opacity .75s cubic-bezier(.16,.84,.44,1),transform .75s cubic-bezier(.16,.84,.44,1);will-change:opacity,transform;}
+#esroot [data-reveal].es-in{opacity:1;transform:none;}
+
+/* ===== Responsive ===== */
+@media(max-width:1080px){
+  #esroot .es-hero-grid{grid-template-columns:1fr;gap:10px;padding:54px 24px 120px;}
+  #esroot .es-hero-visual{height:420px;order:-1;}
+  #esroot .es-zones-grid,#esroot .es-devis-grid{grid-template-columns:1fr;gap:32px;}
+  #esroot .es-why-grid{grid-template-columns:repeat(2,1fr);}
+  #esroot .es-foot-grid{grid-template-columns:1fr 1fr;gap:28px;}
+}
+@media(max-width:860px){
+  #esroot nav.es-nav,#esroot .es-hdr-phone,#esroot .es-btn-quote{display:none;}
+  #esroot .es-burger{display:flex;}
+  #esroot .es-packs,#esroot .es-prods,#esroot .es-testis{grid-template-columns:1fr;}
+  #esroot .es-hero h1{font-size:40px;}
+  #esroot .es-h2,#esroot .es-h2-l,#esroot .es-devis h2{font-size:30px;}
+  #esroot .es-zone-list{grid-template-columns:repeat(2,1fr);}
+  #esroot .es-form-grid{grid-template-columns:1fr;}
+  #esroot .es-wrap,#esroot .es-sec{padding-left:20px;padding-right:20px;}
+  #esroot .es-hdr-row{padding:14px 20px;}
+  #esroot .es-stats{gap:22px;flex-wrap:wrap;}
+}
+@media(max-width:560px){
+  #esroot .es-why-grid{grid-template-columns:1fr;}
+  #esroot .es-foot-grid{grid-template-columns:1fr;}
+  #esroot .es-hero h1{font-size:33px;}
+  #esroot .es-stat-div{display:none;}
+}
+</style>
+
+
+<div id="esroot">
+
+  <!-- ============ HEADER ============ -->
+  <header class="es-hdr">
+    <div class="es-hdr-row">
+      <a class="es-logo" href="#top">
+        <span class="es-logo-mark">
+          <svg width="25" height="25" viewBox="0 0 32 32" fill="none">
+            <defs><linearGradient id="es-jug" x1="8" y1="6" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#6fe0ff"/><stop offset="1" stop-color="#2eb6e6"/></linearGradient></defs>
+            <path d="M10 4H22A2 2 0 0 1 24 6V13C24 15.5 22 16.4 19.2 17.2A1 1 0 0 0 18.8 18V20H13.2V18A1 1 0 0 0 12.8 17.2C10 16.4 8 15.5 8 13V6A2 2 0 0 1 10 4Z" fill="url(#es-jug)"/>
+            <path d="M10 4H22A2 2 0 0 1 24 6V8C21 9.6 19 9.6 16 8.2C13 6.8 11 6.8 8 8V6A2 2 0 0 1 10 4Z" fill="#e4f6fd"/>
+            <rect x="12.4" y="19.2" width="7.2" height="3.2" rx="1.1" fill="#eaf8ff"/>
+            <path d="M11.2 22.4 9.4 25.4M20.8 22.4 22.6 25.4M8.6 25.4H23.4" stroke="#cfe9f5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+          </svg>
+        </span>
+        <span class="es-logo-txt">Eau<span>Service</span></span>
+      </a>
+      <nav class="es-nav">
+        <a href="#top" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="#packs" data-fr="Nos packs" data-en="Packages">Nos packs</a>
+        <a href="#equipements" data-fr="Équipements" data-en="Equipment">Équipements</a>
+        <a href="#zones" data-fr="Zones" data-en="Coverage">Zones</a>
+        <a class="es-nav-shop" href="/boutique/" data-fr="Boutique" data-en="Shop">Boutique</a>
+      </nav>
+      <div class="es-hdr-actions">
+        <div class="es-lang">
+          <button type="button" id="es-fr" class="active" onclick="esSetLang('fr')">FR</button>
+          <button type="button" id="es-en" onclick="esSetLang('en')">EN</button>
+        </div>
+        <span class="es-hdr-phone">07 61 46 57 20</span>
+        <a class="es-cart" href="/panier/" aria-label="Panier">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#eaf3fb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </a>
+        <a class="es-btn-quote" href="https://formulaire.events-cafe.com/formulaire.html" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
+        <button type="button" class="es-burger" onclick="esToggleMenu(true)" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MOBILE MENU ============ -->
+  <div class="es-mm" id="es-mm">
+    <button type="button" class="es-mm-close" onclick="esToggleMenu(false)">×</button>
+    <a href="#top" onclick="esToggleMenu(false)" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="#packs" onclick="esToggleMenu(false)" data-fr="Nos packs" data-en="Packages">Nos packs</a>
+    <a href="#equipements" onclick="esToggleMenu(false)" data-fr="Équipements" data-en="Equipment">Équipements</a>
+    <a href="#zones" onclick="esToggleMenu(false)" data-fr="Zones" data-en="Coverage">Zones</a>
+    <a href="/boutique/" data-fr="Boutique" data-en="Shop">Boutique</a>
+    <a class="es-mm-cta" href="https://formulaire.events-cafe.com/formulaire.html" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</a>
+    <a class="es-mm-wa" href="https://api.whatsapp.com/send?phone=33761465720" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+
+  <a id="top"></a>
+  <!-- ============ HERO ============ -->
+  <section class="es-hero">
+    <div class="es-hero-glow"></div>
+    <div class="es-hero-grid">
+      <div>
+        <div class="es-badge" data-reveal><span class="dot"></span><span data-fr="LOCATION ÉVÉNEMENTIELLE · CÔTE D'AZUR" data-en="EVENT EQUIPMENT RENTAL · FRENCH RIVIERA">LOCATION ÉVÉNEMENTIELLE · CÔTE D'AZUR</span></div>
+        <h1 data-reveal data-reveal-delay="80"><span data-fr="Location de matériel événementiel sur toute la " data-en="Event equipment rental across the entire ">Location de matériel événementiel sur toute la </span><span class="es-hl" data-fr="Côte d'Azur" data-en="French Riviera">Côte d'Azur</span></h1>
+        <p class="es-hero-sub" data-reveal data-reveal-delay="160" data-fr="Fontaines à eau, machines à café, réfrigérateurs et mobilier professionnel livrés, installés et repris sur vos salons, congrès, séminaires et stands — partout entre Toulon, Cannes, Nice et Monaco." data-en="Water dispensers, coffee machines, refrigerators and professional furniture delivered, installed and collected for your trade shows, conferences, seminars and stands — everywhere from Toulon to Cannes, Nice and Monaco.">Fontaines à eau, machines à café, réfrigérateurs et mobilier professionnel livrés, installés et repris sur vos salons, congrès, séminaires et stands — partout entre Toulon, Cannes, Nice et Monaco.</p>
+        <div class="es-hero-cta" data-reveal data-reveal-delay="240">
+          <a class="es-cta-primary" href="https://formulaire.events-cafe.com/formulaire.html" data-fr="Demander un devis →" data-en="Request a quote →">Demander un devis →</a>
+          <a class="es-cta-ghost" href="#packs" data-fr="Découvrir nos packs" data-en="Explore our packages">Découvrir nos packs</a>
+        </div>
+        <div class="es-stats" data-reveal data-reveal-delay="320">
+          <div><div class="es-stat-n" data-count data-count-to="500" data-count-prefix="+">+500</div><div class="es-stat-l" data-fr="événements équipés" data-en="events equipped">événements équipés</div></div>
+          <div class="es-stat-div"></div>
+          <div><div class="es-stat-n" data-count data-count-to="11">11</div><div class="es-stat-l" data-fr="villes couvertes" data-en="cities covered">villes couvertes</div></div>
+          <div class="es-stat-div"></div>
+          <div><div class="es-stat-n" data-count data-count-to="24" data-count-suffix="h">24h</div><div class="es-stat-l" data-fr="délai de réponse" data-en="response time">délai de réponse</div></div>
+        </div>
+      </div>
+      <div class="es-hero-visual">
+        <div class="es-hero-halo"></div>
+        <div data-parallax="-0.04" style="position:relative;height:500px;display:flex;align-items:center;justify-content:center;">
+          <img class="es-hero-img" src="Zenius.png" alt="Fontaine à eau professionnelle en location pour événements sur la Côte d'Azur">
+        </div>
+        <div class="es-floatchip" style="top:40px;left:0;"><span style="width:7px;height:7px;border-radius:50%;background:#35e0a0;"></span><span data-fr="Installation incluse" data-en="Installation included">Installation incluse</span></div>
+        <div class="es-floatchip" style="bottom:70px;right:0;animation-delay:1.2s;"><span style="width:7px;height:7px;border-radius:50%;background:#6fe0ff;"></span><span data-fr="Consommables fournis" data-en="Consumables supplied">Consommables fournis</span></div>
+        <div class="es-bub" style="left:60px;bottom:90px;width:12px;height:12px;animation:esBubble 6s ease-in infinite .4s;"></div>
+        <div class="es-bub" style="right:80px;top:120px;width:8px;height:8px;animation:esBubble 7s ease-in infinite 1.5s;"></div>
+        <div class="es-bub" style="left:120px;bottom:40px;width:6px;height:6px;animation:esBubble 5.5s ease-in infinite 2.2s;"></div>
+      </div>
+    </div>
+    <div class="es-wave" style="height:120px;"><div class="es-wave-track" style="animation:esWave 20s linear infinite;"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,60 C240,108 480,108 720,60 C960,12 1200,12 1440,60 L1440,120 L0,120 Z" fill="#f4f7fb"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,60 C240,108 480,108 720,60 C960,12 1200,12 1440,60 L1440,120 L0,120 Z" fill="#f4f7fb"/></svg></div></div>
+    <div class="es-wave" style="height:88px;"><div class="es-wave-track" style="animation:esWave 13s linear infinite;"><svg viewBox="0 0 1440 88" preserveAspectRatio="none"><path d="M0,44 C240,8 480,8 720,44 C960,80 1200,80 1440,44 L1440,88 L0,88 Z" fill="rgba(53,198,240,.16)"/></svg><svg viewBox="0 0 1440 88" preserveAspectRatio="none"><path d="M0,44 C240,8 480,8 720,44 C960,80 1200,80 1440,44 L1440,88 L0,88 Z" fill="rgba(53,198,240,.16)"/></svg></div></div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <section class="es-marquee">
+    <div class="es-marquee-row">
+      <span class="es-marquee-lbl" data-fr="EauService équipe" data-en="EauService equips">EauService équipe</span>
+      <div class="es-marquee-mask">
+        <div class="es-marquee-track" id="es-marquee-track"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ POURQUOI ============ -->
+  <section class="es-sec">
+    <div class="es-center" data-reveal>
+      <div class="es-eyebrow" data-fr="Pourquoi EauService" data-en="Why EauService">Pourquoi EauService</div>
+      <h2 class="es-h2" data-fr="Votre partenaire confort, du devis à la reprise" data-en="Your comfort partner, from quote to collection">Votre partenaire confort, du devis à la reprise</h2>
+      <p class="es-lead" data-fr="Des solutions clé en main, livrées et installées partout sur la Côte d'Azur, pour que vous restiez concentré sur votre événement." data-en="Turnkey solutions delivered and installed across the French Riviera, so you can stay focused on your event.">Des solutions clé en main, livrées et installées partout sur la Côte d'Azur, pour que vous restiez concentré sur votre événement.</p>
+    </div>
+    <div class="es-why-grid">
+      <div class="es-why-card" data-reveal>
+        <div class="es-why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1b86bc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M14 9h4l3 3v5h-3"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg></div>
+        <h3 data-fr="Livraison rapide" data-en="Fast delivery">Livraison rapide</h3>
+        <p data-fr="Intervention sur toute la Côte d'Azur, toujours dans les délais de votre événement." data-en="We cover the whole French Riviera, always within your event's timeline.">Intervention sur toute la Côte d'Azur, toujours dans les délais de votre événement.</p>
+      </div>
+      <div class="es-why-card" data-reveal data-reveal-delay="100">
+        <div class="es-why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1b86bc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3 data-fr="Matériel professionnel" data-en="Professional equipment">Matériel professionnel</h3>
+        <p data-fr="Équipements fiables, entretenus et conformes aux exigences de l'événementiel." data-en="Reliable, well-maintained gear that meets event-industry standards.">Équipements fiables, entretenus et conformes aux exigences de l'événementiel.</p>
+      </div>
+      <div class="es-why-card" data-reveal data-reveal-delay="200">
+        <div class="es-why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1b86bc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+        <h3 data-fr="Service clé en main" data-en="Turnkey service">Service clé en main</h3>
+        <p data-fr="Livraison, installation, consommables et reprise : vous n'avez rien à gérer." data-en="Delivery, setup, consumables and collection — nothing for you to handle.">Livraison, installation, consommables et reprise : vous n'avez rien à gérer.</p>
+      </div>
+      <div class="es-why-card" data-reveal data-reveal-delay="300">
+        <div class="es-why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1b86bc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3 data-fr="Réactivité" data-en="Responsiveness">Réactivité</h3>
+        <p data-fr="Réponse sous 24h et conseiller dédié, même pour les demandes urgentes." data-en="A reply within 24h and a dedicated contact, even for last-minute requests.">Réponse sous 24h et conseiller dédié, même pour les demandes urgentes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PACKS ============ -->
+  <section class="es-sec" id="packs">
+    <div class="es-sec-head" data-reveal>
+      <div style="max-width:640px;">
+        <div class="es-eyebrow" data-fr="Nos packs clé en main" data-en="Turnkey packages">Nos packs clé en main</div>
+        <h2 class="es-h2" data-fr="Des solutions prêtes à installer" data-en="Solutions ready to install">Des solutions prêtes à installer</h2>
+        <p class="es-lead" data-fr="Choisissez votre marque de café — Nespresso, Lavazza ou Covim. Livraison, installation, consommables et reprise inclus." data-en="Choose your coffee brand — Nespresso, Lavazza or Covim. Delivery, installation, consumables and collection included.">Choisissez votre marque de café — Nespresso, Lavazza ou Covim. Livraison, installation, consommables et reprise inclus.</p>
+      </div>
+      <a class="es-sec-link" href="/boutique/" data-fr="Voir toute la boutique →" data-en="Browse the full shop →">Voir toute la boutique →</a>
+    </div>
+    <div class="es-packs" id="es-packs"></div>
+  </section>
+
+  <!-- ============ EQUIPEMENTS ============ -->
+  <section class="es-sec" id="equipements">
+    <div class="es-sec-head" data-reveal>
+      <div style="max-width:640px;">
+        <div class="es-eyebrow" data-fr="Nos équipements" data-en="Our equipment">Nos équipements</div>
+        <h2 class="es-h2" data-fr="Un catalogue complet à la location" data-en="A complete rental catalogue">Un catalogue complet à la location</h2>
+        <p class="es-lead" data-fr="Composez votre événement à la carte. Tous nos équipements sont livrés, installés et repris sur place." data-en="Build your event à la carte. Everything is delivered, installed and collected on site.">Composez votre événement à la carte. Tous nos équipements sont livrés, installés et repris sur place.</p>
+      </div>
+      <a class="es-sec-link" href="/boutique/" data-fr="Tout voir dans la boutique →" data-en="See everything in the shop →">Tout voir dans la boutique →</a>
+    </div>
+    <div class="es-prods" id="es-prods"></div>
+  </section>
+
+
+  <!-- ============ ZONES ============ -->
+  <section class="es-dark" id="zones">
+    <div class="es-dark-glow"></div>
+    <div class="es-zones-grid">
+      <div data-reveal>
+        <div class="es-eyebrow-l" data-fr="Zone d'intervention" data-en="Service area">Zone d'intervention</div>
+        <h2 class="es-h2-l" data-fr="Nous intervenons sur toute la Côte d'Azur" data-en="We cover the entire French Riviera">Nous intervenons sur toute la Côte d'Azur</h2>
+        <p class="es-lead-l" data-fr="De Toulon à Menton, en passant par Cannes, Nice et Monaco, nos équipes livrent et installent votre matériel directement sur le lieu de votre événement." data-en="From Toulon to Menton — via Cannes, Nice and Monaco — our teams deliver and install your equipment right at your venue.">De Toulon à Menton, en passant par Cannes, Nice et Monaco, nos équipes livrent et installent votre matériel directement sur le lieu de votre événement.</p>
+        <div class="es-zone-list" id="es-zone-list"></div>
+      </div>
+      <div data-reveal data-reveal-delay="150" class="es-map" id="es-map">
+        <div class="es-map-grid"></div>
+        <svg viewBox="0 0 600 360" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+          <path d="M0,0 H600 V148 C540,164 500,158 455,182 C405,206 360,180 315,198 C270,216 235,193 200,206 C150,225 110,206 60,213 C40,216 18,215 0,209 Z" style="fill:rgba(255,255,255,.045);stroke:rgba(53,198,240,.28);stroke-width:1.4;"></path>
+          <path id="es-route" d="" style="fill:none;stroke:#6fe0ff;stroke-width:2.4;stroke-linecap:round;opacity:.8;animation:esDash 22s linear infinite;" stroke-dasharray="2 9"></path>
+          <text x="300" y="330" text-anchor="middle" style="fill:rgba(207,227,243,.3);font-family:'Sora',sans-serif;font-size:14px;font-weight:600;letter-spacing:5px;" data-fr="MER MÉDITERRANÉE" data-en="MEDITERRANEAN SEA">MER MÉDITERRANÉE</text>
+        </svg>
+        <div class="es-map-legend">
+          <span style="color:#cfe3f3;"><span style="width:12px;height:12px;border-radius:50%;background:#6fe0ff;box-shadow:0 0 10px #6fe0ff;"></span><span data-fr="Hub principal" data-en="Main hub">Hub principal</span></span>
+          <span style="color:#9fc0db;"><span style="width:9px;height:9px;border-radius:50%;border:2px solid #6fe0ff;"></span><span data-fr="Ville desservie" data-en="City served">Ville desservie</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="es-events" data-reveal>
+      <div class="es-events-head">
+        <span class="lbl" data-fr="Sur les plus grands rendez-vous" data-en="At the biggest events">Sur les plus grands rendez-vous</span>
+        <span class="ln"></span>
+        <span class="cnt" data-fr="30+ salons & événements équipés" data-en="30+ trade shows & events equipped">30+ salons & événements équipés</span>
+      </div>
+      <p class="es-events-sub" data-fr="Chaque année, nous équipons les salons, congrès et événements majeurs de la Côte d'Azur et de Monaco." data-en="Every year we equip the major trade shows, conferences and events of the French Riviera and Monaco.">Chaque année, nous équipons les salons, congrès et événements majeurs de la Côte d'Azur et de Monaco.</p>
+      <div class="es-events-list" id="es-events-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ TÉMOIGNAGES ============ -->
+  <section class="es-sec">
+    <div class="es-center" data-reveal style="margin-bottom:50px;">
+      <div class="es-eyebrow" data-fr="Ils nous font confiance" data-en="They trust us">Ils nous font confiance</div>
+      <h2 class="es-h2" data-fr="La réactivité qui fait la différence" data-en="Responsiveness that makes the difference">La réactivité qui fait la différence</h2>
+    </div>
+    <div class="es-testis" id="es-testis"></div>
+  </section>
+
+  <!-- ============ DEVIS ============ -->
+  <section class="es-devis" id="devis">
+    <div class="es-devis-glow"></div>
+    <div class="es-devis-grid">
+      <div data-reveal>
+        <div class="es-eyebrow-l" data-fr="Devis gratuit" data-en="Free quote">Devis gratuit</div>
+        <h2 data-fr="Recevez votre devis sous 24h" data-en="Get your quote within 24h">Recevez votre devis sous 24h</h2>
+        <p class="es-lead-l" style="margin-bottom:0;" data-fr="Décrivez votre événement : nous vous proposons une solution sur mesure, livraison, installation et reprise incluses." data-en="Tell us about your event: we'll put together a tailored solution — delivery, installation and collection included.">Décrivez votre événement : nous vous proposons une solution sur mesure, livraison, installation et reprise incluses.</p>
+        <div class="es-bullets">
+          <div class="es-bullet"><span class="bk">✓</span><span data-fr="Réponse garantie sous 24h ouvrées" data-en="Guaranteed reply within 24 business hours">Réponse garantie sous 24h ouvrées</span></div>
+          <div class="es-bullet"><span class="bk">✓</span><span data-fr="Sans engagement, devis personnalisé" data-en="No commitment, personalised quote">Sans engagement, devis personnalisé</span></div>
+          <div class="es-bullet"><span class="bk">✓</span><span data-fr="Un conseiller dédié à votre événement" data-en="A dedicated advisor for your event">Un conseiller dédié à votre événement</span></div>
+        </div>
+      </div>
+      <form class="es-form" data-reveal data-reveal-delay="120" action="https://formulaire.events-cafe.com/formulaire.html" method="get">
+        <div class="es-form-grid">
+          <label><span data-fr="Nom complet *" data-en="Full name *">Nom complet *</span><input required name="nom" data-ph-fr="Jean Dupont" data-ph-en="John Smith" placeholder="Jean Dupont"></label>
+          <label><span data-fr="Société" data-en="Company">Société</span><input name="societe" data-ph-fr="Votre entreprise" data-ph-en="Your company" placeholder="Votre entreprise"></label>
+          <label><span data-fr="Téléphone *" data-en="Phone *">Téléphone *</span><input required name="tel" placeholder="06 00 00 00 00"></label>
+          <label><span data-fr="Email *" data-en="Email *">Email *</span><input required type="email" name="email" data-ph-fr="jean@entreprise.fr" data-ph-en="john@company.com" placeholder="jean@entreprise.fr"></label>
+          <label><span data-fr="Type d'événement" data-en="Event type">Type d'événement</span><select name="type" id="es-type"></select></label>
+          <label><span data-fr="Date" data-en="Date">Date</span><input type="date" name="date"></label>
+        </div>
+        <label class="full"><span data-fr="Nombre de participants" data-en="Number of attendees">Nombre de participants</span><input name="participants" data-ph-fr="ex. 250" data-ph-en="e.g. 250" placeholder="ex. 250"></label>
+        <label class="full"><span data-fr="Besoins matériels" data-en="Equipment needs">Besoins matériels</span><textarea name="besoins" rows="3" data-ph-fr="Fontaines à eau, machines à café, réfrigérateurs…" data-ph-en="Water dispensers, coffee machines, refrigerators…" placeholder="Fontaines à eau, machines à café, réfrigérateurs…"></textarea></label>
+        <button type="submit" class="es-form-submit" data-fr="Recevoir mon devis sous 24h →" data-en="Get my quote within 24h →">Recevoir mon devis sous 24h →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="es-foot">
+    <div class="es-foot-inner">
+      <div class="es-foot-grid">
+        <div>
+          <div class="es-foot-brand">
+            <span class="es-logo-mark" style="box-shadow:inset 0 1px 0 rgba(255,255,255,.08);">
+              <svg width="25" height="25" viewBox="0 0 32 32" fill="none">
+                <defs><linearGradient id="es-jug-f" x1="8" y1="6" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#6fe0ff"/><stop offset="1" stop-color="#2eb6e6"/></linearGradient></defs>
+                <path d="M10 4H22A2 2 0 0 1 24 6V13C24 15.5 22 16.4 19.2 17.2A1 1 0 0 0 18.8 18V20H13.2V18A1 1 0 0 0 12.8 17.2C10 16.4 8 15.5 8 13V6A2 2 0 0 1 10 4Z" fill="url(#es-jug-f)"/>
+                <path d="M10 4H22A2 2 0 0 1 24 6V8C21 9.6 19 9.6 16 8.2C13 6.8 11 6.8 8 8V6A2 2 0 0 1 10 4Z" fill="#e4f6fd"/>
+                <rect x="12.4" y="19.2" width="7.2" height="3.2" rx="1.1" fill="#eaf8ff"/>
+              </svg>
+            </span>
+            <span class="es-logo-txt">Eau<span>Service</span></span>
+          </div>
+          <p class="tag" data-fr="Votre partenaire confort pour tous vos événements professionnels. Location de matériel événementiel livré, installé et repris sur toute la Côte d'Azur." data-en="Your comfort partner for all your professional events. Event equipment rental delivered, installed and collected across the French Riviera.">Votre partenaire confort pour tous vos événements professionnels. Location de matériel événementiel livré, installé et repris sur toute la Côte d'Azur.</p>
+          <div class="es-foot-soc"><a href="#top">in</a><a href="#top">f</a><a href="mailto:contact@events-cafe.com">@</a></div>
+        </div>
+        <div>
+          <div class="es-foot-col-title" data-fr="Navigation" data-en="Navigation">Navigation</div>
+          <div class="es-foot-links">
+            <a href="#top" data-fr="Accueil" data-en="Home">Accueil</a>
+            <a href="#packs" data-fr="Nos packs" data-en="Packages">Nos packs</a>
+            <a href="#equipements" data-fr="Équipements" data-en="Equipment">Équipements</a>
+            <a href="/boutique/" data-fr="Boutique" data-en="Shop">Boutique</a>
+          </div>
+        </div>
+        <div>
+          <div class="es-foot-col-title" data-fr="Équipements" data-en="Equipment">Équipements</div>
+          <div class="es-foot-links">
+            <a href="/boutique/" data-fr="Fontaines à eau" data-en="Water dispensers">Fontaines à eau</a>
+            <a href="/boutique/" data-fr="Machines à café" data-en="Coffee machines">Machines à café</a>
+            <a href="/boutique/" data-fr="Réfrigérateurs" data-en="Refrigerators">Réfrigérateurs</a>
+            <a href="/boutique/" data-fr="Mobilier & confort" data-en="Furniture & comfort">Mobilier & confort</a>
+          </div>
+        </div>
+        <div>
+          <div class="es-foot-col-title" data-fr="Contact" data-en="Contact">Contact</div>
+          <div class="es-foot-contact">
+            <a class="strong" href="tel:+33761465720">07 61 46 57 20</a>
+            <a href="mailto:contact@events-cafe.com">contact@events-cafe.com</a>
+            <span data-fr="Côte d'Azur — Alpes-Maritimes & Var" data-en="French Riviera — Alpes-Maritimes & Var">Côte d'Azur — Alpes-Maritimes & Var</span>
+            <a class="quote-l" href="https://formulaire.events-cafe.com/formulaire.html"><span data-fr="Demander un devis" data-en="Request a quote">Demander un devis</span> →</a>
+          </div>
+        </div>
+      </div>
+      <p class="es-foot-seo" data-fr="Location fontaine à eau Côte d'Azur · location machine à café événement · location réfrigérateur salon professionnel · matériel événementiel Nice & Cannes · location matériel congrès Monaco · machines à café Nespresso, Lavazza & Covim · équipement de stand & exposition · location matériel séminaire et bureau temporaire à Antibes, Sophia Antipolis et Toulon." data-en="Water dispenser rental French Riviera · event coffee machine rental · refrigerator rental for trade shows · event equipment Nice & Cannes · conference equipment rental Monaco · Nespresso, Lavazza & Covim coffee machines · stand & exhibition equipment · seminar and temporary-office rental in Antibes, Sophia Antipolis and Toulon.">Location fontaine à eau Côte d'Azur · location machine à café événement · location réfrigérateur salon professionnel · matériel événementiel Nice & Cannes · location matériel congrès Monaco · machines à café Nespresso, Lavazza & Covim · équipement de stand & exposition · location matériel séminaire et bureau temporaire à Antibes, Sophia Antipolis et Toulon.</p>
+      <div class="es-foot-bottom">
+        <span data-fr="© 2026 EauService. Tous droits réservés." data-en="© 2026 EauService. All rights reserved.">© 2026 EauService. Tous droits réservés.</span>
+        <span class="legal"><span data-fr="Mentions légales" data-en="Legal notice">Mentions légales</span><span data-fr="CGV" data-en="Terms">CGV</span><span data-fr="Confidentialité" data-en="Privacy">Confidentialité</span></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+
+<script>
+(function(){
+  var root = document.getElementById('esroot');
+  if(!root) return;
+
+  /* ---- Base URL des images (racine du site en WordPress). Adapter si besoin. ---- */
+  var IMG = '';
+  function img(name){ return IMG + encodeURI(name); }
+  var SHOP = '/boutique/';
+
+  var state = { lang: 'fr', brand: 'nespresso' };
+  try { var l = localStorage.getItem('es_lang'); if(l==='fr'||l==='en') state.lang = l; } catch(e){}
+
+  /* ---- i18n (contenu dynamique) ---- */
+  var I = {
+    fr: {
+      cats:{tous:'Tous',eau:'Eau',cafe:'Café',froid:'Froid',confort:'Confort',mobilier:'Mobilier'},
+      from:'à partir de', perDay:'/ jour', idealFor:'Idéal pour', addCart:'Ajouter au panier', addShort:'+ Ajouter', photoPh:'photo produit', badge:'★ Le plus complet',
+      marquee:['Salons professionnels','Congrès & conventions','Séminaires','Bureaux temporaires','Expositions',"Stands d'exposition",'Événements corporate','Foires'],
+      types:['Salon professionnel','Congrès','Séminaire','Exposition','Événement corporate','Bureau temporaire','Autre']
+    },
+    en: {
+      cats:{tous:'All',eau:'Water',cafe:'Coffee',froid:'Cold',confort:'Comfort',mobilier:'Furniture'},
+      from:'from', perDay:'/ day', idealFor:'Ideal for', addCart:'Add to cart', addShort:'+ Add', photoPh:'product photo', badge:'★ Most complete',
+      marquee:['Trade shows','Conferences & conventions','Seminars','Temporary offices','Exhibitions','Exhibition stands','Corporate events','Fairs'],
+      types:['Trade show','Conference','Seminar','Exhibition','Corporate event','Temporary office','Other']
+    }
+  };
+  function fmt(n){ return (n||0).toLocaleString(state.lang==='en'?'en-GB':'fr-FR') + ' €'; }
+
+  /* ---- Données packs ---- */
+  function packImg(id, brand){
+    if(id==='pack-eau') return img('pack eau.png');
+    if(id==='pack-cafe') return img('pack de base '+brand+'.png');
+    if(id==='pack-complet') return brand==='covim' ? img('Pack complet covim.png') : img('pack complet '+brand+'.png');
+    return '';
+  }
+  function packData(){
+    var en = state.lang==='en';
+    return [
+      { id:'pack-eau', name: en?'Essential Water Pack':'Pack Eau Essentiel', price:89, brandSelect:false,
+        items: en?['Professional water dispenser','Water bottle included','Cups included']:['Fontaine à eau professionnelle',"Bonbonne d'eau incluse",'Gobelets inclus'],
+        ideal: en?['Stands','Temporary offices','Trade shows']:['Stands','Bureaux temporaires','Salons professionnels'] },
+      { id:'pack-cafe', name: en?'Coffee & Water Pack':'Pack Essentiel Café & Eau', price:149, brandSelect:true,
+        items: en?['Water dispenser','Professional coffee machine','Water bottle','Coffee capsules','Cups','Sugar','Stirrers']:['Fontaine à eau','Machine à café professionnelle',"Bonbonne d'eau",'Capsules café','Gobelets','Sucre','Touillettes'],
+        ideal: en?['Meetings','Seminars','Conferences']:['Réunions','Séminaires','Congrès'] },
+      { id:'pack-complet', name: en?'Complete Event Pack':'Pack Complet Événement', price:229, brandSelect:true, featured:true,
+        items: en?['Water dispenser','Professional coffee machine','Refrigerator','Water bottle','Coffee capsules','Cups','Sugar','Stirrers']:['Fontaine à eau','Machine à café professionnelle','Réfrigérateur',"Bonbonne d'eau",'Capsules café','Gobelets','Sucre','Touillettes'],
+        ideal: en?['Trade shows','Exhibitions','Corporate events','International conferences']:['Salons professionnels','Expositions',"Événements d'entreprise",'Congrès internationaux'] }
+    ];
+  }
+
+  /* ---- Données produits (teaser) ---- */
+  function productsTeaser(){
+    var en = state.lang==='en';
+    var T = en ? {
+      fontaine:['Professional water dispenser','Free-standing, unlimited chilled and room-temperature water.'],
+      nespresso:['Nespresso coffee machine','Professional espresso, capsules included.'],
+      lavazza:['Lavazza coffee machine','Italian coffee, intuitive touchscreen.'],
+      covim:['Covim coffee machine','Italian roast, compact format.'],
+      'frigo-grand':['Large-capacity refrigerator','High volume for drinks and freshness.'],
+      kitcafe:['Coffee consumables kit','Capsules, cups, sugar and stirrers.']
+    } : {
+      fontaine:['Fontaine à eau professionnelle','Distributeur sur pied, eau fraîche et tempérée à volonté.'],
+      nespresso:['Machine à café Nespresso','Espresso professionnel, capsules incluses.'],
+      lavazza:['Machine à café Lavazza','Café italien, écran tactile intuitif.'],
+      covim:['Machine à café Covim','Torréfaction italienne, format compact.'],
+      'frigo-grand':['Réfrigérateur grande capacité','Grand volume pour boissons et fraîcheur.'],
+      kitcafe:['Kit consommables café','Capsules, gobelets, sucre et touillettes.']
+    };
+    return [
+      { id:'fontaine', catKey:'eau', price:35, unit:'jour', img:img('fontaine_a_eau_grise_everest-removebg-preview.png') },
+      { id:'nespresso', catKey:'cafe', price:45, unit:'jour', img:img('machone a café nespresso.png') },
+      { id:'lavazza', catKey:'cafe', price:45, unit:'jour', img:img('machine a café lavazza.png') },
+      { id:'covim', catKey:'cafe', price:45, unit:'jour', img:img('machine a café covim.png') },
+      { id:'frigo-grand', catKey:'froid', price:39, unit:'jour', img:null },
+      { id:'kitcafe', catKey:'cafe', price:29, unit:'', img:img('kit cafe.png') }
+    ].map(function(p){ return { id:p.id, catKey:p.catKey, price:p.price, unit:p.unit, img:p.img, name:T[p.id][0], desc:T[p.id][1] }; });
+  }
+
+  /* ---- Rendu : marquee ---- */
+  function renderMarquee(){
+    var items = I[state.lang].marquee;
+    function grp(){ return '<span class="grp">' + items.map(function(n){ return '<span>'+n+'</span><span class="sep">·</span>'; }).join('') + '</span>'; }
+    document.getElementById('es-marquee-track').innerHTML = grp() + grp();
+  }
+
+  /* ---- Rendu : packs ---- */
+  function brandChips(active){
+    var brands=['nespresso','lavazza','covim'], labels={nespresso:'Nespresso',lavazza:'Lavazza',covim:'Covim'};
+    return '<div class="es-brands">' + brands.map(function(b){
+      return '<span class="es-brand'+(b===active?' active':'')+'" data-brand="'+b+'">'+labels[b]+'</span>';
+    }).join('') + '</div>';
+  }
+  function renderPacks(){
+    var t = I[state.lang];
+    var html = packData().map(function(p){
+      var feats = p.items.map(function(x){ return '<div class="es-feat"><span class="ck">✓</span>'+x+'</div>'; }).join('');
+      var ideal = p.ideal.map(function(x){ return '<span class="es-tag">'+x+'</span>'; }).join('');
+      return '<div class="es-pack">'
+        + (p.featured ? '<div class="es-pack-tag">'+t.badge+'</div>' : '')
+        + '<div class="es-pack-img"><img src="'+packImg(p.id,state.brand)+'" alt="'+p.name+'"></div>'
+        + '<div class="es-pack-body">'
+        +   '<h3>'+p.name+'</h3>'
+        +   '<div class="es-price"><span class="from">'+t.from+'</span><span class="amt">'+fmt(p.price)+'</span><span class="per">'+t.perDay+'</span></div>'
+        +   (p.brandSelect ? brandChips(state.brand) : '')
+        +   '<div class="es-rule"></div>'
+        +   '<div class="es-feats">'+feats+'</div>'
+        +   '<div style="margin-top:20px;"><div class="es-ideal-lbl">'+t.idealFor+'</div><div class="es-tags">'+ideal+'</div></div>'
+        +   '<a class="es-pack-add" href="'+SHOP+'">'+t.addCart+'</a>'
+        + '</div></div>';
+    }).join('');
+    var el = document.getElementById('es-packs');
+    el.innerHTML = html;
+    el.querySelectorAll('.es-brand').forEach(function(c){
+      c.addEventListener('click', function(){ state.brand = c.getAttribute('data-brand'); renderPacks(); });
+    });
+  }
+
+  /* ---- Rendu : produits ---- */
+  function renderProducts(){
+    var t = I[state.lang];
+    document.getElementById('es-prods').innerHTML = productsTeaser().map(function(p){
+      var media = p.img
+        ? '<img src="'+p.img+'" alt="'+p.name+'">'
+        : '<div class="es-prod-ph"><span>'+t.photoPh+'</span></div>';
+      var unit = p.unit ? ('/ '+(state.lang==='en'?'day':'jour')) : '';
+      return '<div class="es-prod">'
+        + '<div class="es-prod-img"><span class="es-prod-cat">'+t.cats[p.catKey]+'</span>'+media+'</div>'
+        + '<div class="es-prod-body"><h3>'+p.name+'</h3><p>'+p.desc+'</p>'
+        +   '<div class="es-prod-foot"><div><span class="es-prod-price">'+fmt(p.price)+'</span> <span class="es-prod-unit">'+unit+'</span></div>'
+        +   '<a class="es-prod-add" href="'+SHOP+'">'+t.addShort+'</a></div>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  /* ---- Rendu : zones + carte + events ---- */
+  var COAST = [
+    ['Toulon',6,60,'town','b'],['Hyères',13,63,'town','t'],['Saint-Tropez',21,65,'town','b'],['Fréjus',29,61,'town','t'],
+    ['Saint-Raphaël',36,63,'town','b'],['Mandelieu',44,59,'town','t'],['Cannes',52,56,'hub','b'],['Antibes',62,55,'town','t'],
+    ['Cagnes-sur-Mer',69,53,'town','b'],['Nice',77,50,'hub','t'],['Villefranche',84,49,'town','b'],['Monaco',90,46,'hub','t'],['Menton',95,44,'town','b']
+  ];
+  var INLAND = [['Grasse',46,37,'inland','t'],['Mougins',56,44,'inland','t'],['Sophia Antipolis',67,39,'inland','t'],['Vence',74,35,'inland','t']];
+  function dotStyle(k){
+    if(k==='hub') return {size:'18px',bg:'#6fe0ff',border:'3px solid rgba(255,255,255,.9)',shadow:'0 0 22px #6fe0ff',ls:'14.5px',lw:'700',lc:'#ffffff'};
+    if(k==='inland') return {size:'10px',bg:'transparent',border:'2px solid #6fe0ff',shadow:'0 0 8px rgba(53,198,240,.6)',ls:'11px',lw:'600',lc:'#9fc0db'};
+    return {size:'11px',bg:'#6fe0ff',border:'2px solid rgba(8,26,43,.6)',shadow:'0 0 12px #6fe0ff',ls:'11.5px',lw:'600',lc:'#cfe3f3'};
+  }
+  function renderZones(){
+    var names = ['Nice','Cannes','Antibes','Monaco','Sophia Antipolis','Grasse','Mandelieu','Fréjus','Saint-Raphaël','Menton','Toulon', state.lang==='en'?'& nearby':'et alentours'];
+    document.getElementById('es-zone-list').innerHTML = names.map(function(n){ return '<div class="es-zone"><span class="dot"></span>'+n+'</div>'; }).join('');
+    var map = document.getElementById('es-map');
+    map.querySelectorAll('.es-pin').forEach(function(p){ p.remove(); });
+    var pins = COAST.concat(INLAND);
+    pins.forEach(function(m,i){
+      var d = dotStyle(m[3]);
+      var top = m[4]==='t' ? 'top:-11px;transform:translate(-50%,-100%);' : 'top:11px;transform:translate(-50%,0);';
+      var pin = document.createElement('div');
+      pin.className='es-pin'; pin.style.left=m[1]+'%'; pin.style.top=m[2]+'%';
+      pin.innerHTML = '<span class="pdot" style="width:'+d.size+';height:'+d.size+';background:'+d.bg+';border:'+d.border+';box-shadow:'+d.shadow+';animation-duration:'+(3+(i%5)*0.25)+'s;"></span>'
+        + '<span class="plabel" style="'+top+'font-size:'+d.ls+';font-weight:'+d.lw+';color:'+d.lc+';">'+m[0]+'</span>';
+      map.appendChild(pin);
+    });
+    // route
+    var pts = COAST.map(function(m){ return {x:m[1]*6,y:m[2]*3.6}; });
+    var d = 'M'+pts[0].x.toFixed(1)+','+pts[0].y.toFixed(1);
+    for(var i=1;i<pts.length-1;i++){ var xc=((pts[i].x+pts[i+1].x)/2).toFixed(1), yc=((pts[i].y+pts[i+1].y)/2).toFixed(1); d+=' Q'+pts[i].x.toFixed(1)+','+pts[i].y.toFixed(1)+' '+xc+','+yc; }
+    d+=' L'+pts[pts.length-1].x.toFixed(1)+','+pts[pts.length-1].y.toFixed(1);
+    document.getElementById('es-route').setAttribute('d', d);
+  }
+  function renderEvents(){
+    var raw=[['Festival de Cannes','Cannes',1],['Cannes Lions','Cannes',1],['MIPCOM','Cannes',1],['MIPTV','Cannes',0],['MIDEM','Cannes',0],['TFWA — Tax Free','Cannes',1],['ILTM','Cannes',0],['MIPIM','Cannes',0],['MAPIC','Cannes',0],['NRJ Music Awards','Cannes',0],['Yachting Festival','Cannes',0],['Monaco Yacht Show','Monaco',1],['Grand Prix F1','Monaco',1],['Top Marques','Monaco',0],['Sportel','Monaco',0],['Monte-Carlo TV Festival','Monaco',0],['Rolex MC Masters','Monaco',0],['Jumping de Monaco','Monaco',0],['EVER Monaco','Monaco',0],['Carnaval de Nice','Nice',1],['Nice Jazz Festival','Nice',0],['Ironman France','Nice',0],['Innovative City','Nice',0],['Jazz à Juan','Juan-les-Pins',0],['Antibes Yacht Show','Antibes',0],['Les Voiles','Saint-Tropez',0],["Roc d'Azur",'Fréjus',0],['Expo Rose','Grasse',0],['Festival de Hyères','Hyères',0],['Fête du Mimosa','Mandelieu',0],['Festival de Ramatuelle','Ramatuelle',0]];
+    document.getElementById('es-events-list').innerHTML = raw.map(function(e){
+      var feat=e[2];
+      var st = feat ? 'border:1px solid rgba(53,198,240,.5);background:rgba(53,198,240,.1);color:#eaf3fb;' : 'border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#c3d4e6;';
+      var dot = feat ? '#6fe0ff' : 'rgba(255,255,255,.38)';
+      return '<span class="es-event" style="'+st+'"><span class="dot" style="background:'+dot+';"></span>'+e[0]+' <span class="city">· '+e[1]+'</span></span>';
+    }).join('');
+  }
+
+  /* ---- Rendu : témoignages ---- */
+  function renderTestis(){
+    var en = state.lang==='en';
+    var data = en ? [
+      ['CL','Camille Laurent','Event manager, Nice','Everything delivered and installed the day before our show, flawlessly. Rare responsiveness on the Riviera.'],
+      ['TM','Thomas Mercier','Conference director, Cannes','The complete pack equipped our 4-day conference: dispensers, coffee, fridges. Impeccable, and we never ran out of consumables.'],
+      ['SB','Sophie Bernard','Office manager, Sophia Antipolis','An urgent request on Friday, equipment installed by Monday. Simple, professional service with deadlines always met.']
+    ] : [
+      ['CL','Camille Laurent','Responsable événementiel, Nice',"Matériel livré et installé la veille de notre salon, sans la moindre fausse note. Une réactivité rare sur la Côte d'Azur."],
+      ['TM','Thomas Mercier','Directeur de congrès, Cannes',"Le pack complet a équipé nos 4 jours de congrès : fontaines, cafés, frigos. Tout était impeccable et les consommables n'ont jamais manqué."],
+      ['SB','Sophie Bernard','Office manager, Sophia Antipolis',"Une demande urgente un vendredi, du matériel installé le lundi. Service simple, professionnel et des délais toujours respectés."]
+    ];
+    document.getElementById('es-testis').innerHTML = data.map(function(d){
+      return '<div class="es-testi"><div class="es-stars">★★★★★</div><p>'+d[3]+'</p>'
+        + '<div class="es-testi-who"><div class="es-testi-av">'+d[0]+'</div><div><div class="es-testi-name">'+d[1]+'</div><div class="es-testi-role">'+d[2]+'</div></div></div></div>';
+    }).join('');
+  }
+
+  /* ---- Rendu : options type d'événement ---- */
+  function renderTypes(){
+    document.getElementById('es-type').innerHTML = I[state.lang].types.map(function(o){ return '<option>'+o+'</option>'; }).join('');
+  }
+
+  /* ---- Langue ---- */
+  function applyStatic(){
+    var lang = state.lang;
+    root.querySelectorAll('[data-fr]').forEach(function(el){
+      var v = el.getAttribute('data-'+lang); if(v!==null) el.textContent = v;
+    });
+    root.querySelectorAll('[data-ph-fr]').forEach(function(el){
+      var v = el.getAttribute('data-ph-'+lang); if(v!==null) el.setAttribute('placeholder', v);
+    });
+    document.getElementById('es-fr').classList.toggle('active', lang==='fr');
+    document.getElementById('es-en').classList.toggle('active', lang==='en');
+  }
+  function renderDynamic(){ renderMarquee(); renderPacks(); renderProducts(); renderZones(); renderEvents(); renderTestis(); renderTypes(); }
+  window.esSetLang = function(l){
+    state.lang = (l==='en')?'en':'fr';
+    try{ localStorage.setItem('es_lang', state.lang); }catch(e){}
+    applyStatic(); renderDynamic();
+  };
+
+  /* ---- Menu mobile ---- */
+  window.esToggleMenu = function(open){
+    document.getElementById('es-mm').classList.toggle('open', !!open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  /* ---- Reveal + count-up ---- */
+  function countUp(el){
+    if(el._c) return; el._c=true;
+    var to=parseFloat(el.getAttribute('data-count-to')||'0'), suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'';
+    var dur=1500, start=performance.now();
+    function tick(now){ var p=Math.min(1,(now-start)/dur), e=1-Math.pow(1-p,3); el.textContent=pre+Math.round(to*e)+suf; if(p<1) requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('es-in');
+        if(en.target.hasAttribute('data-count')) countUp(en.target);
+        en.target.querySelectorAll && en.target.querySelectorAll('[data-count]').forEach(countUp);
+        io.unobserve(en.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+  root.querySelectorAll('[data-reveal]').forEach(function(el){
+    var d=parseInt(el.getAttribute('data-reveal-delay')||'0',10);
+    el.style.transitionDelay = d+'ms';
+    io.observe(el);
+  });
+
+  /* ---- Parallax ---- */
+  function parallax(){
+    var y = window.scrollY || window.pageYOffset || 0;
+    root.querySelectorAll('[data-parallax]').forEach(function(el){
+      var sp=parseFloat(el.getAttribute('data-parallax')||'0');
+      el.style.transform='translate3d(0,'+(y*sp)+'px,0)';
+    });
+  }
+  window.addEventListener('scroll', parallax, {passive:true});
+
+  /* ---- Init ---- */
+  applyStatic(); renderDynamic(); parallax();
+})();
+</script>
