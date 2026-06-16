@@ -99,7 +99,7 @@
 (function(){
   var root=document.getElementById('esliv'); if(!root) return;
   var ZONES={
-    local:{f:20,l:'Zone Antibes — au plus proche',p:16},
+    antibes:{f:0,l:'Antibes — livraison offerte 🎉',p:8},
     cannes:{f:30,l:'Zone Cannes — à ~12 km',p:30},
     nice:{f:50,l:'Zone Nice — à ~20 km',p:48},
     monaco:{f:120,l:'Zone Est — Monaco, Menton, Roquebrune…',p:80},
@@ -108,7 +108,8 @@
   function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');}
   var MAP={};
   function set(list,z){list.forEach(function(c){MAP[norm(c)]=z;});}
-  set(['Antibes','Juan-les-Pins','Vallauris','Golfe-Juan','Biot','Valbonne','Sophia Antipolis','Villeneuve-Loubet'],'local');
+  set(['Antibes','Juan-les-Pins'],'antibes');
+  set(['Vallauris','Golfe-Juan','Biot','Valbonne','Sophia Antipolis','Villeneuve-Loubet'],'cannes');
   set(['Cannes','Le Cannet','Mougins','Mandelieu-la-Napoule','Mandelieu','La Napoule','Grasse','Pegomas','La Roquette-sur-Siagne','Theoule-sur-Mer'],'cannes');
   set(['Nice','Cagnes-sur-Mer','Saint-Laurent-du-Var','Vence','Saint-Paul-de-Vence','Saint-Paul'],'nice');
   set(['Monaco','Monte-Carlo','Menton','Roquebrune-Cap-Martin','Roquebrune','Beausoleil','Cap-d-Ail','Cap d Ail','Eze','Beaulieu-sur-Mer','Beaulieu','Villefranche-sur-Mer','Villefranche'],'monaco');
@@ -134,7 +135,7 @@
     elFill.style.background='linear-gradient(90deg,#6fe0ff,#2eb6e6)';
     elFill.style.width=d.p+'%'; elDrop.style.left=d.p+'%';
     elZ.textContent=d.l;
-    animNum(d.f);
+    if(d.f===0){elFill.style.background='linear-gradient(90deg,#35e0a0,#13b87f)';elF.innerHTML='Offert <small>🎉</small>';}else{animNum(d.f);}
   }
   document.getElementById('livInput').addEventListener('input',function(){ if(this.value.trim().length>=3) show(this.value); });
   document.getElementById('livInput').addEventListener('change',function(){ show(this.value); });

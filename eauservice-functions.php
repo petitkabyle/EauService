@@ -780,8 +780,8 @@ function eauservice_zone_livraison( $cp, $ville ) {
 
 	// --- Tarifs HT par zone (modifiables) ---
 	$TARIFS = array(
-		'local'  => 20,   // Antibes & alentours immédiats (ajustez : 0 = offert)
-		'cannes' => 30,   // Cannes & ~12 km
+		'antibes' => 0,    // Antibes (commune) : livraison OFFERTE
+		'cannes'  => 30,   // Cannes ~12 km + Vallauris, Biot, Valbonne, Sophia, Villeneuve-Loubet
 		'nice'   => 50,   // Nice & ~20 km
 		'monaco' => 120,  // Monaco, Menton, Roquebrune & est éloigné
 		'tropez' => 150,  // Saint-Tropez & golfe (très éloigné / embouteillages)
@@ -791,8 +791,10 @@ function eauservice_zone_livraison( $cp, $ville ) {
 
 	// 1) Par code postal (méthode la plus fiable)
 	$cp_map = array(
-		// Antibes & alentours
-		'06600' => 'local', '06160' => 'local', '06220' => 'local', '06410' => 'local', '06560' => 'local', '06270' => 'local',
+		// Antibes (commune) : OFFERT
+		'06600' => 'antibes', '06160' => 'antibes',
+		// Alentours immédiats : 30 €
+		'06220' => 'cannes', '06410' => 'cannes', '06560' => 'cannes', '06270' => 'cannes',
 		// Zone Cannes
 		'06400' => 'cannes', '06150' => 'cannes', '06110' => 'cannes', '06250' => 'cannes', '06210' => 'cannes', '06130' => 'cannes', '06370' => 'cannes',
 		// Zone Nice
@@ -811,7 +813,7 @@ function eauservice_zone_livraison( $cp, $ville ) {
 	$v = strtr( $v, array( 'é'=>'e','è'=>'e','ê'=>'e','ë'=>'e','à'=>'a','â'=>'a','ä'=>'a','ô'=>'o','ö'=>'o','î'=>'i','ï'=>'i','ç'=>'c','û'=>'u','ù'=>'u','ü'=>'u' ) );
 
 	$ville_map = array(
-		'antibes'=>'local','juan-les-pins'=>'local','juan les pins'=>'local','vallauris'=>'local','golfe-juan'=>'local','biot'=>'local','valbonne'=>'local','sophia'=>'local','villeneuve-loubet'=>'local',
+		'antibes'=>'antibes','juan-les-pins'=>'antibes','juan les pins'=>'antibes','vallauris'=>'cannes','golfe-juan'=>'cannes','biot'=>'cannes','valbonne'=>'cannes','sophia'=>'cannes','villeneuve-loubet'=>'cannes',
 		'cannes'=>'cannes','le cannet'=>'cannes','cannet'=>'cannes','mougins'=>'cannes','mandelieu'=>'cannes','la napoule'=>'cannes','grasse'=>'cannes','pegomas'=>'cannes','theoule'=>'cannes',
 		'nice'=>'nice','cagnes'=>'nice','saint-laurent-du-var'=>'nice','saint laurent du var'=>'nice','vence'=>'nice','saint-paul'=>'nice','saint paul'=>'nice',
 		'monaco'=>'monaco','monte-carlo'=>'monaco','monte carlo'=>'monaco','menton'=>'monaco','roquebrune'=>'monaco','beausoleil'=>'monaco','cap-d'=>'monaco','cap d'=>'monaco','eze'=>'monaco','beaulieu'=>'monaco','villefranche'=>'monaco',
@@ -838,8 +840,11 @@ function eauservice_appliquer_frais_livraison( $cart ) {
 	if ( empty( $ville ) ) { $ville = WC()->customer->get_billing_city(); }
 
 	$fee = eauservice_zone_livraison( $cp, $ville );
-	if ( null !== $fee && $fee > 0 ) {
-		// Dernier paramètre : false = non taxable. Passez à true si vous appliquez la TVA sur la livraison.
+	if ( null === $fee ) { return; } // zone inconnue -> sur devis (aucun frais auto)
+	if ( 0 === (int) $fee ) {
+		$cart->add_fee( 'Livraison offerte (Antibes)', 0, false ); // affiche la gratuité
+	} else {
+		// Dernier paramètre : false = non taxable. Passez à true si TVA sur la livraison.
 		$cart->add_fee( 'Frais de livraison & installation', $fee, false );
 	}
 }
