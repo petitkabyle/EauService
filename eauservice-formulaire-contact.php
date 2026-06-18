@@ -1,0 +1,102 @@
+<?php
+/**
+ * ============================================================================
+ *  EAUSERVICE — TRAITEMENT DU FORMULAIRE DEVIS (envoi e-mail)
+ *  ---------------------------------------------------------------------------
+ *  Le FORMULAIRE lui-même est intégré directement dans le bloc HTML de la
+ *  page d'accueil (section id="es-devis"), juste sous les boutons CTA.
+ *  Ce snippet ne gère QUE l'ENVOI de l'e-mail (action admin-post).
+ *
+ *  Pourquoi pas de shortcode ? Pour pouvoir placer le formulaire EXACTEMENT
+ *  où on veut dans la page (au-dessus du footer), on l'a mis en HTML. Un bloc
+ *  HTML ne peut pas générer de nonce : on protège donc l'envoi par un champ
+ *  piège (honeypot) + une vérification du domaine d'origine.
+ *
+ *  OÙ COLLER ? « Code Snippets » > nouveau snippet > coller tout SAUF la 1re
+ *  ligne <?php > « Exécuter partout » > activer.
+ *
+ *  >>> RÉGLAGE : votre adresse de réception ci-dessous. <<<
+ *  Envoi assuré par votre extension YaySMTP (fiabilité OK).
+ *
+ *  ⚠️ Si vous aviez activé l'ancien snippet avec le shortcode
+ *     [eauservice_devis_rapide] ou [eauservice_contact_rapide], DÉSACTIVEZ-LE
+ *     et SUPPRIMEZ le bloc shortcode de la page : le formulaire est désormais
+ *     dans le bloc HTML d'accueil.
+ * ============================================================================
+ */
+
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+/* ---- À PERSONNALISER -------------------------------------------------- */
+if ( ! defined( 'EAUSERVICE_DEVIS_TO' ) ) {
+	// >>> VOTRE adresse de réception des demandes de devis <<<
+	define( 'EAUSERVICE_DEVIS_TO', 'contact@eau-service-events.fr' );
+}
+/* ---------------------------------------------------------------------- */
+
+add_action( 'admin_post_eauservice_devis', 'eauservice_devis_handle' );
+add_action( 'admin_post_nopriv_eauservice_devis', 'eauservice_devis_handle' );
+function eauservice_devis_handle() {
+	$home = home_url( '/' );
+	$back = wp_get_referer() ? wp_get_referer() : $home;
+
+	// Anti-spam 1 : honeypot rempli => robot.
+	if ( ! empty( $_POST['es_website'] ) ) {
+		wp_safe_redirect( add_query_arg( 'es_devis', 'spam', $back ) . '#es-devis' );
+		exit;
+	}
+
+	// Anti-spam 2 : la requête doit venir de notre propre site.
+	$ref = wp_get_referer();
+	if ( $ref && wp_parse_url( $ref, PHP_URL_HOST ) !== wp_parse_url( $home, PHP_URL_HOST ) ) {
+		wp_safe_redirect( add_query_arg( 'es_devis', 'spam', $home ) . '#es-devis' );
+		exit;
+	}
+
+	// Nettoyage des champs.
+	$nom     = isset( $_POST['es_nom'] )     ? sanitize_text_field( wp_unslash( $_POST['es_nom'] ) )     : '';
+	$email   = isset( $_POST['es_email'] )   ? sanitize_email( wp_unslash( $_POST['es_email'] ) )         : '';
+	$tel     = isset( $_POST['es_tel'] )     ? sanitize_text_field( wp_unslash( $_POST['es_tel'] ) )     : '';
+	$date    = isset( $_POST['es_date'] )    ? sanitize_text_field( wp_unslash( $_POST['es_date'] ) )    : '';
+	$event   = isset( $_POST['es_event'] )   ? sanitize_text_field( wp_unslash( $_POST['es_event'] ) )   : '';
+	$message = isset( $_POST['es_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['es_message'] ) ) : '';
+
+	// Champs obligatoires.
+	if ( '' === $nom || ! is_email( $email ) || '' === $tel || '' === $message ) {
+		wp_safe_redirect( add_query_arg( 'es_devis', 'err', $back ) . '#es-devis' );
+		exit;
+	}
+
+	$site   = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
+	$sujet  = 'Nouvelle demande de DEVIS — ' . $nom;
+	$lignes = array(
+		'Nom & prénom'        => $nom,
+		'E-mail'              => $email,
+		'Téléphone'           => $tel,
+		'Date de l’événement' => $date ?: '—',
+		'Type / lieu'         => $event ?: '—',
+	);
+	$corps  = '<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #e5e9f0;border-radius:10px;overflow:hidden;">';
+	$corps .= '<div style="background:#0F2747;color:#fff;padding:18px 22px;font-size:18px;font-weight:bold;">Nouvelle demande de devis</div>';
+	$corps .= '<div style="padding:22px;color:#0A1C36;"><table style="width:100%;border-collapse:collapse;font-size:14px;">';
+	foreach ( $lignes as $label => $val ) {
+		$corps .= '<tr><td style="padding:7px 10px;border:1px solid #eef2f7;background:#f6f9fc;font-weight:bold;width:40%;">' . esc_html( $label ) . '</td>'
+				. '<td style="padding:7px 10px;border:1px solid #eef2f7;">' . esc_html( $val ) . '</td></tr>';
+	}
+	$corps .= '</table><p style="margin:18px 0 6px;font-weight:bold;color:#0F2747;">Besoin / message :</p>';
+	$corps .= '<p style="margin:0;padding:14px;background:#f6f9fc;border-radius:8px;white-space:pre-wrap;line-height:1.6;">' . nl2br( esc_html( $message ) ) . '</p>';
+	$corps .= '<p style="margin:20px 0 0;font-size:12px;color:#8a99ab;">Demande envoyée depuis ' . esc_html( $site ) . ' (formulaire d\'accueil).</p></div></div>';
+
+	$domain  = preg_replace( '/^www\./', '', (string) wp_parse_url( $home, PHP_URL_HOST ) );
+	$from    = 'no-reply@' . ( $domain ? $domain : 'localhost' );
+	$headers = array(
+		'Content-Type: text/html; charset=UTF-8',
+		'From: ' . $site . ' <' . $from . '>',
+		'Reply-To: ' . $nom . ' <' . $email . '>',
+	);
+
+	$ok = wp_mail( EAUSERVICE_DEVIS_TO, $sujet, $corps, $headers );
+
+	wp_safe_redirect( add_query_arg( 'es_devis', $ok ? 'ok' : 'err', $back ) . '#es-devis' );
+	exit;
+}
