@@ -483,7 +483,7 @@ add_action( 'wp_head', 'eauservice_local_business_schema' );
 function eauservice_local_business_schema() {
 	// ---- À PERSONNALISER ----------------------------------------------
 	$nom        = 'EauService';
-	$telephone  = '+33 6 63 24 08 43';                  // numéro de contact principal
+	$telephone  = '+33 7 61 46 57 20';                  // numéro de contact principal
 	$rue        = '2 chemin des Frères Garberro, Galerie Marchande';
 	$code_postal= '06600';
 	$ville      = 'Antibes';
