@@ -128,6 +128,11 @@ Plus de sites sérieux pointent vers toi, plus Google te fait confiance. Pistes 
 - location machine à café Nespresso / Lavazza professionnelle PACA
 - location fontaine à eau courte durée pour événement
 
+**Deux marchés = deux types de recherches à viser :**
+- Longue durée (bureaux/entreprises) : "abonnement fontaine à eau entreprise", "contrat location machine à café bureau", "fontaine à eau entreprise à l'année [ville]"
+- Courte durée (événementiel) : "location fontaine à eau événement", "location machine à café salon / séminaire / congrès [ville]"
+> Chaque page locale présente déjà les 2 formules pour capter les deux audiences.
+
 **Où les placer (par ordre d'importance) :**
 1. Titre SEO (Yoast) — facteur n°1
 2. H1 (titre de la page)
