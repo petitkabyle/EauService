@@ -111,16 +111,22 @@ Plus de sites sérieux pointent vers toi, plus Google te fait confiance. Pistes 
 
 ## ÉTAPE 7 — Les bons mots-clés (par intention)
 
+> Cœur de métier EauService : **fontaines à eau à bonbonne** + **machines à café**, et aussi **réfrigérateurs**.
+> On met donc ces 3 produits en avant, pas le terme vague "matériel événementiel".
+
 **Priorité 1 — local + intention d'achat :**
+- location fontaine à eau Cannes / Nice / Monaco / Antibes
 - location machine à café Cannes / Nice / Monaco / Antibes
-- location fontaine à eau entreprise [ville]
-- location matériel événementiel Côte d'Azur
-- location café congrès / salon / séminaire
+- location fontaine à eau à bonbonne [ville]
+- location fontaine à eau entreprise / bureau [ville]
+- location réfrigérateur [ville]
 
 **Priorité 2 — longue traîne (facile à gagner) :**
-- louer machine à café pour salon professionnel
-- location machine à café courte durée
-- pack café fontaine à eau événement entreprise
+- location fontaine à eau bonbonne avec livraison
+- louer une machine à café professionnelle pour bureau
+- fontaine à eau bureau Côte d'Azur prix
+- location machine à café Nespresso / Lavazza professionnelle PACA
+- location fontaine à eau courte durée pour événement
 
 **Où les placer (par ordre d'importance) :**
 1. Titre SEO (Yoast) — facteur n°1
