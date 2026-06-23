@@ -58,9 +58,16 @@ Après mise en ligne, teste-le ici :
 
 ---
 
-## ÉTAPE 3 — Publier les 4 pages locales (gros levier)
+## ÉTAPE 3 — Publier les pages SEO (gros levier)
 
-Les fichiers sont prêts dans le dépôt :
+### 3a. Pages PRODUIT (priorité haute — les requêtes les plus recherchées)
+- `seo-page-fontaine-a-eau.html`  → "Location de fontaine à eau à bonbonne" (mot-clé : location fontaine à eau)
+- `seo-page-machine-a-cafe.html`  → "Location de machine à café professionnelle" (mot-clé : location machine à café)
+
+Ce sont les pages qui visent les recherches directes les plus volumineuses.
+Elles sont remplies de liens internes (vers les villes, les catégories et l'une vers l'autre).
+
+### 3b. Pages LOCALES (SEO local par ville)
 - `seo-page-cannes.html`   → page "Location ... à Cannes"
 - `seo-page-nice.html`     → page "Location ... à Nice"
 - `seo-page-monaco.html`   → page "Location ... à Monaco"
@@ -73,8 +80,8 @@ Pour chacune :
 4. Remplace l'URL d'image par une vraie photo de ta médiathèque (avec un `alt` descriptif).
 5. Publie, puis demande l'indexation (étape 1.3).
 
-> Règle d'or SEO : **1 page = 1 mot-clé principal**. C'est pour ça qu'on fait une page par ville
-> au lieu de tout mettre sur l'accueil.
+> Règle d'or SEO : **1 page = 1 mot-clé principal**. C'est pour ça qu'on sépare
+> fontaine à eau / machine à café / chaque ville sur des pages distinctes.
 
 ---
 
