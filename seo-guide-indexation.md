@@ -58,9 +58,16 @@ Après mise en ligne, teste-le ici :
 
 ---
 
-## ÉTAPE 3 — Publier les 4 pages locales (gros levier)
+## ÉTAPE 3 — Publier les pages SEO (gros levier)
 
-Les fichiers sont prêts dans le dépôt :
+### 3a. Pages PRODUIT (priorité haute — les requêtes les plus recherchées)
+- `seo-page-fontaine-a-eau.html`  → "Location de fontaine à eau à bonbonne" (mot-clé : location fontaine à eau)
+- `seo-page-machine-a-cafe.html`  → "Location de machine à café professionnelle" (mot-clé : location machine à café)
+
+Ce sont les pages qui visent les recherches directes les plus volumineuses.
+Elles sont remplies de liens internes (vers les villes, les catégories et l'une vers l'autre).
+
+### 3b. Pages LOCALES (SEO local par ville)
 - `seo-page-cannes.html`   → page "Location ... à Cannes"
 - `seo-page-nice.html`     → page "Location ... à Nice"
 - `seo-page-monaco.html`   → page "Location ... à Monaco"
@@ -73,8 +80,8 @@ Pour chacune :
 4. Remplace l'URL d'image par une vraie photo de ta médiathèque (avec un `alt` descriptif).
 5. Publie, puis demande l'indexation (étape 1.3).
 
-> Règle d'or SEO : **1 page = 1 mot-clé principal**. C'est pour ça qu'on fait une page par ville
-> au lieu de tout mettre sur l'accueil.
+> Règle d'or SEO : **1 page = 1 mot-clé principal**. C'est pour ça qu'on sépare
+> fontaine à eau / machine à café / chaque ville sur des pages distinctes.
 
 ---
 
@@ -111,16 +118,27 @@ Plus de sites sérieux pointent vers toi, plus Google te fait confiance. Pistes 
 
 ## ÉTAPE 7 — Les bons mots-clés (par intention)
 
+> Cœur de métier EauService : **fontaines à eau à bonbonne** + **machines à café**, et aussi **réfrigérateurs**.
+> On met donc ces 3 produits en avant, pas le terme vague "matériel événementiel".
+
 **Priorité 1 — local + intention d'achat :**
+- location fontaine à eau Cannes / Nice / Monaco / Antibes
 - location machine à café Cannes / Nice / Monaco / Antibes
-- location fontaine à eau entreprise [ville]
-- location matériel événementiel Côte d'Azur
-- location café congrès / salon / séminaire
+- location fontaine à eau à bonbonne [ville]
+- location fontaine à eau entreprise / bureau [ville]
+- location réfrigérateur [ville]
 
 **Priorité 2 — longue traîne (facile à gagner) :**
-- louer machine à café pour salon professionnel
-- location machine à café courte durée
-- pack café fontaine à eau événement entreprise
+- location fontaine à eau bonbonne avec livraison
+- louer une machine à café professionnelle pour bureau
+- fontaine à eau bureau Côte d'Azur prix
+- location machine à café Nespresso / Lavazza professionnelle PACA
+- location fontaine à eau courte durée pour événement
+
+**Deux marchés = deux types de recherches à viser :**
+- Longue durée (bureaux/entreprises) : "abonnement fontaine à eau entreprise", "contrat location machine à café bureau", "fontaine à eau entreprise à l'année [ville]"
+- Courte durée (événementiel) : "location fontaine à eau événement", "location machine à café salon / séminaire / congrès [ville]"
+> Chaque page locale présente déjà les 2 formules pour capter les deux audiences.
 
 **Où les placer (par ordre d'importance) :**
 1. Titre SEO (Yoast) — facteur n°1
