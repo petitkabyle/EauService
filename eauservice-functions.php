@@ -483,11 +483,11 @@ add_action( 'wp_head', 'eauservice_local_business_schema' );
 function eauservice_local_business_schema() {
 	// ---- À PERSONNALISER ----------------------------------------------
 	$nom        = 'EauService';
-	$telephone  = '+33 [VOTRE NUMERO]';                 // ex : +33 6 12 34 56 78
-	$rue        = '[VOTRE ADRESSE]';                    // ex : 12 avenue des Congrès
-	$code_postal= '[CODE POSTAL]';                      // ex : 06400
-	$ville      = '[VILLE]';                            // ex : Cannes
-	$lien_maps  = '[LIEN GOOGLE MAPS]';                 // URL de votre fiche Google
+	$telephone  = '+33 7 61 46 57 20';                  // numéro de contact principal
+	$rue        = '2 chemin des Frères Garberro, Galerie Marchande';
+	$code_postal= '06600';
+	$ville      = 'Antibes';
+	$lien_maps  = 'https://share.google/Lc43vOOKwCr2ybn0o'; // fiche Google Business
 	$image      = 'https://eau-service-events.fr/wp-content/uploads/logo.png';
 	// -------------------------------------------------------------------
 
