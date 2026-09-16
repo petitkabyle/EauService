@@ -1,0 +1,155 @@
+# ================================================================
+# EAUSERVICE - CONFIGURATION CACHE HTTP OPTIMALE
+# À ajouter à la fin de votre fichier .htaccess
+# Économie: 2385-2674 Kio
+# ================================================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Images - Cache 1 an (vos images changent rarement)
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/ico "access plus 1 year"
+  ExpiresByType image/icon "access plus 1 year"
+  
+  # Vidéos - Cache 1 an
+  ExpiresByType video/mp4 "access plus 1 year"
+  ExpiresByType video/webm "access plus 1 year"
+  ExpiresByType video/ogg "access plus 1 year"
+  
+  # Polices - Cache 1 an
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  
+  # CSS et JavaScript - Cache 1 mois (peut changer plus souvent)
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  
+  # HTML - Cache 1 heure (pour les pages dynamiques)
+  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/x-component "access plus 1 month"
+  
+  # Données JSON - Cache 1 heure
+  ExpiresByType application/json "access plus 1 hour"
+  ExpiresByType application/ld+json "access plus 1 hour"
+  
+  # Fichiers XML et texte - Cache 1 heure
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType text/xml "access plus 1 hour"
+  ExpiresByType application/rss+xml "access plus 1 hour"
+  ExpiresByType text/plain "access plus 1 hour"
+  
+  # Défaut - Cache 1 semaine
+  ExpiresDefault "access plus 1 week"
+</IfModule>
+
+# En-têtes Cache-Control pour un meilleur contrôle
+<IfModule mod_headers.c>
+  # Images et médias - Cache 1 an + public
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|mp4|webm|ogg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  
+  # Polices - Cache 1 an + crossorigin
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+  
+  # CSS et JS - Cache 1 mois
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  
+  # HTML - Cache court + must-revalidate
+  <FilesMatch "\.(html|htm|php)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+  
+  # Pas de cache pour les fichiers dynamiques WordPress
+  <FilesMatch "wp-(login|register|comments-post)\.php$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
+
+# Compression GZIP pour réduire la taille des fichiers
+<IfModule mod_deflate.c>
+  # Compresser HTML, CSS, JavaScript, texte, XML, polices
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/ld+json
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/ttf font/otf font/eot
+  AddOutputFilterByType DEFLATE application/font-woff application/font-woff2
+  AddOutputFilterByType DEFLATE application/x-font-ttf application/x-font-otf
+  
+  # Ne pas compresser les images déjà compressées
+  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|ico)$ no-gzip dont-vary
+  
+  # Gérer les proxies
+  Header append Vary: Accept-Encoding
+</IfModule>
+
+# Compression Brotli (si disponible) - meilleure que GZIP
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/xml application/xhtml+xml application/rss+xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/json application/ld+json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+  AddOutputFilterByType BROTLI_COMPRESS font/ttf font/otf
+  AddOutputFilterByType BROTLI_COMPRESS application/font-woff application/font-woff2
+</IfModule>
+
+# ETags pour validation du cache
+<IfModule mod_headers.c>
+  Header unset ETag
+  FileETag None
+</IfModule>
+
+# Désactiver les ETags (car on utilise Cache-Control)
+FileETag None
+
+# Précharger les polices et ressources critiques
+<IfModule mod_headers.c>
+  # Précharger la police Sora (utilisée pour les titres)
+  <FilesMatch "\.html$">
+    Header add Link "<https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap>; rel=preconnect"
+    Header add Link "<https://fonts.gstatic.com>; rel=preconnect; crossorigin"
+  </FilesMatch>
+</IfModule>
+
+# Sécurité supplémentaire (bonus)
+<IfModule mod_headers.c>
+  # Protection XSS
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Empêcher le sniffing MIME
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Protection contre le clickjacking
+  Header set X-Frame-Options "SAMEORIGIN"
+  
+  # Politique de referrer
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ================================================================
+# FIN DE LA CONFIGURATION CACHE
+# Sauvegardez ce fichier et testez votre site
+# ================================================================
