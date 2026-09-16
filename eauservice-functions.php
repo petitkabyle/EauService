@@ -487,8 +487,8 @@ function eauservice_local_business_schema() {
 	$rue        = '2 chemin des Frères Garberro, Galerie Marchande';
 	$code_postal= '06600';
 	$ville      = 'Antibes';
-	$lien_maps  = 'https://share.google/Lc43vOOKwCr2ybn0o'; // fiche Google Business
-	$image      = 'https://eau-service-events.fr/wp-content/uploads/logo.png';
+	$lien_maps  = 'https://maps.app.goo.gl/FqH9hm9FLBDLpN6F6'; // fiche Google Business
+	$image      = 'https://eau-service-events.fr/wp-content/uploads/2024/12/logo-eauservice-blanc.png';
 	// -------------------------------------------------------------------
 
 	$data = array(
